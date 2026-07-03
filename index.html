@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#10131c">
@@ -931,6 +931,682 @@ const CALIB_BANK=[
 ['The Amazon River is generally considered to discharge more water than the next several largest rivers combined.',true],
 ['Peanuts are botanically nuts.',false],
 ];
+// ===================== SECTION 2: THE PERFORMER (Workshop deep dive) =====================
+const SECTION2=[
+
+{ id:'s2u1', icon:'🎾', color:'var(--green)', title:'The Inner Game', sub:'Gallwey: get out of your own way',
+  source:[['Book: The Inner Game of Tennis (Gallwey)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s2u1c1', icon:'🗣️', title:'Self 1 and Self 2', kind:'learn',
+teach:`<p>Timothy Gallwey coached tennis and noticed the real opponent was internal. Every performer contains two characters: <b>Self 1</b>, the verbal teller — instructing, criticizing, worrying — and <b>Self 2</b>, the doer: the embodied intelligence that has actually learned the skill.</p>
+<div class="key">Gallwey’s equation: <b>performance = potential − interference</b>. Most improvement available to an adult is not adding skill but removing Self 1’s interference — the tightening, the mid-action commentary, the flinch after errors.</div>
+<p>Watch for Self 1’s signature moves: instructing yourself DURING execution ("bend the elbow!"), replaying an error while the next moment is already arriving, and trying so hard that muscles unrelated to the task contract.</p>
+<div class="ex"><b>Beyond tennis:</b> Self 1 narrates your job interviews ("that answer was bad, fix it, you sound nervous") while Self 2 was perfectly capable of holding a conversation — it has done so daily for decades. The narration IS the nervousness.</div>
+<p>This is Unit 1 of Section 1 again, at a deeper layer: noticing — but now the target is the noticer’s own interference.</p>`,
+quiz:[
+{q:'Per Gallwey, why do adults improve more by removing interference than by adding technique?',opts:[
+['Because technique cannot be taught to adults',0,'Adults learn technique fine. The point is that Self 2 usually already knows more than it is allowed to express — Self 1’s commentary is what blocks it.'],
+['Because performance = potential − interference, and Self 2’s potential is usually already higher than what shows',1,'Right. The tightening, mid-action instructions, and error-replay subtract from a capacity that is already there.'],
+['Because trying harder always helps',0,'Backwards — over-trying is one of Self 1’s main interference patterns: contracting muscles and attention that the task never needed.']]},
+{q:'You make an error in a presentation and spend the next 30 seconds internally replaying it. What is this, in Inner Game terms?',opts:[
+['Useful immediate feedback processing',0,'Feedback review has its place — AFTER the performance. Mid-performance replay is Self 1 stealing attention from the only moment that can still be played: this one.'],
+['Self 1 interference: attention taken from the live moment to feed judgment',1,'Exactly. The error already happened; the replay subtracts from what happens next. Note it, return to the ball.'],
+['Self 2 learning from the mistake',0,'Self 2 learns through experience and observation, not through verbal self-flagellation. The replay is the critic, not the learner.']]}],
+cards:[
+['Self 1 vs Self 2 (Gallwey)','Self 1: the verbal teller — instructs, criticizes, worries during execution. Self 2: the embodied doer that actually learned the skill. Interference = Self 1 obstructing Self 2.'],
+['Gallwey’s performance equation','Performance = potential − interference. Adult improvement mostly = removing interference, not adding technique.'],
+['Three signature Self 1 moves','Instructing yourself DURING execution, replaying errors while the next moment arrives, over-trying (contracting muscles/attention the task never needed).']],
+},
+
+{ id:'s2u1c2', icon:'👀', title:'Non-judgmental awareness', kind:'drill',
+teach:`<p>Gallwey’s replacement for self-instruction is <b>non-judgmental awareness</b>: observe the facts of performance with the neutrality you would give someone else’s. Not "my emails are rambling again, I am hopeless" but "this email has four topics; my finger hovers before every send."</p>
+<p>The paradox that makes the method work: <b>observed behavior changes on its own</b>. When attention rests on what IS happening — without a fix-it agenda — Self 2 adjusts automatically, the way you never consciously computed how to catch a ball.</p>
+<div class="key">Judgment is not evaluation. You may still evaluate outcomes later (Feedback-loop attitude demands it). What is banned is the mid-action verdict — the "good/bad" that tightens the system while it runs.</div>
+<p>Gallwey anchored attention on neutral facts ("watch the seams of the ball"). Your version: pick a routine skilled activity today and choose one neutral fact of it to watch.</p>`,
+drill:{prompt:`Run one non-judgmental awareness session (10+ min) on a routine skilled activity you will really do today — writing, cooking, speaking in a meeting, coding, sport. Pick ONE neutral observable (your pace, pauses, breath, word choice, posture). Report: (a) activity + observable, (b) 3-4 pure observations (facts, zero verdicts), (c) any Self 1 verdicts that intruded and what pulled you back, (d) whether anything changed without being "fixed".`,
+placeholder:'Activity: ... Observable: ...\nObserved: ...\nSelf 1 intrusions: ...\nChanges: ...',min:10},
+rubric:['Real activity actually performed with the awareness frame','Observations are neutral facts, not disguised judgments ("too slow" is a verdict; "each paragraph took ~4 min" is a fact)','Self 1 intrusions honestly logged rather than claimed absent','Any spontaneous change reported without inflation — "nothing changed" is an acceptable finding'],
+cards:[
+['Non-judgmental awareness — the method','Observe neutral FACTS of your own performance mid-action (pace, breath, pauses), no verdicts. Observed behavior self-corrects via Self 2.'],
+['Judgment vs evaluation (Inner Game)','Evaluation of outcomes afterwards: required (feedback loops). Mid-action good/bad verdicts: banned — they tighten the system while it runs.']],
+},
+
+{ id:'s2u1c3', icon:'🤲', title:'Trusting Self 2', kind:'drill',
+teach:`<p>The third Inner Game skill is <b>trust</b>: giving Self 2 the goal and then — this is the hard part — <i>not helping</i>.</p>
+<p>Gallwey’s protocol: (1) hold a clear image of the desired OUTCOME (the ball landing deep, the paragraph reading warmly, the difficult point made kindly); (2) let go of instructions about HOW; (3) allow execution; (4) observe results without judgment and re-image.</p>
+<div class="key">Trust is not recklessness — you only extend it to skills Self 2 has actually trained. You do not "trust" a first-ever piano piece. You trust the conversation you have had ten thousand times, the writing you do daily, the walk to the net.</div>
+<div class="ex"><b>Example:</b> Before a tense one-on-one, Rana pictures the ending she wants — both people relaxed, the issue named without heat — then walks in with no script. Her trained conversational Self 2, unscripted, reads the room better than any plan survived contact with it.</div>`,
+drill:{prompt:`Run the trust protocol on ONE trained skill in a real situation today or tomorrow: (a) name the skill and why Self 2 has earned trust there (evidence of training), (b) the outcome image you held — sensory, specific, (c) what "not helping" felt like and where Self 1 grabbed the wheel anyway, (d) result vs the usual scripted/controlled attempt.`,
+placeholder:'Skill: ... (trained: ...)\nOutcome image: ...\nLetting go felt: ... Self 1 grabbed at: ...\nResult: ...',min:8},
+rubric:['Skill is genuinely trained (trust is earned, not wished)','Outcome image is specific and sensory, not an abstract goal','Honest report of Self 1 interference during the attempt','Fair comparison to baseline; no claim of magic where there was none'],
+cards:[
+['The trust protocol (Inner Game)','1) Hold a specific sensory image of the OUTCOME. 2) Release instructions about HOW. 3) Execute. 4) Observe without judgment, re-image.'],
+['When is trusting Self 2 legitimate?','Only on trained skills — trust is extended to demonstrated competence, not wished into existence. Daily conversation: yes. First piano recital: no.']],
+},
+
+{ id:'s2u1c4', icon:'📓', title:'The interference log', kind:'checkin',
+teach:`<p>Standing practice for this section: <b>one interference catch per day.</b> Somewhere in your real day, Self 1 will instruct, replay, or over-try. Catch it once, log it in one line: the situation, the interference move, what Self 2 was mid-doing.</p>
+<div class="key">This is the flinch-log of Section 1 pointed inward at performance. Over weeks it maps YOUR characteristic interference profile — most people discover they are heavy in one move (replayers vs instructors vs over-triers), and the counter-move differs for each.</div>`,
+checkin:{key:'interference',label:'Interference Log',icon:'🎾',every:24,
+ask:'Log one Self 1 interference caught today: situation, the move (instructing / replaying / over-trying), and what Self 2 was doing at the time.',
+form:'report'},
+cards:[
+['The three interference profiles','Instructors (mid-action how-to commentary), Replayers (error loops during live moments), Over-triers (recruiting effort/muscles the task never needed). Counter-moves differ per profile.']],
+},
+]},
+
+{ id:'s2u2', icon:'🎭', color:'var(--orange)', title:'Status & Spontaneity', sub:'Johnstone: the games under every conversation',
+  source:[['Book: Impro (Keith Johnstone)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s2u2c1', icon:'♟️', title:'Status is something you do', kind:'learn',
+teach:`<p>Keith Johnstone’s acting classes were flat until he asked actors to make their status slightly higher or lower than their partner’s. Scenes instantly became "authentic". His discovery: <b>every exchange is a status transaction</b>, and status is not a rank you have — it is <b>something you do</b>, moment to moment, mostly unconsciously.</p>
+<h4>The micro-moves</h4>
+<p>• <b>Raising own:</b> holding eye contact, stillness, taking time before replying, complete sentences, taking space.<br>• <b>Lowering own:</b> touching your face/hair, "er" and hedges, quick agreement, laughing at your own remarks, moving out of the way.<br>• <b>Lowering other’s:</b> interrupting, topping their story, glancing at your phone.<br>• <b>Raising other’s:</b> letting their point land in silence, asking a follow-up, physically turning toward them.</p>
+<div class="key">Johnstone’s liberating claim: since status is behavior, it is <i>practicable</i>. Most people are stuck in a preferred position (habitual high or habitual low) and play it even when it serves them badly. Flexibility — choosing the move — is the skill.</div>
+<div class="ex"><b>Example:</b> In reviews, Sam (habitual low) prefixes every idea with "this is probably stupid but". The ideas are good; the packaging pre-lowers them. One removed hedge per meeting is a status rep.</div>`,
+quiz:[
+{q:'Johnstone’s core reframe of status is:',opts:[
+['Status is your position in the org chart',0,'That is rank. Johnstone’s point is precisely that a janitor can play high and a CEO low — the transaction is behavioral and moment-to-moment.'],
+['Status is something you DO — a stream of micro-behaviors — and therefore practicable',1,'Yes. Eye contact, hedges, interruptions, stillness: doings, not havings. Which means the stuck patterns can be retrained.'],
+['Status should be eliminated from healthy interactions',0,'Impossible, per Johnstone — the transactions happen anyway. The choice is between playing them blind or seeing them.']]},
+{q:'Which set contains only OWN-status-lowering moves?',opts:[
+['Interrupting, topping their story, phone-glancing',0,'Those lower the OTHER’s status — a different (and more aggressive) family of moves.'],
+['Face-touching, hedging ("this might be dumb but"), laughing at your own remarks',1,'Right — Johnstone’s classic self-lowering set. Fine when chosen (it can put people at ease); costly when it is an unconscious default.'],
+['Stillness, held eye contact, unhurried replies',0,'These RAISE own status. Notice how physical the list is — status lives in the body more than the words.']]}],
+cards:[
+['Status (Johnstone) — definition','Not a rank you have but something you DO: a stream of micro-behaviors (eye contact, hedges, stillness, interruptions) in every exchange. Therefore practicable.'],
+['4 families of status moves','Raise own (stillness, held gaze, unhurried speech) / lower own (hedges, face-touching, self-laughter) / lower other’s (interrupting, topping, phone) / raise other’s (silence for their point, follow-ups, turning toward).'],
+['What is status FLEXIBILITY and why is it the skill?','Most people are stuck playing habitual high or low even when it hurts them. The trained skill is seeing the transaction and choosing the move.']],
+},
+
+{ id:'s2u2c2', icon:'🔬', title:'Status field work', kind:'field',
+teach:`<p>Two-part mission, straight from Johnstone’s classroom to your real week.</p>
+<p><b>Part 1 — See it (observer):</b> in one real meeting or gathering, watch the status transactions for 10 minutes. Who lowers themselves before speaking? Who tops? What does the highest-played person do with their body?</p>
+<p><b>Part 2 — Move it (one notch):</b> in a LOW-stakes interaction, deliberately play one notch off your habitual position. Habitual low? Hold one opinion without a hedge, let one silence sit. Habitual high? Ask a follow-up question and let someone else’s story win. <b>One notch.</b> This is CoZE with a status hypothesis: predict the reaction before, observe after.</p>
+<div class="key">Ethics note: this is practice in awareness and flexibility, not manipulation. You are learning to stop playing moves you never chose — the honest version of yourself needs the full keyboard.</div>`,
+mission:{text:`<b>Field mission:</b> (1) Observe 10 min of real status transactions — log 3 concrete moves you saw (who, what, effect). (2) Play one notch off your habitual status in a low-stakes real interaction — record your prediction beforehand, what you did, and what actually happened.`,
+placeholder:'Observed: 1)... 2)... 3)...\nMy habitual position: ...\nOne-notch experiment — predicted: ... did: ... happened: ...'},
+rubric:['Three observed moves are concrete and behavioral (not "he seemed dominant" but what he DID)','Own habitual position identified honestly','Experiment was one notch, low-stakes, actually performed','Prediction recorded before; outcome compared after (CoZE discipline)'],
+cards:[
+['The one-notch rule for status practice','Shift a single notch off your habitual position in low-stakes settings. Big jumps read as bizarre and teach nothing; one notch is visible in the data and safe.']],
+},
+
+{ id:'s2u2c3', icon:'🎁', title:'Offers: accept, don’t block', kind:'drill',
+teach:`<p>Johnstone’s second engine: every thing a partner says or does is an <b>offer</b>. You can <b>accept</b> it (take it in and build on it) or <b>block</b> it (deny, deflect, ignore — anything that kills where it was going). Improvisers who block feel safe and are boring; improvisers who accept look brave and brilliant, and mostly they are just <i>not blocking</i>.</p>
+<p>Off stage, blocking wears clever disguises: "yes, but…", answering a different question than the one asked, meeting a colleague’s idea with its first flaw, replying to vulnerability with advice.</p>
+<div class="key">Accepting ≠ agreeing. You can accept the offer "I think this plan is wrong" — take it seriously, build on it, ask what they see — while still disagreeing. What you do not do is make the offer disappear.</div>
+<div class="ex"><b>Example:</b> Child: "Look, my drawing!" Block: "Nice. Dinner in five." Accept: "Ooh — why is the sun purple?" The cost was four seconds. The difference compounds for years — with children, colleagues, and spouses alike.</div>`,
+drill:{prompt:`For one real conversation today (≥10 min), adopt the rule: accept every offer — build on what is actually given before adding your own direction. Report: (a) the conversation context, (b) 2-3 offers you caught and how you accepted them, (c) at least one block you caught yourself ABOUT to play (its disguise), (d) what the conversation did that your usual one would not have.`,
+placeholder:'Context: ...\nOffers accepted: 1)... 2)...\nBlock I almost played: ... (disguised as ...)\nDifference: ...',min:8},
+rubric:['Real conversation, rule genuinely attempted throughout','Offers identified are actual offers (things given), acceptances built on them specifically','Honest catch of at least one near-block with its disguise named','Comparison to baseline is concrete, not "it was nicer"'],
+cards:[
+['Offer / accept / block (Impro)','Everything a partner gives is an offer. Accept = take it in and build on it. Block = deny/deflect/ignore, killing where it was going. Blocking feels safe and is deadening.'],
+['Accepting ≠ agreeing','You can fully accept the offer "your plan is wrong" — take it seriously, explore it — while disagreeing. The sin is making the offer disappear, not dissenting.'],
+['Four disguises of everyday blocking','"Yes, but…", answering a different question, meeting ideas with their first flaw, replying to vulnerability with advice.']],
+},
+
+{ id:'s2u2c4', icon:'💡', title:'Be more obvious', kind:'drill',
+teach:`<p>Johnstone found students paralyzed not by emptiness but by <b>censorship</b>: three answers arrive instantly and get rejected — too obvious, too weird, too revealing. His scandalous instruction: <b>"Be more obvious."</b> The obvious answer, delivered without the pause of self-censorship, reads as inspired — because it is <i>yours</i>, and connected to what came before.</p>
+<p>The censor is Self 1 wearing a beret. It runs on three fears Johnstone names precisely: fear of being seen as unoriginal, as mad, or as <i>yourself</i>.</p>
+<div class="key">Rationality relevance: the same censor that blocks improv blocks hypothesis generation, brainstorming, and honest answers to "what do you actually want?" — the Focusing sessions of Section 1 were fighting it too. Spontaneity is trainable trust in your first material.</div>`,
+drill:{prompt:`Run a 5-minute Yoda-timer spontaneity rep on a REAL open question of yours (from your ledger or Hamming chapter): write continuously, accepting your first thought every time — obvious, weird, or revealing — zero editing. Then report: (a) the question, (b) how many times the censor fired and which fear it used (unoriginal / mad / myself), (c) one thing in the output that surprised you, (d) honest verdict: any material worth keeping?`,
+placeholder:'Question: ...\nCensor fired ~x times, mostly the fear of: ...\nSurprise: ...\nKeep: ...',min:6,timer:5},
+rubric:['Continuous uncensored writing actually attempted on a real question','Censor events counted and their fear-type identified','A genuine surprise reported (surprise is the signature of beating the censor)','Sober assessment of the material — spontaneity produces ore, not finished metal'],
+cards:[
+['"Be more obvious" (Johnstone)','The first, obvious answer delivered without censorship reads as inspired — it is connected and yours. Cleverness-seeking is the censor talking.'],
+['The censor’s three fears','Being seen as unoriginal, as mad, or as yourself. Same censor blocks improv, brainstorming, and honest introspection.']],
+},
+]},
+
+{ id:'s2u3', icon:'📦', color:'var(--purple)', title:'Out of the Box', sub:'Warner: self-deception and the people around you',
+  source:[['Book: Bonds That Make Us Free (C. Terry Warner)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s2u3c1', icon:'🪤', title:'Self-betrayal', kind:'learn',
+teach:`<p>C. Terry Warner’s deep claim: much of our misery with other people begins with an act against ourselves. A <b>self-betrayal</b> is failing to act on a sense you had about what another person needed — you saw your partner exhausted and felt the pull to take over dinner, and didn’t.</p>
+<p>What happens next is the engine: needing to feel justified, <b>your perception itself bends</b>. Their tiredness starts looking like theatrics; your inaction starts looking like fairness ("I worked all day too"; "she never asks properly"). Warner calls this state being <b>in the box</b>: a self-justifying stance from which the other person appears as an object — an obstacle, a vehicle, or an irrelevance — rather than a person.</p>
+<div class="key">The epistemics is the point for us: in the box, <b>you are motivated to be provoked</b>. You need them to be as bad as your story requires. This is a bias factory running on relationship fuel — no calibration training touches it, because the distortion arrives disguised as perception, not as inference.</div>`,
+quiz:[
+{q:'What is a self-betrayal, in Warner’s precise sense?',opts:[
+['Any failure to meet your own goals',0,'That is ordinary akrasia — Section 1’s territory. Warner’s term is specifically relational: a sense of what another needed, unacted-on.'],
+['Failing to act on your own sense of what another person needed',1,'Right — and the sequel is the engine: the need to feel justified bends your perception of them until your inaction looks reasonable.'],
+['Betraying a secret',0,'Unrelated. The betrayed party in Warner’s concept is your own moral sense.']]},
+{q:'Why does Warner’s "box" matter epistemically, not just morally?',opts:[
+['Because being kind is rational',0,'Maybe, but the specific claim is sharper: the box corrupts perception itself, upstream of any reasoning.'],
+['Because in the box you are MOTIVATED to be provoked — you need the other person to be as bad as your justification requires',1,'Exactly. It is a bias factory disguised as seeing: their neutral acts arrive pre-interpreted as evidence for your story.'],
+['Because boxes make you less productive',0,'Downstream at best. The core damage is to the accuracy of your read of another human — data you act on daily.']]}],
+cards:[
+['Self-betrayal (Warner)','Failing to act on your own sense of what another person needed. The seed of the box.'],
+['The box — mechanism','After self-betrayal, the need for justification bends perception: their faults inflate, your virtues inflate, they become an object (obstacle/vehicle/irrelevance) in your story.'],
+['Why the box defeats ordinary debiasing','The distortion arrives disguised as perception ("I SEE she is being dramatic"), not as an inference you could audit. You are motivated to be provoked.']],
+},
+
+{ id:'s2u3c2', icon:'🔄', title:'Collusion', kind:'learn',
+teach:`<p>Boxes interlock. My in-the-box behavior toward you — the sigh, the clipped answers, the scorekeeping — <i>gives you real evidence</i> for your box about me. Your resulting coldness gives me mine. Warner calls this <b>collusion</b>: two people cooperating perfectly to give each other cause.</p>
+<p>The signature of collusion is that <b>both parties are right about the facts and wrong about the story</b>. Yes, he really is curt with you. Yes, you really do avoid him. Each dossier is accurate; each was partly manufactured by its collector.</p>
+<div class="key">Warner’s hard question, and this section’s crux: <i>would you rather be right, or be free?</i> In the box, being right is winning — and the game it wins keeps you exactly where you are. Escape is not "acting nicer" (in-the-box niceness reads as fake, because it is a move in the same game). Escape is upstream: honoring the sense you betrayed, at which point the other person turns back into a person on their own.</div>
+<div class="ex"><b>Example:</b> A classic couple’s loop: he withdraws because she criticizes; she criticizes because he withdraws. Two accurate dossiers, one machine. The first person to act OUT of the box — not nicer, but actually seeing the other’s burden — usually finds the machine was running on their fuel too.</div>`,
+quiz:[
+{q:'The signature of collusion is:',opts:[
+['One person is lying about the facts',0,'Rarely needed. Collusion’s trap is precisely that no one has to lie — both dossiers are factually accurate.'],
+['Both parties are right about the facts and wrong about the story — each partly manufactured the evidence they collect',1,'Yes. His curtness is real; your avoidance is real; each is fuel the other’s box produced. Accuracy of facts, corruption of narrative.'],
+['Both people secretly want the conflict',0,'Not consciously — that is what makes it stable. Each experiences themselves as the reasonable one responding to provocation.']]},
+{q:'Why does "just act nicer" fail to break collusion, per Warner?',opts:[
+['Niceness rewards bad behavior',0,'Not the mechanism. The problem is where the niceness comes from, not what it rewards.'],
+['In-the-box niceness is a move in the same game — the other person feels it as fake because it IS strategic',1,'Right. The box is a stance, not a behavior set. Escape happens upstream: honoring the betrayed sense, after which the other reappears as a person — and behavior changes for real.'],
+['Nice actions take too long to work',0,'Speed is not the issue; sourcing is. Out-of-the-box acts often work startlingly fast.']]}],
+cards:[
+['Collusion (Warner)','Interlocking boxes: my in-the-box behavior gives you real evidence for your box, and yours gives me mine. Two accurate dossiers, one self-sustaining machine.'],
+['"Right about facts, wrong about the story"','Collusion’s signature: no one needs to lie. Each party’s evidence is real AND partly manufactured by their own box’s provocations.'],
+['Why escape is upstream of behavior','Acting nicer from inside the box reads as fake (it is a move in the same game). The exit is honoring the originally betrayed sense — the stance change that makes real behavior change possible.']],
+},
+
+{ id:'s2u3c3', icon:'🔍', title:'Box audit', kind:'drill',
+teach:`<p>Time to look at one of yours. Choose a real, currently strained relationship — colleague, family, friend. Not your heaviest (this is a first audit, choose a 5/10, not the 10/10), and note this is about ordinary friction between roughly-well-meaning people — <b>not</b> about relationships involving abuse or safety, which deserve better tools than a self-audit.</p>
+<p>The audit questions, in Warner’s order:</p>
+<p>1. What do I find myself constantly proving about them, or about me? (The justification names the box.)<br>2. Can I locate an original sense-unacted-on — something I felt I should do or say and did not?<br>3. What do I need them to keep being, for my story to hold? What evidence do I collect with special appetite?<br>4. When I imagine them as a person carrying their own load — what comes into view that the dossier omits?</p>
+<div class="key">Your Focusing and IDC skills are the instruments here; the box audit is those skills pointed at relational perception. Expect resistance — the box defends itself by making the audit feel unnecessary ("this is different, they really ARE like that"). That feeling is question 3 answering itself.</div>`,
+drill:{prompt:`Run the four audit questions on one real strained relationship (a 5/10, not a 10/10; nothing involving safety). Report at whatever detail you are comfortable — the mechanics matter more than the specifics: (a) what you keep proving, (b) the original unacted-on sense if you found one, (c) what your story needs them to keep being + the evidence you collect with appetite, (d) what appeared when you imagined them carrying their own load, (e) any resistance the audit itself produced.`,
+placeholder:'Proving: ...\nOriginal sense unacted-on: ...\nStory needs them to be: ... I collect: ...\nSeen as a person: ...\nResistance felt: ...',min:15},
+rubric:['Appropriately-sized relationship chosen (5/10, no safety issues)','Justification pattern identified concretely (what is being proven)','Honest attempt at locating a self-betrayal, or honest report of not finding one','Question 4 actually attempted — something the dossier omits was seen','Resistance acknowledged as data rather than obeyed or denied'],
+cards:[
+['The four box-audit questions','1) What do I keep proving? 2) Original sense-unacted-on? 3) What must they keep being for my story — what evidence do I collect with appetite? 4) What appears when they are a person carrying their own load?'],
+['"This is different, they really ARE like that"','The box defending itself — the feeling that the audit is unnecessary is question 3 answering itself. Treat as data, not verdict.']],
+},
+
+{ id:'s2u3c4', icon:'🕊️', title:'One out-of-the-box act', kind:'field',
+teach:`<p>Warner is clear that the box is not exited by insight alone — the exit is an <b>act</b>: doing the thing your recovered sense says, without scorekeeping, without watching for credit.</p>
+<div class="key">Constraints that keep it honest: it must be small, concrete, this week, and — the hard one — <b>not performed AT them</b>. If part of you is watching their reaction for vindication ("see, I even did X and they STILL…"), that is the box wearing a halo. The act is complete when done, whatever they do with it.</div>
+<p>"Nothing changed in them" is a fully successful outcome. The claim under test is about what changes in your seeing, not in their behavior.</p>`,
+mission:{text:`<b>Field mission:</b> from your box audit, identify one small concrete act your recovered sense points to — and do it this week, not-at-them, no scorekeeping. Report: the act, how you kept it from becoming a performance, what happened in YOUR perception of them afterwards (their reaction is optional data, not the metric).`,
+placeholder:'Act: ...\nKept honest by: ...\nMy perception after: ...\n(Their reaction, if any: ...)'},
+rubric:['Act is small, concrete, actually done this week','Sourced from the audit’s recovered sense, not from strategy','Honest handling of the credit-watching temptation','Success measured in the author’s perception shift, with "their reaction" correctly demoted to optional data'],
+cards:[
+['The out-of-the-box act — constraints','Small, concrete, this week, and not performed AT them: no scorekeeping, no watching for vindication. Complete when done, whatever they do.'],
+['What metric does an out-of-the-box act target?','Your own perception (do they reappear as a person?), NOT their behavior. "Nothing changed in them" can be full success.']],
+},
+]},
+
+{ id:'s2u4', icon:'🧘', color:'var(--teal)', title:'Performing Under Fire', sub:'Integration: Againstness and the daily rep',
+  source:[['CFAR Handbook: Againstness','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'s2u4c1', icon:'🌡️', title:'Againstness', kind:'learn',
+teach:`<p>CFAR’s <b>Againstness</b> names what this whole section keeps circling: the state of being physiologically <i>against</i> — sympathetic activation during disagreement or evaluation. Tight jaw, fast shallow breath, forward pressure, the felt need to win the next sentence.</p>
+<p>In that state: Self 1 grabs the controls (Inner Game), you play compulsive status instead of chosen status (Impro), and the box gets its fuel (Warner). One physiological switch, three failure modes.</p>
+<h4>The CFAR de-escalation moves</h4>
+<p>1. <b>Notice and name it, out loud if possible</b> — "I notice I’m getting defensive" drops the temperature astonishingly well (and is a high-status move, in Johnstone’s sense: only secure players can afford it).<br>2. <b>Change the body first:</b> exhale longer than you inhale, unclench, lean back, slow down — the mind follows the posture more readily than the reverse.<br>3. <b>Re-aim at the territory:</b> say the other position accurately (ideological Turing test, live). Againstness cannot fully survive genuinely trying to see it.</p>
+<div class="key">This is the performance layer under Double Crux: the technique fails in bodies that are against. Fix the state, then the epistemics gets to happen.</div>`,
+quiz:[
+{q:'Why does CFAR say to change the body FIRST when caught in againstness?',opts:[
+['Because posture is easier to fake',0,'Not fakery — physiology. The claim is causal: state drives cognition, and the body is the accessible handle on state.'],
+['Because sympathetic activation drives the cognition, and breath/posture are the levers you can actually pull mid-conversation',1,'Right. You cannot argue yourself calm nearly as fast as you can exhale yourself calm. Mind follows body here.'],
+['To signal dominance',0,'Backwards — the moves are de-escalating (lean back, slow down), and naming your own defensiveness is disarming, not dominating.']]}],
+cards:[
+['Againstness (CFAR)','Sympathetic activation during disagreement/evaluation: tight jaw, shallow breath, need to win the next sentence. The state under Self 1 takeovers, compulsive status, and box-fueling.'],
+['Three de-escalation moves','1) Notice and NAME it (aloud works best). 2) Body first: long exhale, unclench, lean back, slow down. 3) Re-aim at territory: state their position accurately, live.'],
+['Why Double Crux needs Againstness work','The technique fails in bodies that are against — fix the physiological state first, then the epistemics can happen.']],
+},
+
+{ id:'s2u4c2', icon:'🎪', title:'The daily performance rep', kind:'checkin',
+teach:`<p>Section 2’s standing practice, replacing nothing: <b>one deliberate performance rep every 3 days</b>, rotating through the section’s repertoire —</p>
+<p>• an Inner Game rep (non-judgmental awareness or trust protocol on a real task),<br>• a status rep (one-notch experiment or one hedge deliberately dropped),<br>• an offers rep (one conversation on accept-everything),<br>• an out-of-the-box act, or a live Againstness recovery.</p>
+<div class="key">Rotate honestly — the rep you keep avoiding is the one carrying your growth (you know this from Aversion Factoring). Log which type, what you did, what you observed.</div>`,
+checkin:{key:'performrep',label:'Performance Rep',icon:'🎭',every:72,
+ask:'One deliberate rep from the Performer repertoire (Inner Game / status / offers / out-of-box / Againstness recovery) — rotate types, and note if you are avoiding one. Report type, what you did, what you observed.',
+form:'report'},
+cards:[
+['The Performer repertoire (rotation)','Inner Game rep, status one-notch rep, offers/accept rep, out-of-the-box act, live Againstness recovery. The avoided one carries the growth.']],
+},
+]},
+];
+
+// ===================== SECTION 3: THE MATHEMATICIAN =====================
+const SECTION3=[
+
+{ id:'s3u1', icon:'⚖️', color:'var(--gold)', title:'Bayes as a Reflex', sub:'Odds, evidence, and honest updating',
+  source:[['Read the Sequences: highlights','https://www.lesswrong.com/highlights'],['Arbital: Bayes guide','https://arbital.com/p/bayes_rule/?l=1zq']],
+  chapters:[
+
+{ id:'s3u1c1', icon:'🎚️', title:'Odds and the likelihood ratio', kind:'learn',
+teach:`<p>Bayes becomes usable in daily life the moment you switch to <b>odds form</b>: <b>posterior odds = prior odds × likelihood ratio</b>. Three numbers, one multiplication, no denominators.</p>
+<p>The <b>likelihood ratio (LR)</b> of a piece of evidence is: how probable is this observation if the hypothesis is TRUE, divided by how probable if FALSE. LR = 3 means "this is 3× more expected under H." LR near 1 means the dramatic-feeling evidence is <i>noise</i>.</p>
+<div class="ex"><b>Example:</b> "Marc hasn’t answered my message in 6 hours — he’s angry at me." Prior odds he’s angry: maybe 1:10. LR of a 6-hour silence: he answers slowly all the time (P≈0.5 if angry, P≈0.4 if not) → LR ≈ 1.25. Posterior ≈ 1:8. The evidence that FELT damning moved you barely at all — and now you can see that.</div>
+<div class="key">The reflex to train: when evidence arrives, ask <i>"how surprising would this be if I were wrong?"</i> Evidence only counts to the degree the alternative world would NOT have produced it.</div>`,
+quiz:[
+{q:'A test result feels alarming. Its LR is 1.1. How much should you update?',opts:[
+['A lot — alarming evidence demands action',0,'Feeling alarming and being diagnostic are different properties. LR 1.1 means both worlds produce this result almost equally often: it is nearly noise.'],
+['Barely — LR near 1 means both hypotheses predict this observation about equally',1,'Right. Multiply your prior odds by 1.1: almost nothing moves. Drama is not diagnosticity.'],
+['Fully to the alarming conclusion',0,'That is ignoring the prior AND the LR — the two things that determine what the evidence is worth.']]},
+{q:'What is the everyday reflex this chapter installs?',opts:[
+['Compute exact probabilities for everything',0,'Precision is optional; structure is the point. Rough odds and rough LRs already beat unstructured alarm.'],
+['When evidence arrives, ask: how surprising would this be if my hypothesis were FALSE?',1,'Exactly — evidence counts only insofar as the alternative world would not have produced it. That one question is Bayes in a trench coat.'],
+['Distrust all evidence',0,'Opposite direction — the goal is to weigh evidence correctly, which sometimes means updating hard.']]}],
+cards:[
+['Bayes in odds form','Posterior odds = prior odds × likelihood ratio. Three numbers, one multiplication.'],
+['Likelihood ratio — definition + reflex question','LR = P(evidence | H true) ÷ P(evidence | H false). Reflex: "how surprising would this be if I were wrong?" LR≈1 → the evidence is noise however dramatic it feels.']],
+},
+
+{ id:'s3u1c2', icon:'🧾', title:'Update on real evidence', kind:'drill',
+teach:`<p>Run the machine on something live. Pick a real uncertain belief from your week — "the client will sign", "my flatmate is annoyed", "this side project is viable" — and one piece of evidence that arrived recently.</p>
+<div class="key">Two honesty checks while you work: (1) would you have counted the OPPOSITE observation as evidence for the same conclusion? If yes, your LR is corrupt. (2) After computing, compare with your gut’s verdict — divergence in either direction is interesting data.</div>`,
+drill:{prompt:`Take one real uncertain belief + one recent piece of evidence. Report: (a) the belief and your prior odds (rough is fine), (b) the evidence and its LR — with the two conditional probabilities stated, (c) posterior odds, (d) the opposite-observation check, (e) computed result vs gut verdict.`,
+placeholder:'Belief: ... Prior ~1:4\nEvidence: ... P(E|true)≈..., P(E|false)≈... → LR≈...\nPosterior ~...\nOpposite check: ...\nVs gut: ...',min:8},
+rubric:['Belief and evidence are real and current','LR built from two explicit conditional probabilities, not vibes','Opposite-observation check performed honestly','Gut comparison reported, with curiosity rather than forcing agreement'],
+cards:[
+['The corrupt-LR test','Would you have counted the OPPOSITE observation as evidence for the same conclusion? If yes, your likelihood ratio is motivated, not measured.']],
+},
+
+{ id:'s3u1c3', icon:'🔮', title:'Conservation of expected evidence', kind:'learn',
+teach:`<p>A theorem with teeth: <b>you cannot expect to update in a known direction.</b> If you already know tomorrow’s evidence will push you toward believing X, you should believe X more <i>now</i> — the expectation of your posterior must equal your prior.</p>
+<p>Violations to catch in yourself:</p>
+<p>• Planning to "look into it" while knowing what you’ll conclude — that’s not inquiry, that’s a ceremony.<br>• Treating confirmations as big updates and disconfirmations as small ones — the sizes are mathematically linked; you don’t get to choose both.<br>• "No evidence of a problem" after actually looking IS evidence of no problem — weak, but real. Absence of evidence is evidence of absence, proportional to how hard you looked.</div>
+<div class="key">Field version: before checking anything (inbox, analytics, their reaction), state which outcome would surprise you and how much. If no outcome would move you, skip the check — you were seeking reassurance, not information.</div>`,
+quiz:[
+{q:'You plan to "do more research" on a decision, but you can already predict your conclusion. What does conservation of expected evidence say?',opts:[
+['Research is always worth doing',0,'Not when its outcome is already known to you — then it produces zero expected update, only delay and ceremony.'],
+['Update NOW to where you expect to end up; only research if the outcome could genuinely surprise you',1,'Right. Expected posterior = prior. Predictable research is reassurance-seeking wearing a lab coat.'],
+['Never trust your predictions of your own conclusions',0,'Sometimes wise, but the theorem’s instruction is sharper: either the research can surprise you, or it cannot teach you.']]}],
+cards:[
+['Conservation of expected evidence','You cannot expect to update in a known direction: E[posterior] = prior. If you know where "more research" will land, update now and skip the ceremony.'],
+['Absence of evidence','After genuinely looking, finding nothing IS evidence of absence — weak but real, proportional to how thorough the look was.']],
+},
+
+{ id:'s3u1c4', icon:'📐', title:'The Bayes rep', kind:'checkin',
+teach:`<p>Standing practice: <b>one explicit odds update every 2 days.</b> Real belief, real evidence, numbers written down: prior odds × LR = posterior. Two minutes once the reflex forms.</p>
+<div class="key">This is the Maths attitude made honest: not reading about Bayes — running it, on your life, with numbers small enough to fit between two meetings. Your forecast habit gives it fuel: each resolved prediction is an update begging to be done properly.</div>`,
+checkin:{key:'bayesrep',label:'Bayes Rep',icon:'⚖️',every:48,
+ask:'One explicit odds update on a real belief: prior odds, the evidence, its LR (both conditionals), posterior odds. Note if gut and math disagree.',
+form:'report'},
+cards:[],
+},
+]},
+
+{ id:'s3u2', icon:'🎰', color:'var(--blue)', title:'Deciding Under Uncertainty', sub:'Expected value, utility, and the worth of knowing',
+  source:[['Book: How to Measure Anything (Hubbard) — VOI chapters','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s3u2c1', icon:'💱', title:'Expected value, honest utility', kind:'learn',
+teach:`<p><b>Expected value</b>: probability × payoff, summed over outcomes. The discipline is not the arithmetic — it is agreeing to take good bets <i>repeatedly</i> and let variance wash out, instead of re-litigating each loss as if the policy failed.</p>
+<p>Two honest complications:</p>
+<p>• <b>Utility, not euros.</b> Losing your last 1000€ hurts more than winning 1000€ helps. Risk aversion about LARGE fractions of your resources is not irrational — it falls straight out of utility curvature. (The Kelly-flavored rule of thumb: never bet a big fraction of your bankroll on one roll, even at good odds.)<br>• <b>Small repeated bets are where EV shines.</b> Asking the question at the meeting, sending the cold email, the 5-minute Resolve Cycle on a probably-unfixable bug: tiny costs, fat right tails, run the policy.</p>
+<div class="key">The failure mode this chapter hunts: treating one bad outcome of a good bet as proof the bet was wrong. Judge policies by their distribution, not draws by their outcome — you already learned the emotional half of this in Sunk Cost Faith.</div>`,
+quiz:[
+{q:'You took a well-calculated 70% bet and lost. What does this prove about the decision?',opts:[
+['It was the wrong decision',0,'Outcome bias. A 70% bet loses 30% of the time BY DESIGN. The decision is judged by the numbers available when it was made.'],
+['Nothing by itself — 30% losses are part of a correct 70% policy; judge the policy over draws',1,'Right. Update your probability estimates if the loss carries new information, but a loss alone does not indict the bet.'],
+['That you should be more risk-averse',0,'Only if the stake was a large fraction of your resources — that is a utility-curvature question, separate from one loss stinging.']]},
+{q:'When is refusing a positive-EV bet rational?',opts:[
+['Never — EV is the whole story',0,'EV in raw money ignores utility curvature. Losing what you cannot afford to lose is not offset by symmetric gains.'],
+['When the stake is a large fraction of your resources — utility curvature makes the loss weigh more than the gain',1,'Exactly. Risk aversion at bankroll scale is math, not cowardice. At small scale, though, take the good bets and let variance wash.'],
+['Whenever losing would feel bad',0,'Feeling bad about small losses is variance-flinching — the thing the repeated-bets discipline exists to override.']]}],
+cards:[
+['Judge policies, not draws','A 70% bet losing proves nothing by itself — 30% losses are part of the design. Outcome bias = re-litigating good bets after bad draws.'],
+['When is risk aversion rational?','At bankroll scale: utility curvature makes losing a large fraction of resources weigh more than winning it. At small repeated-bet scale: take the +EV bets and let variance wash out.']],
+},
+
+{ id:'s3u2c2', icon:'🔎', title:'Value of information', kind:'drill',
+teach:`<p>Before researching a decision, price the research: <b>information only has value if it could change what you do.</b></p>
+<p>The 3-question VOI estimate: (1) What would I do by default? (2) What could the research realistically show that would FLIP that choice — and how likely is that? (3) How much better is the flipped choice in that world? Multiply (2)×(3): that is roughly what the research is worth. Compare with its cost in hours.</p>
+<div class="ex"><b>Example:</b> Choosing between two €40 gadgets, 3 hours of review-reading, flip probability maybe 30%, gain-if-flipped maybe €15 of satisfaction → VOI ≈ €4.50 for 3 hours. Meanwhile a job decision with a 10% flip probability worth thousands justifies WEEKS of due diligence. Most people invert this allocation exactly.</div>`,
+drill:{prompt:`Price the information on a real pending decision. Report: (a) the decision + default choice, (b) what could realistically flip it + flip probability, (c) value of the flip in that world, (d) VOI ≈ (b)×(c) vs the research cost, (e) verdict: decide now, or research a specific bounded thing.`,
+placeholder:'Decision: ... default: ...\nFlip if: ... (p≈...)\nFlip worth: ...\nVOI ≈ ... vs cost ≈ ...h\nVerdict: ...',min:8},
+rubric:['Decision is real and pending','Flip scenario is specific and its probability estimated honestly','VOI multiplication actually done, units sane','Verdict follows the numbers — including "decide now" when VOI is small','If researching: the research is bounded (what, how long)'],
+cards:[
+['Value of information — 3 questions','1) Default choice? 2) What could flip it + how likely? 3) How much better is the flipped choice? VOI ≈ p(flip)×value(flip). Compare with research cost.'],
+['The classic VOI inversion','Weeks of review-reading on cheap reversible choices; snap decisions on huge irreversible ones. Research effort should scale with stakes × flippability.']],
+},
+
+{ id:'s3u2c3', icon:'🧮', title:'The ten-minute decision analysis', kind:'drill',
+teach:`<p>Full pipeline on one real decision, timeboxed to ~10 minutes — long enough to structure, short enough to actually happen:</p>
+<p>1. Options (include the do-nothing and the weird third option).<br>2. The 1-2 uncertainties that actually drive the choice.<br>3. Rough probabilities and payoffs → rough EV per option.<br>4. <b>Inner-sim cross-check</b> (Section 1, Unit 8): imagine each option chosen — where does the gut resist the spreadsheet? A mismatch means a hidden variable, usually an unpriced cost. Find it, re-run.<br>5. Decide, or name the ONE bounded piece of information you need first (previous chapter).</p>
+<div class="key">The math and the simulator are colleagues, not rivals: the spreadsheet catches scope neglect, the gut catches missing variables. Agreement between them is what license-to-act feels like.</div>`,
+drill:{prompt:`Run the 10-minute analysis on a real decision (timer below). Report: options, driving uncertainties with rough probabilities, EV sketch, the inner-sim cross-check (where gut and math disagreed and what hidden variable it exposed), and your decision or the single bounded info-need.`,
+placeholder:'Decision: ...\nOptions: A / B / C(weird)\nDriving uncertainty: ... p≈...\nEV sketch: ...\nGut check: resisted ... → hidden variable: ...\nDecision: ...',min:10,timer:10},
+rubric:['Real decision, analysis actually timeboxed','A weird third option was generated','EV sketch uses explicit rough numbers','Inner-sim cross-check performed; any mismatch investigated for the hidden variable','Ends in a decision or ONE bounded info-need, not "more thought needed"'],
+cards:[
+['Spreadsheet + simulator division of labor','EV math catches scope neglect (numbers the gut can’t feel); the inner sim catches hidden variables (costs the spreadsheet didn’t price). Agreement = license to act.']],
+},
+]},
+
+{ id:'s3u3', icon:'🎳', color:'var(--purple)', title:'Decision Theory for Humans', sub:'Newcomb is everywhere people model you',
+  source:[['Planecrash / Project Lawful (Yudkowsky & lintamande) — further reading','https://www.projectlawful.com/'],['LW: Functional Decision Theory','https://www.lesswrong.com/w/functional-decision-theory']],
+  chapters:[
+
+{ id:'s3u3c1', icon:'📦', title:'Newcomb in your life', kind:'learn',
+teach:`<p>Newcomb’s problem — a predictor fills boxes based on what it predicts you’ll choose — sounds like philosophy-department exotica. It stops being exotic the moment you notice: <b>everyone around you is a predictor.</b> Imperfect, but good enough that their model of you fills boxes daily: trust extended or withheld, opportunities offered or not, honesty reciprocated or not — decided before you act, based on the kind of agent they model you as.</p>
+<p>Plain-language decision theories: <b>CDT</b> asks "what does this act cause, from here?" — and two-boxes, defects, and cannot keep a promise once keeping stops paying. <b>FDT</b>-flavored reasoning asks "what POLICY, if I were known to run it, serves me best?" — and keeps promises, pays back favors nobody could enforce, and one-boxes.</p>
+<div class="key">You met this in Section 1 as TDT-for-humans (self-trust). The upgrade: the same logic runs on OTHER minds. People deal with their model of you; you choose what that model observes. Being reliably honest is not a sacrifice CDT should talk you out of — it is what fills your boxes.</div>
+<p>Further reading, gloriously long-form: Planecrash (link above) dramatizes an agent who takes decision theory as seriously as physics.</p>`,
+quiz:[
+{q:'Why does Newcomb-like structure appear in ordinary social life?',opts:[
+['It does not — Newcomb needs a perfect predictor',0,'Perfection is not required; correlation is. A colleague who models you 70% accurately still fills boxes (trust, offers, candor) based on that model before you act.'],
+['Because people act on their MODEL of you, formed before your choice — so your standing policy, not your in-the-moment act, is what gets rewarded',1,'Exactly. The predictor is everyone who knows you. You choose your policy; their observations of it fill your boxes.'],
+['Because people are irrational',0,'Modeling others and acting on the model is highly functional — it is the rational behavior that CREATES the Newcomblike payoff structure.']]}],
+cards:[
+['CDT vs FDT, one line each','CDT: "what does this act cause from here?" (defects, breaks unenforceable promises). FDT-flavored: "what policy, known to be mine, serves me best?" (keeps promises, one-boxes).'],
+['Why is social life Newcomblike?','People act on their pre-formed model of you — trust, offers, candor get decided before your act. Your standing policy is what fills the boxes, so choose policies, then be seen running them.']],
+},
+
+{ id:'s3u3c2', icon:'⛓️', title:'Precommitment and bright lines', kind:'learn',
+teach:`<p>If policies beat acts, the practical art is <b>binding yourself to policies</b> when you’re strong, for moments when you’ll be weak. Ulysses did not out-argue the sirens; he arranged the mast in advance.</p>
+<p>The toolkit:</p>
+<p>• <b>Bright lines</b>: rules with zero-judgment boundaries ("no spending decisions after 22h", "never two skipped sessions in a row"). Fuzzy rules get negotiated by tired-you; bright lines don’t convene the meeting.<br>• <b>Schelling fences</b>: place the line where there is a natural landmark, well BEFORE the cliff — because each small step past it re-anchors what feels normal (the slippery slope is real, and it slides by renegotiation).<br>• <b>Pre-signed exceptions</b>: a policy with principled escape hatches written in advance ("unless someone is blocked on me") survives contact with reality; improvising exceptions in the moment is just CDT sneaking back in.</p>
+<div class="key">Connect to your TAP audits: a TAP is a micro-precommitment, and every audit is you checking whether past-you’s treaties are being honored. Same machinery, now with a theory underneath.</div>`,
+quiz:[
+{q:'Why do bright lines outperform fuzzy "reasonable judgment" rules?',opts:[
+['Because judgment is always bad',0,'Judgment is fine when you are at full strength. Bright lines exist precisely for the moments when you are not.'],
+['Because fuzzy rules get renegotiated by the tired/tempted version of you — bright lines never convene that meeting',1,'Right. "One episode if I truly need rest" invites nightly litigation; "no screens after 23h" adjourns the court permanently.'],
+['Because they impress other people',0,'Occasionally a side effect (reputation IS Newcomblike), but the primary customer is future-you.']]}],
+cards:[
+['Bright line — why it works','Zero-judgment boundary ("no X after 22h"): the tired/tempted self never gets a negotiation to win. Fuzzy rules die by nightly renegotiation.'],
+['Schelling fence','Place your line at a natural landmark well before the cliff — each small step past a line re-anchors normal, so defend the fence, not the cliff edge.'],
+['Pre-signed exceptions','Write principled escape hatches into the policy in advance ("unless someone is blocked on me"). Improvised in-the-moment exceptions are the policy dying politely.']],
+},
+
+{ id:'s3u3c3', icon:'🤝', title:'Find your Newcomb', kind:'drill',
+teach:`<p>Locate one live Newcomblike structure in your own life — somewhere an agent (boss, partner, client, community, or future-you) is filling boxes based on their model of your policy — and set the policy deliberately.</p>`,
+drill:{prompt:`Report: (a) the situation and WHO the predictor is, (b) what boxes their model of you fills (what gets extended or withheld before you act), (c) the policy a naive act-by-act CDT view would suggest, (d) the policy you actually choose FDT-style, with its bright line and pre-signed exceptions, (e) how the predictor will get to OBSERVE the policy (unobserved virtue fills no boxes).`,
+placeholder:'Situation: ... predictor: ...\nTheir model fills: ...\nCDT would say: ...\nMy policy: ... bright line: ... exceptions: ...\nObservable via: ...',min:10},
+rubric:['A real predictor-structure identified, not a generic virtue pledge','The boxes (what is pre-decided about you) named concretely','CDT-vs-policy contrast is genuine — the policy costs something act-by-act','Bright line + pre-signed exceptions specified','Observability channel identified — the policy is visible to the predictor'],
+cards:[],
+},
+]},
+];
+
+// ===================== SECTION 4: THE INSTRUMENTALIST =====================
+const SECTION4=[
+
+{ id:'s4u1', icon:'🎯', color:'var(--green)', title:'Calibration League', sub:'Harder feedback, public stakes',
+  source:[['Fatebook — personal predictions','https://fatebook.io/'],['Metaculus','https://www.metaculus.com/'],['Book: Superforecasting (Tetlock)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s4u1c1', icon:'🏋️', title:'Calibration, round two', kind:'calib', calib:12,
+teach:`<p>Back to the range — a longer set this time. Since Section 1 you have accumulated resolved forecasts and time predictions; before answering, guess your own current stats (accuracy vs average confidence, fudge ratio). Then check the Habits tab afterwards. Predicting your own calibration is itself a calibration question — the meta-loop is the point of this whole section.</p>
+<div class="key">Watch specifically for the 90%+ zone this round. Most trained people fix their 60-70s first; the tail overconfidence at 90-99% is stickier and costs the most when it bites.</div>`,
+cards:[
+['Where does overconfidence persist longest after training?','The 90-99% zone. Mid-range confidence calibrates first; tail overconfidence is stickier and costs most (it is where you bet big).']],
+},
+
+{ id:'s4u1c2', icon:'🌐', title:'Forecasts with witnesses', kind:'field',
+teach:`<p>Private predictions are good; <b>recorded, resolvable, timestamped</b> predictions are better — the record removes hindsight’s editing privileges.</p>
+<p>Fatebook (free, friction-less) is built for exactly this; Metaculus and Manifold add crowds and harder questions. Your mission: put three real predictions on the record with resolve dates. At least one about your own projects, at least one where you disagree with someone (a colleague, the news, a friend — write THEIR implied probability too, so the disagreement gets scored, not just remembered).</p>
+<div class="key">The Praxis daily-forecast habit continues in parallel — this adds the version with witnesses, which is the version that trains honesty under mild social stakes.</div>`,
+mission:{text:`<b>Field mission:</b> create a Fatebook (or Metaculus/Manifold) account and record 3 real forecasts with probabilities and resolve dates — ≥1 about your own project, ≥1 where you disagree with a specific person (record their implied probability too). Report the three questions, your numbers, and what writing them down changed.`,
+placeholder:'1) ... p=..% resolves ...\n2) [my project] ... p=..%\n3) [disagreement with ...] me: ..% them: ~..%\nWriting them down changed: ...'},
+rubric:['Three real forecasts actually recorded on a platform, with dates','At least one self-project forecast (where self-serving bias lives)','At least one scored disagreement with another person’s implied probability','Reflection notes an actual effect of recording (however small)'],
+cards:[
+['Why record forecasts on a platform?','Timestamps remove hindsight’s editing privileges; mild social stakes train honesty. "I basically knew" dies when the number is on the record.']],
+},
+]},
+
+{ id:'s4u2', icon:'🧪', color:'var(--teal)', title:'Self-Experiments', sub:'n=1 without fooling yourself',
+  source:[['Book: How to Measure Anything (Hubbard)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s4u2c1', icon:'⚗️', title:'The n=1 rulebook', kind:'learn',
+teach:`<p>Your life is full of testable claims — caffeine timing, exercise vs mood, meeting-free mornings — and n=1 experiments can actually answer them IF you dodge four classic self-deceptions:</p>
+<p>1. <b>No baseline, no experiment.</b> Measure ≥1 week BEFORE changing anything. Otherwise "it works" means "I started paying attention".<br>2. <b>One variable.</b> The enthusiasm that starts an experiment loves changing five things; then nothing is learned no matter the result.<br>3. <b>Pre-register metric, duration, and success bar</b> — decided before, or hindsight will pick whichever metric flattered the hypothesis.<br>4. <b>Expect regression to the mean.</b> You start experiments when things are unusually bad; things then return toward normal on their own, and the intervention takes credit.</p>
+<div class="key">Placebo caveat, honestly handled: at n=1 you mostly cannot blind yourself. If an effect is placebo but PERSISTS for months at near-zero cost — often fine, take it. The rulebook’s real job is protecting you from expensive or identity-level conclusions drawn from noise.</div>`,
+quiz:[
+{q:'You start a mood experiment during your worst week of the quarter. It "works". The most likely explanation?',opts:[
+['The intervention works',0,'Maybe! But you chose the start time precisely because things were unusually bad — and unusually bad reverts toward normal by itself.'],
+['Regression to the mean: bad extremes drift back toward baseline regardless of intervention',1,'Right — the single most common n=1 illusion. Defense: a real pre-baseline, and ideally an on/off/on repetition.'],
+['Placebo',0,'Possible too, but the start-at-the-bottom design error is the bigger and more systematic culprit here.']]},
+{q:'Why must the metric and success bar be fixed BEFORE the experiment?',opts:[
+['To make it feel official',0,'Ceremony is not the function. The function is removing a degree of freedom that hindsight always abuses.'],
+['Because afterwards, hindsight will pick whichever of the twenty possible metrics flattered the hypothesis',1,'Exactly — with enough post-hoc metric choices, everything "works". Pre-registration is the n=1 version of not grading your own exam after seeing the answers.'],
+['Because metrics cannot be measured retroactively',0,'Some can — the problem is selection among them, not availability.']]}],
+cards:[
+['The n=1 rulebook (4 rules)','1) Baseline ≥1 week before changing anything. 2) One variable. 3) Pre-register metric, duration, success bar. 4) Expect regression to the mean (you start experiments at your worst).'],
+['The honest placebo policy','Can’t blind yourself at n=1. A placebo effect that persists at near-zero cost is often worth keeping — the rulebook protects against EXPENSIVE conclusions from noise, not against cheap wins.']],
+},
+
+{ id:'s4u2c2', icon:'📋', title:'Design your experiment', kind:'drill',
+teach:`<p>Pick a claim worth testing from your ledger — something you have opinions about but no data on. Design it by the rulebook. You will run it via the weekly check-in that unlocks next chapter.</p>`,
+drill:{prompt:`Design one n=1 experiment. Report: (a) the claim being tested + why it matters (what decision the answer feeds), (b) the ONE variable, (c) metric + how/when measured, (d) baseline plan, duration, and pre-registered success bar, (e) the regression-to-the-mean risk in YOUR case and your defense, (f) start date.`,
+placeholder:'Claim: ...\nVariable: ...\nMetric: ... measured ...\nBaseline: ...w, run: ...w, success = ...\nRegression risk: ... defense: ...\nStarts: ...',min:10},
+rubric:['Claim is real, decision-relevant, and currently data-free','Single variable, honestly isolated','Metric pre-registered with measurement time/method','Baseline period ≥1 week and success bar fixed in advance','Regression risk assessed for this specific start-timing'],
+cards:[],
+},
+
+{ id:'s4u2c3', icon:'📈', title:'The lab notebook', kind:'checkin',
+teach:`<p>Weekly check-in while an experiment runs: log the data (numbers, not impressions), note protocol violations honestly, and at end-date — <b>call the result by the pre-registered bar</b>, whatever your enthusiasm says. Then design the next experiment or graduate the finding into a Design-unit permanent fixture.</p>
+<div class="key">One experiment at a time. The queue of exciting next experiments is itself a bug the one-variable rule exists to catch.</div>`,
+checkin:{key:'experiment',label:'Lab Notebook',icon:'🧪',every:168,
+ask:'Log this week’s experiment data (numbers), protocol violations, and — if the end date passed — the verdict per the pre-registered bar. If between experiments: design or start the next one.',
+form:'report'},
+cards:[],
+},
+]},
+
+{ id:'s4u3', icon:'📏', color:'var(--gold)', title:'Measure What Matters', sub:'Hubbard, Goodhart, and honest metrics',
+  source:[['Book: How to Measure Anything (Hubbard)','https://www.rationality.org/resources/reading-list'],['LW: Goodhart Taxonomy','https://www.lesswrong.com/posts/EbFABnst8LsidYs5Y/goodhart-taxonomy']],
+  chapters:[
+
+{ id:'s4u3c1', icon:'🌫️', title:'Measurement dissolves fog', kind:'learn',
+teach:`<p>Douglas Hubbard’s heresy: <b>anything that matters is measurable</b>, because "measurable" only means <i>reducing uncertainty</i>, not achieving precision. "Team morale", "writing quality", "am I improving at rationality" — all fog until you ask his three questions:</p>
+<p>1. <b>What decision would this measurement change?</b> (No decision → don’t measure; you’re decorating.)<br>2. <b>What do you observe when the thing is present vs absent?</b> Fog words hide observables: "morale" contains sick days, volunteering rates, how long people linger after meetings.<br>3. <b>How much uncertainty reduction does the decision need?</b> Often a 90%-confidence RANGE from five data points is plenty — you needed to know "closer to 2 or to 20", not the third decimal.</p>
+<div class="key">Then Goodhart arrives: <b>when a measure becomes a target, it stops measuring.</b> The proxy gets optimized, the target drifts away — page counts produce padding, step counts produce wrist-shaking. Every metric you install needs a plan for its own corruption.</div>`,
+quiz:[
+{q:'Hubbard’s first question before measuring anything is:',opts:[
+['What instrument is most precise?',0,'Precision comes last, if at all. Measurement is uncertainty reduction in service of something — and that something comes first.'],
+['What decision would this measurement change?',1,'Right — no decision downstream means the measurement is decoration. This one question deletes half of most dashboards.'],
+['Can it be expressed as a number?',0,'Almost anything can, which is why this filter filters nothing.']]},
+{q:'Your daily word-count target has you padding sentences by Thursday. This is:',opts:[
+['Evidence you need a higher target',0,'A higher target buys more padding. The proxy is corrupted, not under-dosed.'],
+['Goodhart in action: the proxy (words) became the target and detached from the goal (writing worth reading)',1,'Exactly. Standard fixes: pair the proxy with a counter-metric (editor-surviving words), rotate proxies, or audit samples against the true goal.'],
+['Proof that writing cannot be measured',0,'It is proof that ONE proxy corrupts under pressure — Hubbard’s observables are plural for exactly this reason.']]}],
+cards:[
+['Hubbard’s 3 questions','1) What decision would this change? (none → don’t measure). 2) What do you observe when it’s present vs absent? 3) How much uncertainty reduction does the decision actually need?'],
+['"Measurable" redefined','Measurement = uncertainty reduction, not precision. A 90%-confidence range from five observations often suffices — you needed "2 or 20?", not decimals.'],
+['Goodhart’s law + the standard defenses','When a measure becomes a target it stops measuring. Defenses: pair proxy with a counter-metric, rotate proxies, periodically audit samples against the true goal.']],
+},
+
+{ id:'s4u3c2', icon:'🛡️', title:'One Goodhart-resistant metric', kind:'drill',
+teach:`<p>Instrument one personal goal you currently track by vibes. Build the metric Hubbard-first (decision, observables, needed precision), then Goodhart-proof it: name how YOU would game it within a month, and install the counter-metric that catches that gaming.</p>`,
+drill:{prompt:`Report: (a) the goal + the decision its measurement feeds, (b) the observable(s) chosen and why they beat the fog-word, (c) precision honestly needed, (d) the gaming forecast — how you would corrupt this proxy within a month, (e) the paired counter-metric or audit that catches it, (f) where/when this gets recorded (a metric without a recording ritual is a wish).`,
+placeholder:'Goal: ... decision: ...\nObservables: ...\nPrecision needed: ...\nI would game it by: ...\nCounter-metric: ...\nRecorded: ... every ...',min:10},
+rubric:['Decision-first: the measurement demonstrably feeds a real choice','Observables genuinely operationalize the fog-word','Gaming forecast is specific and self-aware (generic "I might cheat" fails)','Counter-metric actually catches the named gaming','Recording ritual specified (where, when, how long)'],
+cards:[],
+},
+]},
+];
+
+// ===================== SECTION 5: THE LIVER OF LIFE =====================
+const SECTION5=[
+
+{ id:'s5u1', icon:'🚀', color:'var(--red)', title:'The One Project', sub:'The point of the toolbox is not the toolbox',
+  source:[['LW: Levels of Action','https://www.lesswrong.com/posts/guDcrPqLsnhEjrPZj/levels-of-action']],
+  chapters:[
+
+{ id:'s5u1c1', icon:'🪜', title:'Meta is a tax', kind:'learn',
+teach:`<p>The Object-Level attitude’s uncomfortable claim, given its own section: <b>every hour spent improving your thinking is an hour not spent using it.</b> Meta-work compounds — but only if there is an object level for it to compound INTO. A perfectly sharpened axe in a shed cuts nothing.</p>
+<p>The failure mode has a signature you can learn to feel: meta-work is <i>legible, controllable, and safe</i>. The bug list always offers one more bug; the technique always has a refinement. Real projects can FAIL — and so the toolbox becomes the world’s most productive hiding place.</p>
+<div class="key">This section inverts the app’s frame. Your Hamming chapter produced the most important problem in your life. Here, that problem (or the project attacking it) becomes THE project — and rationality practice becomes its support crew: capped, triggered by need, evaluated by what ships.</div>
+<p>Test yourself now: in the last month, what changed in the WORLD — not in your systems, your notes, or your understanding — because of your practice?</p>`,
+quiz:[
+{q:'Why does meta-work make such an effective hiding place?',opts:[
+['Because it is useless',0,'It is genuinely useful — that is what makes the hiding place respectable. Useless procrastination at least announces itself.'],
+['Because it is legible, controllable, and cannot fail the way a real project can',1,'Right. One more technique refinement is always available and never rejects you. The tell is meta-hours rising while world-changes flatline.'],
+['Because tools are fun',0,'Fun is fine. The trap is structural: safety plus endless supply, not enjoyment.']]}],
+cards:[
+['Meta is a tax — the test','In the last month, what changed in the WORLD (not your systems/notes/understanding) because of your practice? Meta-hours rising while world-changes flatline = the hiding place.'],
+['Why meta-work beats real work as procrastination','It is legible, controllable, endless in supply, and cannot fail or reject you the way a real project can — the world’s most respectable hiding place.']],
+},
+
+{ id:'s5u1c2', icon:'📜', title:'Charter and first ship', kind:'drill',
+teach:`<p>Charter THE project — the one your Hamming answer points at, or the nearest actionable proxy for it. The charter is one page and one commitment:</p>
+<p>• <b>Outcome</b>: what exists in the world if this works (goal-factored — check the outcome is YOURS, Unit 6 style).<br>• <b>Weekly ship</b>: the unit of visible progress you commit to producing every week — small enough to survive bad weeks, real enough that someone could see it.<br>• <b>First ship within 48 hours</b>: something leaves your hands — an email sent, a page published, a prototype shown. Not prepared: <i>shipped</i>.</p>
+<div class="key">Murphyjitsu the 48-hour ship before committing (you know how). But notice if "preparing the perfect charter" starts eating days — that would be this section’s lesson failing in real time.</div>`,
+drill:{prompt:`Write the charter. Report: (a) THE project and its link to your Hamming answer, (b) the outcome (goal-factored: whose goal is this?), (c) the weekly ship definition — survivable on bad weeks, visible to others, (d) the 48-hour first ship, Murphyjitsu’d, (e) what you will SAY NO to while this runs.`,
+placeholder:'Project: ... (Hamming link: ...)\nOutcome: ...\nWeekly ship = ...\nFirst ship (48h): ... — failure modes patched: ...\nSaying no to: ...',min:12},
+rubric:['Project traces to the Hamming answer or is an honest proxy with the gap acknowledged','Outcome goal-factored — passes the "whose goal?" test','Weekly ship is bad-week-survivable AND externally visible','48h first ship is a real shipping event, Murphyjitsu applied','A concrete renunciation named (a charter without a no-list is a wish)'],
+cards:[
+['The charter’s four parts','Outcome (goal-factored), weekly ship (bad-week-survivable, externally visible), first ship within 48h, and a no-list. Missing the no-list = wish, not charter.']],
+},
+]},
+
+{ id:'s5u2', icon:'🚢', color:'var(--blue)', title:'Cadence', sub:'Ship weekly, budget the meta',
+  source:[['CFAR Handbook: focused grit ideas via TAPs & Design','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'s5u2c1', icon:'⚓', title:'Deep hours by design', kind:'learn',
+teach:`<p>The weekly ship gets built in <b>deep hours</b> — and deep hours are not found, they are <i>manufactured</i>, with tools you already own:</p>
+<p>• <b>Design (Unit 5):</b> a standing time block defended by environment — phone in another room, one tab, the work already open from yesterday (ending mid-sentence is a gift to tomorrow-you).<br>• <b>TAPs:</b> "When I sit at the cleared desk at 9:00 → open the project file and read the last paragraph." Entry into deep work is a trigger problem, not a motivation problem.<br>• <b>Inner Game (Section 2):</b> non-judgmental awareness during the block — noting "distraction arose" beats the Self-1 lecture about discipline that costs three more minutes.</p>
+<div class="key">Definition of shipped, decided now, per week: visible outside your head, dated, and small. "Chapter drafted and sent to one reader" ships; "worked on the chapter" is fog. The next chapter installs the weekly check-in that will ask exactly one question: what shipped?</div>`,
+quiz:[
+{q:'"Ending mid-sentence is a gift to tomorrow-you" works because:',opts:[
+['Unfinished work creates guilt that motivates',0,'Guilt is a terrible fuel (Section 1, Understanding Shoulds). The mechanism is friction, not feelings.'],
+['It removes the entry friction of a cold start — tomorrow’s TAP lands on an open loop with an obvious next keystroke',1,'Right. The hardest moment of deep work is entry; a visible next action collapses it. Same 20-second rule as the gym bag by the door.'],
+['It ensures you remember the idea',0,'Notes do that. The mid-sentence trick is about tomorrow’s ENTRY cost, not memory.']]}],
+cards:[
+['Deep hours are manufactured, not found','Standing block + environment design (phone exiled, one tab) + entry TAP ("sit at cleared desk → read last paragraph") + mid-sentence endings to kill cold starts.'],
+['Definition of shipped','Visible outside your head, dated, small. "Sent draft to one reader" ships; "worked on it" is fog.']],
+},
+
+{ id:'s5u2c2', icon:'📦', title:'The shipping log', kind:'checkin',
+teach:`<p>The weekly question, from now on: <b>what shipped?</b> One honest answer per week. If the answer is "nothing" — no self-flagellation (that is Self 1); instead name the smallest shippable thing and the day it ships. Two consecutive "nothing" weeks triggers the diagnostic ladder of the next unit.</p>`,
+checkin:{key:'ship',label:'Shipping Log',icon:'🚢',every:168,
+ask:'What shipped this week (visible, dated, outside your head)? If nothing: the smallest shippable thing + which day it ships. Two "nothing" weeks in a row → run the stuck-diagnostic (Section 5, Unit 3).',
+form:'report'},
+cards:[],
+},
+
+{ id:'s5u2c3', icon:'⏲️', title:'The meta-budget', kind:'learn',
+teach:`<p>The chapter where the app argues against itself, sincerely: <b>cap your rationality practice.</b> A practical Object-Level budget: ~15 minutes on ordinary days (reviews, one check-in, one rep), with deep meta-work (new chapters, big IDC sessions, curriculum binges) <b>earned by shipping</b> — meta as celebration, not avoidance.</p>
+<p>The daily new-lesson cap in this app (see ⚙️) is this chapter, enforced by software. Two new chapters a day is plenty; the ledger of due reps and habits is where skill actually accretes.</p>
+<div class="key">The diagnostic that keeps the budget honest: before opening any rationality tool, ask <i>"what object-level thing am I possibly avoiding right now?"</i> Sometimes the answer is "nothing, it’s practice time" — fine. When it isn’t, you just caught the hiding place mid-use, which is Section 1 noticing doing its highest-value work.</div>`,
+quiz:[
+{q:'The meta-budget’s pre-practice diagnostic question is:',opts:[
+['"Which technique should I use?"',0,'Downstream. The budget question comes before the toolbox opens at all.'],
+['"What object-level thing am I possibly avoiding right now?"',1,'Right — usually the answer is innocent, and the one time in five it is not, you caught the respectable hiding place in the act.'],
+['"Have I earned this?"',0,'Close — deep meta is earned by shipping — but the daily diagnostic targets avoidance specifically, not desert.']]}],
+cards:[
+['The meta-budget','~15 min/day of practice on ordinary days; deep meta-work is EARNED by shipping (celebration, not avoidance). The app’s new-lesson cap enforces the intake side.'],
+['Pre-practice diagnostic','Before opening any rationality tool: "what object-level thing am I possibly avoiding right now?" Catching the hiding place mid-use is noticing’s highest-value catch.']],
+},
+]},
+
+{ id:'s5u3', icon:'🚪', color:'var(--green)', title:'Leave the Dojo', sub:'Trigger-based meta and one deep session',
+  source:[['Hammertime: The Strategic Level','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/SYT8E7YThLHWr6JEm']],
+  chapters:[
+
+{ id:'s5u3c1', icon:'🧗', title:'One deep session', kind:'field',
+teach:`<p>Proof of concept, this week: <b>one 90-minute deep session on THE project</b>, manufactured with the full toolkit — block scheduled, environment designed, entry TAP set, phone physically quarantined, Murphyjitsu run on the session itself ("it is 10:40 and I got nothing done — what happened?").</p>
+<div class="key">Report output AND friction. The friction list is gold: each entry is a bug for the ledger, and most have Design-unit fixes you already know.</div>`,
+mission:{text:`<b>Field mission:</b> one 90-min deep session on THE project this week, fully manufactured (block, environment, entry TAP, phone quarantine, session Murphyjitsu). Report: what got produced, the friction log (every pull, interruption, Self-1 event), and which frictions have known fixes from your toolkit.`,
+placeholder:'Session: ...day ...h-...h\nProduced: ...\nFriction log: 1)... 2)... 3)...\nFixes I already know: ...'},
+rubric:['Session actually happened at scheduled time, ~90 min','Full manufacture: environment + entry TAP + quarantine + session Murphyjitsu evidenced','Concrete output named (visible artifact or clear increment)','Friction log honest and specific, mapped to known fixes where they exist'],
+cards:[],
+},
+
+{ id:'s5u3c2', icon:'🔔', title:'Trigger-based meta', kind:'learn',
+teach:`<p>Graduation policy for the Object-Level attitude: <b>meta-work by trigger, not by schedule</b> (the small daily budget aside). The triggers, with their assigned tools:</p>
+<p>• <b>Stuck ≥2 days on the same point</b> → Murphyjitsu the plan; if the plan is fine, Hamming-question the project.<br>• <b>Two "nothing shipped" weeks</b> → aversion-factor the project itself: which part produces the flinch? Real cost or miscalibrated fear?<br>• <b>Recurring friction (3+ appearances in the log)</b> → one Design fix, then back to work.<br>• <b>A decision worth &gt;1 week of work</b> → the 10-minute decision analysis, once, with the inner-sim cross-check.<br>• <b>Emotional weather around the project</b> (dread, staleness, resentment) → one Focusing session; the felt sense knows whether this is a rough patch or a wrong project.</p>
+<div class="key">Everything else — the itch to reorganize, re-plan, re-read, refine — waits for the daily budget or dies. The dojo exists so you can fight; the fight is out there. Go ship.</div>`,
+quiz:[
+{q:'You feel a strong urge to redesign your task system mid-afternoon. Per trigger-based meta:',opts:[
+['Follow it — system improvements compound',0,'They do, at the right time. But an urge arriving MID-WORK matches no trigger — and matches the hiding-place signature perfectly.'],
+['Check the triggers: no stuck-point, no shipping failure, no 3× friction? Then it waits for the daily budget or dies',1,'Right — and run the diagnostic: "what am I avoiding right now?" The urge’s timing is usually the answer.'],
+['Suppress all system thoughts forever',0,'The budget and triggers exist precisely so meta-work has a legitimate place — bounded, not banished.']]}],
+cards:[
+['The five meta-triggers','Stuck ≥2 days → Murphyjitsu/Hamming. Two shipless weeks → aversion-factor the project. 3× recurring friction → one Design fix. Decision >1 week of work → 10-min analysis. Emotional weather → Focusing.'],
+['Trigger-based meta — the policy','Outside the small daily budget, meta-work runs only when a trigger fires. Mid-work urges to reorganize/re-plan match no trigger — they match the hiding place.']],
+},
+]},
+];
+
+// ===================== SECTION 6: THE AUTHOR =====================
+const SECTION6=[
+
+{ id:'s6u1', icon:'📚', color:'var(--purple)', title:'Reading With Reps', sub:'The Reading attitude, made honest',
+  source:[['Sequences Highlights','https://www.lesswrong.com/highlights'],['CFAR reading list','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'s6u1c1', icon:'🥩', title:'Reading is not practice — unless', kind:'learn',
+teach:`<p>The Reading attitude is right that the corpus matters: the Sequences and the reading list contain distinctions you will not reinvent (you have now met a dozen of them in this app). It goes wrong only at the exchange rate — insight-feelings are not skills, and highlighting is not installing.</p>
+<p>The honest protocol, per reading session:</p>
+<p>1. <b>Extract 1-3 cards</b> in your own words — if you cannot write the card without the book open, you have not read it yet.<br>2. <b>Design one rep</b>: a concrete application of the idea to YOUR life within 48 hours. No rep derivable → the reading was entertainment (permitted! just not creditable as practice).<br>3. <b>File the disagreements</b>: where the author seems wrong, write the crux — that is where your own thinking starts, and Section 6 is about your own thinking.</p>
+<div class="key">Exchange rate to internalize: one post genuinely repped beats ten posts admired. The Canon read this way takes years — and unlike the fast way, it compounds.</div>`,
+quiz:[
+{q:'The test for whether you have actually read a post, per this protocol:',opts:[
+['You remember agreeing with it',0,'Agreement-feelings fade in days and were never skills. The test is productive: what can you now DO?'],
+['You can write its core distinction as a card in your own words, and derive one 48-hour rep from it',1,'Right — own-words extraction plus a derivable application. Fail either and the reading was (permitted) entertainment.'],
+['You highlighted the key passages',0,'Highlighting is the reading-attitude equivalent of buying gym clothes.']]}],
+cards:[
+['The reading protocol','Per session: 1) extract 1-3 cards in YOUR words (book closed), 2) design one rep applying it to your life within 48h, 3) file disagreements as cruxes. No derivable rep = entertainment, not practice.'],
+['The reading exchange rate','One post genuinely repped > ten posts admired. Insight-feelings are not skills; the Canon read slowly compounds, read fast it evaporates.']],
+},
+
+{ id:'s6u1c2', icon:'📖', title:'One post, one rep', kind:'field',
+teach:`<p>Run the protocol once, fully. Pick a Sequences-highlights post you have NOT read (or one you "know" but never repped — arguably better). Read it properly, extract, derive, execute the rep within 48 hours.</p>`,
+mission:{text:`<b>Field mission:</b> one post from the Sequences Highlights (link in unit sources), full protocol. Report: (a) the post, (b) your 1-3 cards in your own words, (c) the rep you derived and how executing it went, (d) one disagreement or limitation you can state as a crux.`,
+placeholder:'Post: ...\nCards: 1)... 2)...\nRep: ... → executed: ...\nDisagreement/crux: ...'},
+rubric:['Cards are own-words distillations, not quotes or summaries of summaries','Rep is concrete, personal, and was actually executed within ~48h','The rep genuinely applies the post’s distinction (not a generic good deed)','Disagreement stated as a crux ("I would change my mind if...") rather than a vibe'],
+cards:[],
+},
+]},
+
+{ id:'s6u2', icon:'🗣️', color:'var(--orange)', title:'Naturalize & Teach', sub:'The Speaking attitude, aimed outward',
+  source:[['CFAR Handbook: Pedagogical Content Knowledge','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'s6u2c1', icon:'✍️', title:'The plain-language essay', kind:'drill',
+teach:`<p>Write ~300 words explaining ONE technique from this app to a specific real person in your life who has never heard of LessWrong — in their vocabulary, anchored to a problem THEY actually have, with zero jargon (no "priors", no "TAP", no "crux").</p>
+<div class="key">The constraint is the teacher: every place you reach for the jargon word and find nothing underneath is a place you memorized a label. Expect two or three such holes; finding them is the exercise’s real product. (Feynman: what you cannot explain simply, you do not yet understand.)</div>`,
+drill:{prompt:`Write the ~300-word explainer here (it will be graded on the translation, not the prose). Then add: (a) who it is for and which of their real problems it addresses, (b) where you reached for jargon and found a hole underneath, (c) the sentence you are proudest of.`,
+placeholder:'[Essay]\n...\n\nFor: ... their problem: ...\nHoles found: ...\nBest sentence: ...',min:15},
+rubric:['Zero jargon — every term a non-rationalist friend would know','Anchored to the specific reader’s actual problem, not humanity in general','Technique’s real mechanism survives the translation (not diluted to platitude)','Holes honestly reported — a no-holes report is less credible than a two-holes report'],
+cards:[
+['Why translate without jargon?','Every jargon word you reach for with nothing underneath marks a memorized label, not an installed concept. The holes found are the product.']],
+},
+
+{ id:'s6u2c2', icon:'🎓', title:'Run a micro-workshop', kind:'field',
+teach:`<p>The Workshop attitude’s final boss: <b>teach one technique to one willing person, live, on a real problem of theirs</b> — 20-30 minutes, structured like this app taught you: brief mechanism, then THEY practice on THEIR case while you coach (precise feedback, remember — observation before advice).</p>
+<div class="key">Teaching under live questions is the strongest known test of understanding — expect at least one moment of "huh, I actually don’t know why that step works". File those. They are next month’s curriculum.</div>`,
+mission:{text:`<b>Field mission:</b> run a 20-30 min micro-workshop for one willing person on one technique, applied to their real case. Report: technique + why chosen for them, how the live practice went, the question that stumped you (there was one), and what you would teach differently next time.`,
+placeholder:'Taught: ... to: ... (their case: ...)\nHow it went: ...\nStumped by: ...\nNext time: ...'},
+rubric:['A real, willing participant with a real case (not a hypothetical walkthrough)','They practiced — the session was coaching, not lecturing','Feedback given followed the observation-before-advice discipline','The stumping moment honestly captured and treated as curriculum'],
+cards:[],
+},
+]},
+
+{ id:'s6u3', icon:'🎨', color:'var(--gold)', title:'Your Own Book', sub:'The Idiosyncratic endgame',
+  source:[['Attitudes about Applied Rationality (Camille B.)','https://www.lesswrong.com/posts/5jdqtpT6StjKDKacw/attitudes-about-applied-rationality']],
+  chapters:[
+
+{ id:'s6u3c1', icon:'📕', title:'Handbook v0.1', kind:'drill',
+teach:`<p>You now have months of data no curriculum author has: your rep grades, TAP audit history, squashed-bug patterns, the techniques that quietly died and the ones you reach for unprompted. The Idiosyncratic move is to <b>write the handbook that data implies</b> — yours, not CFAR’s, not this app’s.</p>
+<p>Handbook v0.1 is an outline, one page:</p>
+<p>• The 5±2 techniques that SURVIVED your testing (with your modifications — the modifications are the interesting part);<br>• Your named failure-shapes and which tool answers each;<br>• Your check-in set (which standing practices earn their place at your current life-stage);<br>• The open problems: what your current art cannot yet handle.</p>
+<div class="key">Cite your evidence. "Focusing survived: 9 sessions, 6 produced real shifts, modified to 10-min walking format" is a handbook entry. "Focusing is great" is a book review.</div>`,
+drill:{prompt:`Write Handbook v0.1. Report the four parts: surviving techniques WITH your modifications and evidence, failure-shapes → tools mapping, your earned check-in set, and open problems. Draw on real data (rep grades, audits, ledger patterns).`,
+placeholder:'SURVIVORS: 1) ... (modified: ... evidence: ...)\nFAILURE-SHAPES: ... → ...\nMY CHECK-INS: ...\nOPEN PROBLEMS: ...',min:15},
+rubric:['Survivors list is evidence-cited from actual practice history, not preference','Modifications documented — pure unmodified adoption suggests under-testing','Failure-shape → tool mapping is specific to the author','Open problems honestly identified (an art with no open problems has stopped looking)'],
+cards:[
+['Handbook v0.1 — the four parts','1) Surviving techniques + YOUR modifications + evidence. 2) Failure-shapes → tools map. 3) The earned check-in set. 4) Open problems your art cannot yet handle.']],
+},
+
+{ id:'s6u3c2', icon:'🛠️', title:'The editor: extend this app', kind:'learn',
+teach:`<p>Final chapter, and the app changes hands. In the <b>My Art</b> section (new chip on your path), you can now author your own chapters: a technique of your invention (Section 1’s Final Exam produced your first), with its own teaching notes, drill prompt, grading rubric, flashcards — and optionally its own recurring check-in.</p>
+<p>Your creations get the full machinery: spaced reps, the same Claude coaching (graded against YOUR rubric), habit nagging, sync across devices.</p>
+<h4>Authoring standards (you know these by now)</h4>
+<p>• The drill must demand real-life material — no hypothetical practice.<br>• The rubric’s items must be checkable by an honest tired person.<br>• If it needs regularity to work, give it a check-in interval; if not, let the rep scheduler handle it.<br>• Run it yourself for two weeks before trusting it (your own Section 1 standard).</p>
+<div class="key">The curriculum you were following is over when you say it is. The one you are writing has no last chapter. Go well.</div>`,
+quiz:[
+{q:'Per this app’s own standards, when is one of your custom techniques ready to trust?',opts:[
+['When it feels insightful to write',0,'Insight-feelings at authoring time predict little — you learned this about reading, and it is truer of writing.'],
+['After you have run it yourself for ~2 weeks with a measurable signal — the same test you applied to your Section 1 invention',1,'Right. Author standards equal practice standards: trigger, procedure, mechanism, test. The editor just makes the loop faster.'],
+['Once the rubric has at least four items',0,'Rubric length is decoration. The two-week self-test is the certification.']]}],
+cards:[
+['Authoring standards for custom techniques','Drill demands real-life material; rubric checkable by a tired honest person; check-in interval only if regularity is the mechanism; self-tested 2 weeks with a measurable signal before trusted.']],
+},
+]},
+];
+
 // ===================== PRAXIS ENGINE =====================
 'use strict';
 const $=s=>document.querySelector(s);
@@ -944,7 +1620,7 @@ let S=null;
 const DEFAULT={v:1,xp:0,xpToday:0,today:todayStr(),streak:0,bestStreak:0,lastGoalDay:null,freezes:1,
 goal:30,done:{},cards:{},bugs:[],taps:[],habits:{},preds:[],calib:[],calibSeen:[],
 reports:[],apiKey:'',model:'claude-sonnet-4-6',notif:false,notified:{},welcomed:false,
-ghToken:'',gistId:'',gistOwner:'',lastSync:0,updated:0,reps:{}};
+ghToken:'',gistId:'',gistOwner:'',lastSync:0,updated:0,reps:{},sec:'s1',custom:[],cap:2,newDay:'',newCount:0,capOver:''};
 function load(){try{S=Object.assign({},DEFAULT,JSON.parse(localStorage.getItem('praxis')||'{}'));}catch(e){S=Object.assign({},DEFAULT);}}
 function save(){S.updated=Date.now();localStorage.setItem('praxis',JSON.stringify(S));scheduleSync();}
 
@@ -989,6 +1665,7 @@ async function syncPull(manual){
       S=Object.assign({},DEFAULT,rem);
       S.lastSync=Date.now();
       localStorage.setItem('praxis',JSON.stringify(S));
+      rebuild();
       toast('☁️ Newer progress pulled from sync');
       render();
     }else if(manual)setSyncStatus('☁️ ✓ this device is already up to date');
@@ -1056,13 +1733,41 @@ function addXP(n){
 }
 
 // ---------- curriculum helpers ----------
-const ALLCH=[]; CURRICULUM.forEach(u=>u.chapters.forEach(c=>{c._unit=u;ALLCH.push(c);}));
+let SECTIONS=[], ALLCH=[];
+function buildCustomUnit(){
+  const chapters=((S&&S.custom)||[]).map(x=>{
+    const ch={id:x.id,icon:x.icon||'🔧',title:x.title,
+      kind:x.drillPrompt?'drill':(x.every?'checkin':'learn'),
+      teach:x.teach?'<p>'+esc(x.teach).replace(/\n/g,'<br>')+'</p>':'<p class="small">No teaching notes yet — edit this technique to add some.</p>',
+      cards:x.cards||[], custom:true};
+    if(x.drillPrompt)ch.drill={prompt:esc(x.drillPrompt).replace(/\n/g,'<br>'),
+      rubric:(x.rubric&&x.rubric.length)?x.rubric:['Practice performed on real-life material, not hypothetically','Specific and concrete (names, actions, observations)','Honest about difficulties and failures'],min:5};
+    if(x.every>0)ch.checkin={key:'cust_'+x.id,label:x.title,icon:x.icon||'🔧',every:x.every,
+      ask:x.checkAsk||x.drillPrompt||('Practice and report: '+x.title),form:'report'};
+    return ch;});
+  return {id:'myu1',icon:'🎨',color:'var(--purple)',title:'My Techniques',sub:'Authored, tested, and owned by you',source:[],chapters};
+}
+function rebuild(){
+  SECTIONS=[
+   {id:'s1',icon:'🔨',title:'Foundations',desc:'The core curriculum: from noticing to forging your own art.',units:CURRICULUM},
+   {id:'s2',icon:'🎭',title:'The Performer',desc:'Workshop deep dive: Inner Game of Tennis, Impro, Bonds That Make Us Free, Againstness.',units:SECTION2},
+   {id:'s3',icon:'🧮',title:'The Mathematician',desc:'Bayes as a reflex, deciding under uncertainty, decision theory for humans.',units:SECTION3},
+   {id:'s4',icon:'📊',title:'The Instrumentalist',desc:'Calibration league, self-experiments, Goodhart-resistant measurement.',units:SECTION4},
+   {id:'s5',icon:'🌍',title:'The Liver of Life',desc:'The one project, shipping cadence, and the meta-budget. The app argues against itself.',units:SECTION5},
+   {id:'s6',icon:'✍️',title:'The Author',desc:'Reading with reps, teaching, and writing your own handbook — then extending this app.',units:SECTION6},
+   {id:'my',icon:'🎨',title:'My Art',desc:'Your own techniques, with full machinery: reps, coaching, check-ins, sync.',units:[buildCustomUnit()]},
+  ];
+  ALLCH=[];
+  SECTIONS.forEach(sec=>{sec._flat=[];sec.units.forEach(u=>{u._sec=sec;u.chapters.forEach(c=>{c._unit=u;sec._flat.push(c);ALLCH.push(c);});});});
+}
+rebuild();
 const chById=id=>ALLCH.find(c=>c.id===id);
 function chState(c){
   if(S.done[c.id])return 'done';
-  const i=ALLCH.indexOf(c);
+  if(c._unit._sec.id==='my')return 'next';
+  const flat=c._unit._sec._flat, i=flat.indexOf(c);
   if(i===0)return 'next';
-  return S.done[ALLCH[i-1].id]?'next':'locked';
+  return S.done[flat[i-1].id]?'next':'locked';
 }
 
 // ---------- SR (SM-2-ish) ----------
@@ -1086,7 +1791,7 @@ function gradeCard(id,g){ // g: 0 again,1 hard,2 good,3 easy
 // ---------- habits / check-ins ----------
 function habitDue(h){if(h.paused)return false; return Date.now()-(h.last||h.since) > h.every*HOUR;}
 function dueHabits(){return Object.entries(S.habits).filter(([,h])=>habitDue(h));}
-function habitMeta(key){for(const u of CURRICULUM)for(const c of u.chapters)if(c.checkin&&c.checkin.key===key)return c.checkin;return null;}
+function habitMeta(key){for(const c of ALLCH)if(c.checkin&&c.checkin.key===key)return c.checkin;return null;}
 function openPreds(){return S.preds.filter(p=>!p.resolved);}
 
 // ---------- practice reps (spaced repetition of EXERCISES) ----------
@@ -1107,7 +1812,14 @@ u12c2:'Crux a fresh disagreement — if possible, do it WITH the other person th
 u13c1:'Re-ask the Hamming pair. Has the most important problem changed? Is the gap between knowing and working on it shrinking?',
 u13c2:'Schedule another abyss session with a DIFFERENT question you flinch from. Time-boxed, device-free, considering is not deciding.',
 u14c2:'Translate a different technique, jargon-free, in a real conversation about a real problem of theirs.',
-u14c3:'Review your invented technique against its 2-week test results: keep, revise, or retire it and forge a new one for your next failure-shape.'
+u14c3:'Review your invented technique against its 2-week test results: keep, revise, or retire it and forge a new one for your next failure-shape.',
+s2u1c2:'New non-judgmental awareness session on a DIFFERENT skilled activity, with a different neutral observable.',
+s2u1c3:'Run the trust protocol on a different trained skill — or the same one at slightly higher stakes.',
+s2u2c2:'New status field work: observe a different group, then a one-notch experiment in the OTHER direction from last time.',
+s2u2c3:'Another accept-every-offer conversation — this time with someone you find harder to accept offers from.',
+s2u2c4:'A fresh 5-minute spontaneity rep on a different open question. Track whether the censor count is dropping.',
+s2u3c3:'Audit a DIFFERENT relationship — or re-audit the same one and compare: has the dossier thinned?',
+s2u3c4:'One new out-of-the-box act, same constraints: small, this week, not performed at them.'
 };
 function repEligible(c){return !!(c.drill||c.mission)&&c.kind!=='checkin'&&!REP_EXCLUDE.includes(c.id);}
 function repInterval(i){return i<REP_IVLS.length?REP_IVLS[i]:Math.round(42*Math.pow(1.5,i-REP_IVLS.length+1));}
@@ -1200,7 +1912,13 @@ function vPath(){
   if(rp>0)h+='<div class="banner alert" onclick="setTab(\'habits\')" style="cursor:pointer">🔁 <b>'+rp+' practice rep'+(rp>1?'s':'')+' due</b> — earlier techniques, fresh targets. Tap to open.</div>';
   const rev=dueCards().length;
   if(rev>0)h+='<div class="banner info" onclick="setTab(\'review\')" style="cursor:pointer">🧠 '+rev+' cards ready for review.</div>';
-  CURRICULUM.forEach(u=>{
+  const cursec=SECTIONS.find(x=>x.id===S.sec)||SECTIONS[0];
+  h+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px">'+SECTIONS.map(x=>{
+    const dn=x._flat.filter(c=>S.done[c.id]).length;
+    return '<button class="btn sm '+(x.id===cursec.id?'':'sec')+'" onclick="S.sec=\''+x.id+'\';save();render()">'+x.icon+' '+esc(x.title)+' · '+dn+'/'+x._flat.length+'</button>';
+  }).join('')+'</div>';
+  h+='<p class="small" style="margin:4px 2px 0">'+esc(cursec.desc)+'</p>';
+  cursec.units.forEach(u=>{
     const done=u.chapters.filter(c=>S.done[c.id]).length;
     h+='<div class="unit-head" style="border-left:5px solid '+u.color+'"><div class="uic">'+u.icon+'</div><div><h2>'+esc(u.title)+'</h2><div class="small">'+esc(u.sub)+' · '+done+'/'+u.chapters.length+'</div></div></div>';
     h+='<div class="small" style="margin:2px 4px 8px">'+u.source.map(s=>'<a href="'+s[1]+'" target="_blank" rel="noopener">📖 '+esc(s[0])+'</a>').join(' · ')+'</div>';
@@ -1213,8 +1931,16 @@ function vPath(){
     });
     h+='</div>';
   });
-  const total=ALLCH.length, fin=Object.keys(S.done).length;
-  if(fin>=total)h+='<div class="banner win">🏔️ Curriculum complete. The app is now equipment; you are the curriculum. Keep the weekly Practice Review alive.</div>';
+  if(cursec.id==='my'){
+    if(!(S.custom||[]).length)h+='<div class="card"><h3>🎨 Your art starts here</h3><p class="small">Author your own techniques — they get the full machinery: spaced reps, Claude coaching against your rubric, optional check-ins, sync. Your Section 1 Final Exam invention is a natural first entry. (Section 6 teaches the authoring standards.)</p></div>';
+    h+='<button class="btn" onclick="openEditor(\'\')">＋ New technique</button>';
+    (S.custom||[]).forEach(x=>{
+      h+='<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">'+(x.icon||'🔧')+' '+esc(x.title)+'</h3><button class="btn sm sec" onclick="openEditor(\''+x.id+'\')">Edit</button></div>'+
+      '<div class="small">'+(x.drillPrompt?'drill':'')+(x.every?' · check-in every '+x.every+'h':'')+((x.cards||[]).length?' · '+x.cards.length+' cards':'')+'</div></div>';
+    });
+  }
+  const sdone=cursec._flat.filter(c=>S.done[c.id]).length;
+  if(sdone>=cursec._flat.length)h+='<div class="banner win">🏔️ '+esc(cursec.title)+' complete. Pick another section — or better: go live what you trained.</div>';
   return h;
 }
 
@@ -1307,7 +2033,9 @@ function vYou(){
      '<div class="card"><div class="big">'+S.taps.length+'</div><div class="small">TAPs installed</div></div></div>';
   h+='<div class="card"><h3>Daily goal</h3><div class="row">'+
     [10,30,50].map(g=>'<button class="btn sm '+(S.goal===g?'':'sec')+'" onclick="S.goal='+g+';save();render()">'+g+' XP'+(g===10?' (~5 min)':'')+'</button>').join('')+'</div>'+
-    '<p class="small">Downscale honestly on heavy weeks instead of breaking the chain. You have '+S.freezes+' 🧊 streak freezes (earn 1 per 7-day streak, max 3); they auto-spend on missed days.</p></div>';
+    '<p class="small">Downscale honestly on heavy weeks instead of breaking the chain. You have '+S.freezes+' 🧊 streak freezes (earn 1 per 7-day streak, max 3); they auto-spend on missed days.</p>'+
+    '<h3 style="margin-top:14px">New-lesson cap</h3><div class="row">'+[1,2,3,0].map(c=>'<button class="btn sm '+(S.cap===c?'':'sec')+'" onclick="S.cap='+c+';save();render()">'+(c===0?'∞':c+'/day')+'</button>').join('')+'</div>'+
+    '<p class="small">Caps NEW chapters per day (reviews, reps and check-ins stay unlimited). Protects you from doing every book at once — skill grows in the gaps between lessons.</p></div>';
   h+='<div class="card"><h3>Claude feedback</h3><label class="fld">Anthropic API key (stored only on this device)</label><input type="password" id="apikey" value="'+esc(S.apiKey)+'" placeholder="sk-ant-..." autocomplete="off">'+
     '<button class="btn sm ghost" style="margin-top:4px" onclick="const k=$(\'#apikey\');k.type=k.type===\'password\'?\'text\':\'password\'">👁 show/hide key</button>'+
     (S.apiKey?'<p class="small">Currently saved: '+esc(S.apiKey.slice(0,12))+'…'+esc(S.apiKey.slice(-4))+' ('+S.apiKey.length+' chars)</p>':'<p class="small">No key saved yet.</p>')+
@@ -1371,7 +2099,7 @@ function expData(){
 function impData(){
   const i=document.createElement('input');i.type='file';i.accept='.json';
   i.onchange=()=>{const f=i.files[0];const r=new FileReader();
-    r.onload=()=>{try{S=Object.assign({},DEFAULT,JSON.parse(r.result));save();render();toast('Imported');}catch(e){toast('Invalid file');}};
+    r.onload=()=>{try{S=Object.assign({},DEFAULT,JSON.parse(r.result));save();rebuild();render();toast('Imported');}catch(e){toast('Invalid file');}};
     r.readAsText(f);};
   i.click();
 }
@@ -1383,6 +2111,10 @@ function closeSheet(){$('#sheet').classList.remove('open');stopTimer();render();
 
 function openLesson(id){
   const c=chById(id); if(!c||chState(c)==='locked')return;
+  if(!S.done[c.id]){
+    if(S.newDay!==todayStr()){S.newDay=todayStr();S.newCount=0;save();}
+    if(S.cap>0&&S.newCount>=S.cap&&S.capOver!==todayStr()){gateSheet();return;}
+  }
   const steps=[];
   if(c.teach)steps.push({t:'teach'});
   (c.quiz||[]).forEach((q,i)=>steps.push({t:'quiz',q,i}));
@@ -1550,7 +2282,7 @@ function acceptCheckin(){
 }
 function finishLesson(xp){
   const c=L.chap;
-  if(!S.done[c.id]){S.done[c.id]=Date.now();if(repEligible(c))S.reps[c.id]={i:0,due:Date.now()+REP_IVLS[0]*DAY,count:0};}
+  if(!S.done[c.id]){S.done[c.id]=Date.now();if(repEligible(c))S.reps[c.id]={i:0,due:Date.now()+REP_IVLS[0]*DAY,count:0};if(S.newDay!==todayStr()){S.newDay=todayStr();S.newCount=0;}S.newCount++;}
   ensureCards(c); addXP(xp); save(); closeSheet();
 }
 
@@ -1616,6 +2348,50 @@ function habitDone(k){
 function completeHabit(k,msg){
   S.habits[k].last=Date.now(); delete S.notified[k]; save();
   addXP(20); toast('✓ '+msg); closeSheet();
+}
+
+// ---- daily cap gate ----
+function gateSheet(){
+  const rp=dueReps().length, dh=dueHabits().length, dc=dueCards().length;
+  sheetHTML('<div class="top"><button class="x" onclick="closeSheet()">✕</button></div>'+
+   '<div class="center" style="padding:26px 0"><div style="font-size:3.2rem">⛩️</div><h2>The dojo caps new material</h2>'+
+   '<p class="small" style="max-width:420px;margin:8px auto">You have opened '+S.newCount+'/'+S.cap+' new chapters today. Skill grows in the gap between lessons — and you currently have '+dc+' cards, '+rp+' reps and '+dh+' check-ins waiting. That is where today\'s XP lives.</p>'+
+   '<div class="row" style="max-width:340px;margin:14px auto 0"><button class="btn" onclick="closeSheet();setTab(\'review\')">Review cards</button><button class="btn sec" onclick="closeSheet();setTab(\'habits\')">Reps & check-ins</button></div>'+
+   '<button class="btn ghost" style="margin-top:10px" onclick="if(confirm(\'Lift the cap for today? (Binging new chapters is the Reading attitude\\\'s failure mode wearing your face.)\')){S.capOver=todayStr();save();closeSheet();toast(\'Cap lifted until midnight\');}">Lift the cap today</button></div>');
+}
+
+// ---- custom technique editor ----
+function openEditor(id){
+  const x=((S.custom)||[]).find(c=>c.id===id)||{};
+  let h='<div class="top"><button class="x" onclick="closeSheet()">✕</button></div><h2>🎨 '+(id?'Edit':'New')+' technique</h2>';
+  h+='<label class="fld">Name</label><input type="text" id="etitle" value="'+esc(x.title||'')+'" placeholder="Pre-mortem walk">';
+  h+='<label class="fld">Icon (one emoji)</label><input type="text" id="eicon" value="'+esc(x.icon||'')+'" placeholder="🚶">';
+  h+='<label class="fld">Teaching notes (when to use it, the steps, why it works)</label><textarea id="eteach" placeholder="When [trigger], do: 1)... 2)...\nMechanism: ...">'+esc(x.teach||'')+'</textarea>';
+  h+='<label class="fld">Drill prompt (what to actually do + report — leave empty for a pure check-in)</label><textarea id="edrill" placeholder="Run the technique on a real ... Report: ...">'+esc(x.drillPrompt||'')+'</textarea>';
+  h+='<label class="fld">Rubric (one criterion per line — used by Claude feedback and self-grading)</label><textarea id="erub" placeholder="Used real material\nTrigger was specific">'+esc((x.rubric||[]).join('\n'))+'</textarea>';
+  h+='<label class="fld">Flashcards (one per line: front :: back)</label><textarea id="ecards" placeholder="My technique X — trigger? :: When ...">'+esc((x.cards||[]).map(c=>c[0]+' :: '+c[1]).join('\n'))+'</textarea>';
+  h+='<label class="fld">Check-in interval in hours (0 = none; the rep scheduler covers non-recurring drills)</label><input type="number" id="eevery" value="'+(x.every||0)+'">';
+  h+='<button class="btn" style="margin-top:14px" onclick="saveCustomForm(\''+(id||'')+'\')">Save technique</button>';
+  if(id)h+='<button class="btn ghost" style="margin-top:6px" onclick="delCustom(\''+id+'\')">Delete technique</button>';
+  sheetHTML(h);
+}
+function saveCustomForm(id){
+  const title=$('#etitle').value.trim(); if(!title)return toast('Name it first');
+  const obj={id:id||('cust'+uid()),title,icon:$('#eicon').value.trim().slice(0,4),
+    teach:$('#eteach').value.trim(),drillPrompt:$('#edrill').value.trim(),
+    rubric:$('#erub').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    cards:$('#ecards').value.split('\n').map(l=>l.split('::')).filter(a=>a.length===2).map(a=>[a[0].trim(),a[1].trim()]),
+    every:parseInt($('#eevery').value)||0};
+  S.custom=S.custom||[];
+  const i=S.custom.findIndex(c=>c.id===obj.id);
+  if(i>=0)S.custom[i]=obj; else S.custom.push(obj);
+  save(); rebuild(); closeSheet(); toast('🎨 Technique saved');
+}
+function delCustom(id){
+  if(!confirm('Delete this technique? Its reps and check-in go with it.'))return;
+  S.custom=(S.custom||[]).filter(c=>c.id!==id);
+  delete S.reps[id]; delete S.habits['cust_'+id]; delete S.done[id];
+  save(); rebuild(); closeSheet(); render();
 }
 
 // ---- practice rep execution ----
@@ -1690,7 +2466,7 @@ function startTimer(min){
 function stopTimer(){if(TMR){clearInterval(TMR);TMR=null;}}
 
 // ---------- boot ----------
-load(); rollover(); render(); notifCheck();
+load(); rebuild(); rollover(); render(); notifCheck();
 if(S.ghToken&&S.gistId)syncPull();
 window.addEventListener('visibilitychange',()=>{if(!document.hidden){rollover();render();notifCheck();if(S.ghToken&&S.gistId)syncPull();}});
 
