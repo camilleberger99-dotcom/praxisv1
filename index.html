@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#10131c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Praxis">
+<title>Praxis — Applied Rationality Dojo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%94%A8%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#10131c; --bg2:#181d2a; --card:#1e2433; --card2:#252c3f;
+  --line:#2e3650; --txt:#e8ecf5; --dim:#9aa3bb; --faint:#5d6680;
+  --green:#58cc7a; --green-d:#3da55c; --gold:#ffc94d; --red:#ff6b6b;
+  --blue:#5fa8ff; --purple:#b98aff; --orange:#ff9d5c; --teal:#4dd6c1;
+  --r:16px;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.45; overscroll-behavior:none;}
+body{padding-bottom:calc(64px + env(safe-area-inset-bottom));}
+button{font-family:inherit;}
+#app{max-width:560px;margin:0 auto;padding:12px 14px 24px;}
+h1,h2,h3{line-height:1.25;}
+a{color:var(--blue);}
+.small{font-size:.82rem;color:var(--dim);}
+.faint{color:var(--faint);}
+.center{text-align:center;}
+
+/* top bar */
+#topbar{position:sticky;top:0;z-index:50;background:rgba(16,19,28,.93);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  max-width:560px;margin:0 auto;padding:10px 14px;border-bottom:1px solid var(--line);}
+.stat{display:flex;align-items:center;gap:4px;font-weight:700;font-size:.95rem;}
+.stat .ic{font-size:1.1rem;}
+
+/* bottom nav */
+#nav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:var(--bg2);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));}
+#nav button{background:none;border:none;color:var(--faint);font-size:1.45rem;
+  padding:4px 10px;border-radius:12px;position:relative;cursor:pointer;}
+#nav button.on{color:var(--txt);background:var(--card2);}
+#nav .badge{position:absolute;top:0;right:2px;background:var(--red);color:#fff;
+  font-size:.62rem;font-weight:800;border-radius:9px;min-width:17px;height:17px;
+  display:flex;align-items:center;justify-content:center;padding:0 4px;}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;margin:12px 0;}
+.card h3{margin:0 0 6px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--green);color:#0c2616;border:none;border-radius:14px;
+  padding:13px 22px;font-size:1rem;font-weight:800;cursor:pointer;width:100%;
+  box-shadow:0 4px 0 var(--green-d);transition:transform .05s;}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--green-d);}
+.btn.sec{background:var(--card2);color:var(--txt);box-shadow:0 4px 0 #181d2c;}
+.btn.warn{background:var(--gold);color:#3a2c00;box-shadow:0 4px 0 #c79a2e;}
+.btn.ghost{background:none;box-shadow:none;color:var(--dim);font-weight:600;}
+.btn:disabled{opacity:.45;pointer-events:none;}
+.btn.sm{width:auto;padding:8px 14px;font-size:.88rem;border-radius:11px;}
+.row{display:flex;gap:10px;align-items:center;}
+.row .btn{flex:1;}
+
+/* path */
+.unit-head{margin:26px 0 4px;padding:14px 16px;border-radius:var(--r);
+  display:flex;align-items:center;gap:12px;border:1px solid var(--line);}
+.unit-head .uic{font-size:1.7rem;}
+.unit-head h2{margin:0;font-size:1.06rem;}
+.unit-head .small{margin-top:2px;}
+.path{display:flex;flex-direction:column;align-items:center;padding:6px 0;}
+.node{width:74px;height:66px;border-radius:50% / 46%;display:flex;align-items:center;
+  justify-content:center;font-size:1.65rem;margin:9px 0;cursor:pointer;border:none;
+  background:var(--card2);box-shadow:0 6px 0 #141927;position:relative;transition:transform .05s;}
+.node:active{transform:translateY(3px);box-shadow:0 2px 0 #141927;}
+.node.done{background:var(--gold);box-shadow:0 6px 0 #b8860b;}
+.node.next{background:var(--green);box-shadow:0 6px 0 var(--green-d);animation:pulse 1.6s infinite;}
+.node.locked{opacity:.38;cursor:default;}
+.node.checkin{border-radius:18px;}
+.node .lbl{position:absolute;top:100%;margin-top:8px;font-size:.7rem;color:var(--dim);
+  width:130px;text-align:center;left:50%;transform:translateX(-50%);line-height:1.2;}
+.node.off-l{align-self:flex-start;margin-left:18%;}
+.node.off-r{align-self:flex-end;margin-right:18%;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.gap-lbl{height:18px;}
+
+/* lesson screen */
+#sheet{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;
+  -webkit-overflow-scrolling:touch;display:none;}
+#sheet.open{display:block;}
+#sheet .inner{max-width:560px;margin:0 auto;padding:14px 16px 60px;}
+#sheet .top{display:flex;align-items:center;gap:12px;position:sticky;top:0;
+  background:var(--bg);padding:10px 0;z-index:5;}
+#sheet .x{background:none;border:none;color:var(--faint);font-size:1.5rem;cursor:pointer;padding:4px;}
+.prog{flex:1;height:12px;background:var(--card2);border-radius:8px;overflow:hidden;}
+.prog>div{height:100%;background:var(--green);border-radius:8px;transition:width .3s;}
+.teach{font-size:1.02rem;}
+.teach p{margin:.7em 0;}
+.teach .ex{background:var(--card);border-left:4px solid var(--purple);border-radius:8px;
+  padding:10px 14px;margin:12px 0;font-size:.95rem;}
+.teach .key{background:var(--card);border-left:4px solid var(--gold);border-radius:8px;
+  padding:10px 14px;margin:12px 0;}
+.teach h4{margin:1.1em 0 .3em;color:var(--gold);}
+
+.opt{display:block;width:100%;text-align:left;background:var(--card);
+  border:2px solid var(--line);border-radius:14px;padding:13px 15px;margin:9px 0;
+  color:var(--txt);font-size:.97rem;cursor:pointer;}
+.opt.sel{border-color:var(--blue);}
+.opt.right{border-color:var(--green);background:#1c3325;}
+.opt.wrong{border-color:var(--red);background:#3a2026;}
+.fb{border-radius:14px;padding:13px 15px;margin:12px 0;font-size:.95rem;}
+.fb.good{background:#1c3325;border:1px solid var(--green);}
+.fb.bad{background:#3a2026;border:1px solid var(--red);}
+
+textarea{width:100%;min-height:130px;background:var(--card);color:var(--txt);
+  border:1px solid var(--line);border-radius:12px;padding:12px;font-size:.97rem;
+  font-family:inherit;resize:vertical;}
+input[type=text],input[type=password],input[type=number],select{width:100%;background:var(--card);color:var(--txt);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.95rem;font-family:inherit;}
+label.fld{display:block;margin:12px 0 4px;font-size:.85rem;color:var(--dim);font-weight:600;}
+
+.timerbox{text-align:center;padding:18px;}
+.timerbox .t{font-size:3rem;font-weight:800;font-variant-numeric:tabular-nums;}
+
+/* SR card */
+.srcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 18px;min-height:160px;display:flex;flex-direction:column;
+  justify-content:center;text-align:center;font-size:1.05rem;}
+.srgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+.srgrid button{border:none;border-radius:11px;padding:11px 4px;font-weight:800;
+  font-size:.82rem;cursor:pointer;color:#10131c;}
+
+.pill{display:inline-block;background:var(--card2);border-radius:9px;padding:2px 9px;
+  font-size:.74rem;font-weight:700;color:var(--dim);margin-right:6px;}
+.pill.due{background:#4a2a2e;color:var(--red);}
+.pill.ok{background:#1c3325;color:var(--green);}
+
+.bug{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);}
+.bug:last-child{border-bottom:none;}
+.bug .chk{font-size:1.2rem;background:none;border:none;cursor:pointer;padding:2px;}
+.bug .txt{flex:1;font-size:.95rem;}
+.bug.sq .txt{text-decoration:line-through;color:var(--faint);}
+
+.banner{border-radius:14px;padding:12px 15px;margin:10px 0;font-size:.92rem;
+  display:flex;gap:10px;align-items:center;}
+.banner.alert{background:#3a2630;border:1px solid var(--red);}
+.banner.info{background:#1d2a3f;border:1px solid var(--blue);}
+.banner.win{background:#1c3325;border:1px solid var(--green);}
+
+#toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);z-index:200;
+  background:var(--card2);border:1px solid var(--line);color:var(--txt);
+  padding:11px 18px;border-radius:14px;font-weight:700;display:none;max-width:90vw;text-align:center;}
+
+.spin{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.25);
+  border-top-color:#fff;border-radius:50%;animation:rot .8s linear infinite;vertical-align:middle;}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+.feedback-md{background:var(--card);border:1px solid var(--purple);border-radius:14px;
+  padding:14px 16px;margin:12px 0;font-size:.93rem;white-space:pre-wrap;}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.statgrid .card{margin:0;text-align:center;}
+.statgrid .big{font-size:1.7rem;font-weight:800;}
+hr{border:none;border-top:1px solid var(--line);margin:16px 0;}
+details{margin:10px 0;} summary{cursor:pointer;color:var(--dim);font-weight:600;}
+.conf{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;}
+.conf button{background:var(--card2);border:1px solid var(--line);color:var(--txt);
+  border-radius:9px;padding:7px 10px;font-size:.82rem;cursor:pointer;}
+.conf button.sel{background:var(--blue);color:#08182e;border-color:var(--blue);font-weight:800;}
+</style>
+</head>
+<body>
+<div id="topbar"></div>
+<div id="app"></div>
+<div id="sheet"><div class="inner" id="sheetInner"></div></div>
+<nav id="nav"></nav>
+<div id="toast"></div>
+<script>
+// ===================== PRAXIS CURRICULUM (Units 1-7) =====================
+// Sources: CFAR Handbook (2021), Hammertime (alkjash), CFAR reading list,
+// "Attitudes about Applied Rationality" (Camille B., LessWrong 2024).
+const CURRICULUM = [
+
+// ---------------------------------------------------------------- UNIT 1
+{ id:'u1', icon:'👁️', color:'var(--blue)', title:'Noticing', sub:'The skill beneath all skills',
+  source:[['CFAR Handbook: Noticing','https://www.rationality.org/resources/handbook'],['Book: Thinking, Fast and Slow (Kahneman)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'u1c1', icon:'👁️', title:'The skill beneath all skills', kind:'learn',
+teach:`<p>Every technique in this app has the same first step: <b>noticing</b> that you are in a situation where the technique applies — <i>while it is happening</i>, not three hours later in the shower.</p>
+<p>Noticing is a trainable perceptual skill. Like a birder learning to spot a silhouette, you can learn to spot mental events: a flash of irritation, the urge to check your phone, the half-second flinch away from a scary thought.</p>
+<div class="key"><b>Why this comes first:</b> applied rationality fails mostly at Step 0. People know fifteen debiasing techniques and apply none, because the moment that called for them was never noticed. (Kahneman makes the same point: System 1 runs the show by default; System 2 only engages when summoned.)</div>
+<h4>What a noticing rep looks like</h4>
+<p>1. Pick ONE target sensation (e.g. the feeling of being interrupted).<br>2. When it happens, mentally mark it: <i>"noticing — interruption."</i><br>3. Do nothing else. No fixing, no judging. Just the mark.</p>
+<div class="ex"><b>Example:</b> Lena trains on the feeling of <i>defensiveness</i>. Day 1 she catches it once, an hour late. Day 4 she catches it mid-sentence. Day 9 she catches the precursor — a tightening in her chest — before she even speaks. Now, and only now, can she choose what to do next.</div>
+<p>Everything later — TAPs, aversion factoring, Murphyjitsu — is built on this. Five noticing reps on a real day beat fifty hypothetical exercises.</p>`,
+quiz:[
+{q:'Why does this curriculum put noticing before every other technique?',opts:[
+['Because noticing is the most impressive skill to show others',0,'No — noticing is nearly invisible from outside. Its value is that no other technique can trigger without it.'],
+['Because most techniques fail at Step 0: the relevant moment passes unnoticed',1,'Exactly. Knowing a technique and deploying it in the live moment are different skills; noticing bridges them.'],
+['Because noticing replaces the need for other techniques',0,'Noticing alone changes little — it is the doorway, not the room. You still need the technique behind the door.']]},
+{q:'You feel a flash of annoyance during a meeting and mentally mark "noticing — annoyance", then return to the meeting. Did you do the rep correctly?',opts:[
+['No — you should have immediately analyzed why you were annoyed',0,'Analysis is a different (later) move. Pure noticing practice deliberately stops at the mark, which keeps the rep cheap enough to do dozens of times a day.'],
+['Yes — mark it, do nothing else',1,'Correct. The rep is intentionally tiny. Cheap reps get repeated; expensive ones get abandoned.'],
+['No — noticing only counts if you catch it before it happens',0,'Catching precursors comes with practice. Late noticing still strengthens the skill; the latency shrinks with reps.']]}],
+cards:[
+['What is the "Step 0" failure of applied rationality?','Knowing a technique but never deploying it, because the moment it applied was never noticed in real time.'],
+['What are the 3 parts of a noticing rep?','1) One pre-chosen target sensation. 2) Mark it mentally when it occurs ("noticing — X"). 3) Do nothing else.'],
+['Why keep noticing reps tiny (no analysis, no fixing)?','Cheap reps get repeated dozens of times a day; expensive reps get abandoned. Volume builds the perceptual skill.']],
+},
+
+{ id:'u1c2', icon:'😬', title:'Catching the flinch', kind:'field',
+teach:`<p>The single most valuable noticing target is the <b>mental flinch</b>: the micro-moment where your attention bounces off something unpleasant. An unopened email. A bank balance. The thought <i>"maybe this project is failing."</i></p>
+<div class="key">Flinches mark exactly the spots where your map is most likely wrong — because you have been refusing to look at the territory there. Ugh-fields grow in the dark.</div>
+<p>The flinch feels like: a subject change in your own head, sudden urge to grab the phone, a vague fog, "I will deal with it later" arriving suspiciously fast.</p>
+<div class="ex"><b>Example:</b> Marc notices that every time the word "taxes" crosses his mind, his hand is already reaching for Twitter. The flinch took ~400ms. The unfiled taxes took 8 months.</div>
+<p>Today's mission trains only the catch. You do NOT have to fix what you find. Looking is the win.</p>`,
+mission:{text:`<b>Field mission — today, on your real day:</b> catch <b>3 mental flinches</b> (attention bouncing off something uncomfortable). For each, write one line: what you flinched from, and what the flinch felt like in your body/attention. Do not fix anything. Just look.`,
+placeholder:'1) Flinched from... it felt like...\n2) ...\n3) ...'},
+rubric:['Three real, concrete flinch moments from an actual day (not hypotheticals)','Each names the object flinched from','Each describes the felt signature (body sensation / attention move)','No premature fixing — observation only'],
+cards:[
+['What is a mental flinch?','The micro-moment where attention bounces off an unpleasant thought or task (email, bank balance, doubt about a project).'],
+['Why are flinches high-value noticing targets?','They mark where your map is most likely wrong — places you systematically refuse to look. Ugh-fields grow in the dark.']],
+},
+
+{ id:'u1c3', icon:'📍', title:'Mental notes & the trigger log', kind:'drill',
+teach:`<p>To get noticing volume up, rationalists use a <b>trigger log</b>: a running list of moments worth catching. Common high-yield targets:</p>
+<p>• <b>Surprise</b> — reality just diverged from your model. Free calibration data.<br>• <b>Confusion</b> — "either the world is weird or my model is wrong." (Your model is wrong.)<br>• <b>Defensiveness</b> — you might be protecting a belief instead of testing it.<br>• <b>The "should" feeling</b> — heavy obligation without desire; data about a motivation bug.<br>• <b>Rehearsing an argument</b> — you stopped updating minutes ago.</p>
+<div class="key">Pick targets you actually encounter on a normal workday. The practice must fit inside your real life, between meetings, on the commute — or it will not happen.</div>`,
+drill:{prompt:`Choose your <b>2 noticing targets for this week</b> from the list above (or your own). For each: (a) name it, (b) describe its earliest detectable signature in YOU specifically, (c) name one realistic situation tomorrow where it is likely to fire.`,
+placeholder:'Target 1: surprise — signature: tiny eyebrow raise + "huh"... likely tomorrow when...',min:5},
+rubric:['Two targets named, suited to an ordinary day','Signatures are specific and personal (body/attention level), not generic definitions','Each has a plausible concrete situation within 24h','Targets are observable, not vague traits like "being irrational"'],
+cards:[
+['Why is surprise a high-yield noticing target?','Surprise = reality diverging from your model. Each surprise is free evidence for recalibrating beliefs.'],
+['What does noticing "I am rehearsing my argument" tell you?','You have stopped listening/updating — the conversation became a performance. Time to find the actual disagreement.'],
+['What makes a good personal noticing target?','It occurs on a normal day, has an early detectable felt signature, and marks a moment where a better move exists.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 2
+{ id:'u2', icon:'🐛', color:'var(--red)', title:'Bug Hunt', sub:'Real problems are the gym',
+  source:[['Hammertime Day 1: Bug Hunt','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/rFjhz5Ks685xHbMXW'],['Book: Getting Things Done framing — capture everything','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'u2c1', icon:'🔍', title:'What counts as a bug', kind:'learn',
+teach:`<p>Applied rationality cannot be practiced on made-up examples — you need <b>real material</b>. That material is your <b>bugs</b>: anything in your life that is not the way you would like it to be.</p>
+<p>A bug can be tiny ("my desk chair squeaks", "I always forget my badge") or huge ("I am in the wrong career"). Hammertime's rule: <b>if it bugs you, it is a bug.</b> No bug is too small to file, and filing is not committing to fix.</p>
+<div class="key">Your bug list is the fuel tank of this entire app. Every later technique — Yoda Timers, TAPs, Goal Factoring, CoZE — will reach into this list for a real target. An empty list means fake practice.</div>
+<h4>Three classic capture mistakes</h4>
+<p>1. <b>Filtering for fixability</b> — file it even if it seems unsolvable; future-you will have more hammers.<br>2. <b>Filtering for importance</b> — small bugs train the fix-it muscle cheaply.<br>3. <b>Writing solutions instead of observations</b> — "buy standing desk" is a solution; "back hurts by 3pm" is the bug. File the bug.</div>`,
+quiz:[
+{q:'"I should really use my mornings better" — is this well-filed as a bug?',opts:[
+['Yes, perfectly filed',0,'It is vague and pre-judged ("should"). Better: the observation behind it — e.g. "I spend 8:00-9:30 scrolling and feel gross afterwards." Concrete observations are workable; shoulds are fog.'],
+['Almost — restate it as a concrete observation, e.g. "I scroll 8:00-9:30 and feel gross after"',1,'Right. A bug is an observation about how things are. Concrete beats judgmental, and observation beats solution.'],
+['No — only major life problems belong on a bug list',0,'Opposite of the Hammertime rule: if it bugs you, it is a bug. Small bugs are cheap training material.']]},
+{q:'Why file bugs you have no idea how to solve?',opts:[
+['Because writing them down solves them automatically',0,'Filing is not fixing. The point is that future-you, armed with techniques from later units, will have more hammers than present-you.'],
+['Because future-you will have more hammers; capture and fixing are separate steps',1,'Exactly. Capture everything, judge later — the same separation GTD insists on.'],
+['You should not — unsolvable bugs clutter the list',0,'Filtering at capture time is the classic mistake. Many "unsolvable" bugs fall to a 5-minute Resolve Cycle in Unit 3.']]}],
+cards:[
+['Define "bug" (Hammertime).','Anything in your life that is not the way you would like it to be. If it bugs you, it is a bug.'],
+['Bug vs solution — which do you file?','The observation ("back hurts by 3pm"), not the solution ("buy standing desk"). Solutions filed as bugs hide the real problem.'],
+['Three capture mistakes when filing bugs','Filtering for fixability, filtering for importance, writing solutions instead of observations.']],
+},
+
+{ id:'u2c2', icon:'⚙️', title:'Generators', kind:'drill',
+teach:`<p>When the list runs dry, you need <b>generators</b> — prompts that surface real problems on demand. Rotate them:</p>
+<p>• <b>Room sweep:</b> walk through your home/desk; everything annoying gets filed.<br>• <b>Day replay:</b> replay yesterday hour by hour; file every friction point.<br>• <b>Areas-of-life sweep:</b> health, money, work, relationships, fun — rate each /10; anything under 8 contains bugs. Name them.<br>• <b>"What should you do?"</b> — ask: if I were giving advice to someone in exactly my situation, what would I tell them to deal with? The gap between that and what you are doing is a bug.<br>• <b>Flinch ledger:</b> your Unit 1 flinches — each one points at a bug.<br>• <b>Staring into the abyss (gentle version):</b> "What am I pretending not to know?" File whatever surfaces, even half-formed. (The full-strength version gets its own chapter later.)</p>
+<div class="key">Generators turn "I have no problems to practice on" — which is never true — into a list of twenty within ten minutes.</div>`,
+drill:{prompt:`Run ONE generator right now, for 5 minutes by timer, and file <b>at least 5 bugs</b> below (one per line — they will be added to your Bug Ledger). Note which generator you used.`,
+placeholder:'Generator: day replay\n- bug 1...\n- bug 2...',min:5,timer:5,bugcapture:true},
+rubric:['At least 5 bugs filed','Bugs are concrete observations, not vague shoulds or pre-baked solutions','Mix of sizes (at least one tiny, at least one that matters)','Generator named'],
+cards:[
+['Name 4 bug generators.','Room sweep, day replay, areas-of-life ratings (/10), "what would I advise someone in my exact situation?", flinch ledger, "what am I pretending not to know?"'],
+['What does the "What should you do?" generator detect?','The gap between the advice you would give someone in your situation and what you actually do. That gap is a bug.']],
+},
+
+{ id:'u2c3', icon:'🪲', title:'The standing Bug Hunt', kind:'checkin',
+teach:`<p>This is your first <b>standing practice</b>. From now on, Praxis expects you to file <b>at least one new bug every day</b>. If you have not filed one within your chosen window, the app will nag you — that is the deal you are making now.</p>
+<div class="key">Why a check-in instead of a lesson? Because bug-noticing is a <i>perceptual habit</i>, not knowledge. It only becomes automatic through daily contact with your real life. This is the Object-Level attitude: microdosed practice woven into actual days.</div>
+<p>Filing takes 20 seconds. On busy days, one tiny bug ("the meeting had no agenda — again") keeps the habit alive. Streak-friendly, workday-friendly.</p>
+<p>You can adjust the window or pause the habit anytime in the Habits tab — flexibility is a feature, abandonment is not.</p>`,
+checkin:{key:'bughunt',label:'Bug Hunt',icon:'🐛',every:24,
+ask:'File at least one new bug from the last day (concrete observation, any size).',
+form:'bugs'},
+cards:[
+['Why is Bug Hunt a recurring check-in rather than a one-time lesson?','Bug-noticing is a perceptual habit, not knowledge — it becomes automatic only through daily contact with real life.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 3
+{ id:'u3', icon:'⏳', color:'var(--green)', title:'Yoda Timers', sub:'Five minutes of actually trying',
+  source:[['Hammertime Day 2: Yoda Timers','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/vpvKEj7shuk8h5Eet'],['CFAR Handbook: Resolve Cycles','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'u3c1', icon:'🧪', title:'Five minutes of full effort', kind:'learn',
+teach:`<p><i>"Do. Or do not. There is no try."</i> The Yoda Timer (CFAR: <b>Resolve Cycle</b>) is brutally simple: set a 5-minute timer and <b>actually try to solve the whole problem</b> before it rings.</p>
+<p>Not "work on it for 5 minutes." Try to <i>finish</i> it. The absurd deadline is the point: it forces your brain to drop the respectable-looking slow path and look for doors you assumed were locked.</p>
+<div class="key">Most bugs survive not because they are hard but because nobody has ever spent five minutes of <i>full-strength, undivided</i> effort on them. Full effort for 5 minutes ≠ background worry for 5 years.</div>
+<h4>What full effort feels like</h4>
+<p>• You write, move, or speak — not just stare.<br>• You consider rude solutions: pay money, ask for help, delete the obligation entirely.<br>• You feel slightly silly with urgency. Good.</p>
+<div class="ex"><b>Example:</b> Bug: "I have needed a dentist appointment for 6 months." Yoda Timer: phone in hand, found a dentist, booked online. 3 minutes 40 seconds. Six months of low-grade guilt, deleted.</div>
+<p>If the bug is genuinely too big for 5 minutes, the timer's job changes: produce the <b>next physical action</b> and do its first step.</p>`,
+quiz:[
+{q:'What is the actual instruction of a Yoda Timer / Resolve Cycle?',opts:[
+['Work on the problem for 5 focused minutes',0,'Close, but weaker. The instruction is to try to SOLVE the whole thing in 5 minutes. The impossible framing is what unlocks unconventional moves.'],
+['Try to completely solve the problem before the 5-minute timer rings',1,'Yes. The absurd deadline forces your search out of the slow respectable path and into "wait, could I just...?" territory.'],
+['Think about the problem for 5 minutes, then plan when to solve it',0,'Planning-to-plan is the failure mode this technique exists to kill. Resolve now.']]},
+{q:'A bug is clearly too big to solve in 5 minutes (e.g. "change careers"). What does the timer become?',opts:[
+['Skip it — Yoda Timers only work on small bugs',0,'Big bugs are exactly where 5 minutes of real contact beats years of avoidance. You just change the target.'],
+['Produce the next physical action and take its first step before the bell',1,'Right. "Email Sarah who made this switch" is achievable in 5 minutes and converts an abyss into a path.'],
+['Extend the timer to 50 minutes',0,'Longer timers lose the urgency that makes the technique work. Keep 5 minutes; shrink the target instead.']]}],
+cards:[
+['Yoda Timer / Resolve Cycle — core instruction','Set 5 minutes and try to SOLVE the entire problem before it rings (not merely "work on it").'],
+['Why does the absurd 5-minute deadline help?','It forces the brain off the slow respectable path toward unconventional moves: pay, ask, delete, do it right now.'],
+['Yoda Timer on a too-big problem: what is the target?','Produce the next physical action and execute its first step before the bell.']],
+},
+
+{ id:'u3c2', icon:'🔨', title:'Resolve Cycle on a real bug', kind:'drill',
+teach:`<p>Time to use real fuel. Open your Bug Ledger (mentally or in the Ledger tab), pick a bug that has annoyed you for over a week, and run a true Resolve Cycle with the timer below.</p>
+<div class="key">Pick a bug you semi-believe is unsolvable in 5 minutes. The training effect comes from the surprise of how often that belief is wrong.</div>`,
+drill:{prompt:`Run a 5-minute Resolve Cycle on a real bug from your ledger. Then report: which bug, what you actually DID during the 5 minutes (actions, not thoughts), and the state of the bug now (solved / next action produced / genuinely stuck — where exactly?).`,
+placeholder:'Bug: ...\nDuring the timer I: ...\nState now: ...',min:6,timer:5,pickbug:true},
+rubric:['A real ledger bug was used','Report describes concrete actions taken during the timer (typed, called, moved, wrote), not just thinking','Honest end-state: solved, next-action produced, or precisely-located stuck point','If stuck: the stuck point is specific enough to attack later'],
+cards:[
+['What counts as "full effort" during a Resolve Cycle?','Visible action: writing, calling, booking, moving. Considering rude options (pay, ask, delete). Not silent staring.']],
+},
+
+{ id:'u3c3', icon:'⚡', title:'Speed as a habit', kind:'checkin',
+teach:`<p>Hammertime's "Yoda Timers 3: Speed" thesis: most people systematically overestimate how long things take and underestimate what raw speed unlocks. The cure is regular contact: <b>one Resolve Cycle every two days</b> on a fresh bug.</p>
+<div class="key">This is your second standing practice. It compounds with Bug Hunt: the hunt feeds the ledger, the cycles drain it. A healthy rationalist metabolism eats one bug every couple of days.</div>
+<p>On a packed workday, a Resolve Cycle is exactly 5 minutes — it fits between two meetings. That is by design.</p>`,
+checkin:{key:'resolve',label:'Resolve Cycle',icon:'⏳',every:48,
+ask:'Run one 5-minute Resolve Cycle on a bug from your ledger. Report the bug + what you did + end state.',
+form:'report',timer:5},
+cards:[
+['What is a healthy "bug metabolism"?','Bug Hunt files at least one bug daily; Resolve Cycles squash one every ~2 days. Intake and digestion in balance.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 4
+{ id:'u4', icon:'🔗', color:'var(--orange)', title:'Trigger-Action Plans', sub:'Programming your autopilot',
+  source:[['CFAR Handbook: TAPs','https://www.rationality.org/resources/handbook'],['Hammertime Day 3: TAPs','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/ESnzpoCJrAfwAzpMB']],
+  chapters:[
+
+{ id:'u4c1', icon:'🧩', title:'Anatomy of a TAP', kind:'learn',
+teach:`<p>A <b>Trigger-Action Plan</b> is the smallest unit of behavior change: <i>"When [precise sensory trigger], I will [tiny action]."</i> Psychology literature calls them implementation intentions; the effect sizes are unusually solid.</p>
+<p>TAPs work because they pre-compile a decision. The choosing happens once, calmly, in advance; the doing happens automatically, in the moment, when willpower is unavailable.</p>
+<h4>The two laws</h4>
+<p>1. <b>The trigger must be concrete and sensory.</b> "When I get home" is fog. "When I hear my key hit the bowl by the door" is a trigger. If you cannot name the exact sight/sound/sensation, your autopilot cannot either.<br>
+2. <b>The action must be ≤ ~10 seconds, or be the first physical step of something longer.</b> "Exercise" fails. "Put on my running shoes" fires.</p>
+<div class="ex"><b>Example:</b> Bug: phone-checking during conversations. TAP: "When my hand touches my pocket while someone is talking → I place the hand flat on the table." Trigger = exact proprioceptive sensation; action = 2 seconds.</div>
+<div class="key">A TAP is a bet that the moment will be noticed. That is why Unit 1 came first: TAPs are noticing skill, weaponized.</div>`,
+quiz:[
+{q:'Which is the best-formed TAP?',opts:[
+['"When I feel like procrastinating, I will be more disciplined"',0,'Both halves fail: the trigger is a vague internal state with no sensory signature, and the action is a trait, not a movement.'],
+['"When my laptop shows the lock screen at 9:00, I will open my task list and read the top item"',1,'Concrete visual trigger, sub-10-second physical action. This can compile to autopilot.'],
+['"Every morning I will do deep work"',0,'No trigger at all — "every morning" is a schedule wish, not a sensory cue. And "deep work" is not a 10-second action.']]},
+{q:'Why must TAP actions be tiny (≤10 seconds or a first physical step)?',opts:[
+['Because small actions are the only ones that matter',0,'Big actions matter — but autopilot cannot execute them directly. It can execute the first step that puts you on the rails.'],
+['Because the habit loop can only reliably automate short motor sequences; momentum handles the rest',1,'Exactly. "Put on running shoes" is automatable; running follows with surprising reliability once shoes are on.'],
+['To avoid getting tired',0,'Fatigue is not the mechanism. Reliability of automatic execution is.']]},
+{q:'A TAP keeps failing to fire. Per the two laws, what is the FIRST thing to check?',opts:[
+['Whether you want it badly enough',0,'Motivation is rarely the bottleneck for TAPs — design is. Check the trigger before questioning your character.'],
+['Whether the trigger has a precise sensory signature you actually encounter',1,'Right. Most dead TAPs have foggy triggers. Re-anchor on an exact sight/sound/sensation that reliably occurs.'],
+['Whether you should add a reward',0,'Rewards can help installation, but a trigger that never gets noticed makes everything downstream moot.']]}],
+cards:[
+['TAP formula + the two laws','"When [trigger], I will [action]". Law 1: trigger concrete & sensory. Law 2: action ≤10s or the first physical step.'],
+['Why do TAPs work (mechanism)?','They pre-compile a decision: choose once in advance, execute automatically in the moment when willpower is absent. (Implementation intentions.)'],
+['First debugging step for a TAP that never fires','Check the trigger: does it have an exact sensory signature that actually occurs? Foggy triggers are the #1 cause of dead TAPs.']],
+},
+
+{ id:'u4c2', icon:'🛠️', title:'Install one real TAP', kind:'drill',
+teach:`<p>Pick a bug from your ledger that involves a <i>recurring moment</i> (a habit, a friction point, a thing you always forget). Design one TAP for it and rehearse it.</p>
+<h4>Installation protocol (CFAR)</h4>
+<p>1. Write the TAP.<br>2. <b>Visual rehearsal ×10:</b> vividly imagine the trigger — the actual scene, sounds, sensations — then imagine performing the action. Ten times. This is what wires it.<br>3. If possible, physically walk through it once.</p>
+<div class="key">One TAP, installed properly, beats five TAPs written down. Praxis will quiz you on YOUR tap in review — your TAPs become spaced-repetition cards.</div>`,
+drill:{prompt:`Design and rehearse ONE TAP for a real recurring bug. Report: (a) the bug, (b) the TAP in "When X, I will Y" form, (c) confirmation you did 10 visual rehearsals and what you noticed during them.`,
+placeholder:'Bug: ...\nTAP: When ... , I will ...\nRehearsal: did 10 reps; noticed ...',min:6,tapcapture:true},
+rubric:['Trigger is sensory-concrete (exact sight/sound/sensation) and occurs reliably','Action ≤10 seconds or a true first physical step','TAP attacks a real ledger bug','10 visual rehearsals actually performed, with at least one observation from them'],
+cards:[],
+},
+
+{ id:'u4c3', icon:'📋', title:'TAP audit', kind:'checkin',
+teach:`<p>TAPs decay silently. The fix is a recurring <b>audit</b>: every 3 days, Praxis asks you which of your installed TAPs fired since last time.</p>
+<p>For each TAP: <b>fired / fired sometimes / dead</b>. Dead TAPs get one redesign (usually: sharpen the trigger) or an honest funeral. Keeping zombie TAPs on the books trains you to ignore your own plans — worse than having none.</p>
+<div class="key">This is the Feedback-loop attitude in miniature: a plan with no measurement is a wish. The audit is the measurement.</div>`,
+checkin:{key:'tapaudit',label:'TAP Audit',icon:'🔗',every:72,
+ask:'For each of your installed TAPs: did it fire since last audit? (fired / sometimes / dead). For dead ones: redesign the trigger or retire it explicitly.',
+form:'report'},
+cards:[
+['Why audit TAPs every few days?','TAPs decay silently. Unmeasured plans are wishes (Feedback-loop attitude); zombie TAPs train you to ignore your own plans.'],
+['What do you do with a dead TAP at audit time?','One redesign (usually sharpen the trigger to something more sensory/reliable) — or an explicit funeral. Never keep zombies.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 5
+{ id:'u5', icon:'📐', color:'var(--teal)', title:'Design', sub:'Make the right thing the easy thing',
+  source:[['Hammertime Day 4: Design','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/HHjn3r8n7bJp6Q5HE'],['CFAR Handbook: Systemization','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'u5c1', icon:'🏗️', title:'Choice architecture for one', kind:'learn',
+teach:`<p>Willpower is a budget; <b>design</b> is changing the prices. Instead of resolving to resist the cookie, you stop buying cookies. Instead of resolving to focus, the phone sleeps in another room.</p>
+<p>Hammertime's Design principle: <b>notice friction, then move it.</b> Add friction to what you want less of; remove friction from what you want more of. Twenty seconds of added inconvenience kills most impulses; twenty seconds removed births most habits.</p>
+<div class="ex"><b>Examples:</b> Gym bag packed by the door the night before (−friction). Social apps logged out with a long random password kept on paper downstairs (+friction). Vitamin bottle on top of the coffee machine (−friction, plus the coffee is now the TAP trigger).</div>
+<div class="key">Design beats discipline because it works while you sleep, scales to bad days, and never gets tired. A designed environment is a TAP carved into matter.</div>
+<p>The diagnostic question, always: <i>"Where did my environment make the wrong thing easy yesterday?"</i></p>`,
+quiz:[
+{q:'You keep snacking while working. The Design move is:',opts:[
+['Resolve firmly each morning not to snack',0,'That spends willpower budget daily and loses on tired days. Design changes the price instead of paying it repeatedly.'],
+['Move snacks to a high shelf in another room; put a water bottle on the desk',1,'+20 seconds of friction on the impulse, −friction on the substitute. The environment now votes for you around the clock.'],
+['Track every snack in a spreadsheet',0,'Measurement is useful but is not the design move — it does not change the price of the action in the moment.']]},
+{q:'Why does ~20 seconds of friction change behavior so much?',opts:[
+['Impulses are short-lived; if execution takes longer than the impulse, it usually dies',1,'Yes — most impulses are brief spikes. A 20-second tax outlives the spike. Symmetrically, removing 20s of setup lets fragile intentions survive into action.'],
+['Because 20 seconds is enough to feel guilty',0,'Guilt is not the mechanism — impulse decay is. Design works even when you feel no guilt at all.'],
+['It does not — only total prevention works',0,'Empirically false: small frictions move behavior a lot (this is the entire field of choice architecture).']]}],
+cards:[
+['Core Design principle','Add friction to what you want less of; remove friction from what you want more of. ~20 seconds changes most behavior.'],
+['Why does design beat discipline?','It works while you sleep, survives bad days, never tires. Willpower is a budget; design changes prices instead of spending it.'],
+['Daily design diagnostic question','"Where did my environment make the wrong thing easy yesterday?"']],
+},
+
+{ id:'u5c2', icon:'🔧', title:'One design fix', kind:'field',
+teach:`<p>Mission: change your physical or digital environment <b>today</b> so that one recurring bug becomes structurally harder to occur — or one desired behavior becomes structurally easier.</p>
+<div class="key">It must be a change in the world, not in your intentions. If a stranger inspected your space, they could see the difference.</div>`,
+mission:{text:`<b>Field mission:</b> implement ONE design fix on a real ledger bug today. Report: the bug, the physical/digital change you made (visible to a stranger), and the friction direction (+ on bad / − on good).`,
+placeholder:'Bug: ...\nChange made: ...\nFriction: added/removed on ...'},
+rubric:['The change is physical/digital and already executed (not planned)','Clearly tied to a recurring ledger bug','Friction direction is explicit and correctly reasoned','A stranger could verify the change by looking'],
+cards:[],
+},
+
+{ id:'u5c3', icon:'🗂️', title:'Systemization & the weekly design review', kind:'checkin',
+teach:`<p>CFAR's <b>Systemization</b> extends design to processes: any task you have done more than three times deserves a system — a checklist, a template, a default time, an automation, a standing order.</p>
+<p>The compounding move is the <b>weekly design review</b> (~10 minutes): scan the week for repeated friction, pick ONE recurring annoyance, and either design it away or systemize it.</p>
+<div class="key">One design fix per week = fifty-two structural improvements a year, each working forever. This is the highest-leverage recurring practice in the app.</div>`,
+checkin:{key:'design',label:'Design Review',icon:'📐',every:168,
+ask:'Weekly review: scan the week for repeated friction. Pick ONE recurring annoyance and design/systemize it away. Report the friction and the fix you implemented.',
+form:'report'},
+cards:[
+['When does a task deserve a system?','Done more than ~3 times → checklist, template, default time, automation, or standing order.'],
+['What is the weekly design review?','~10 min: scan the week for repeated friction, pick ONE recurring annoyance, design or systemize it away. 52 permanent fixes/year.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 6
+{ id:'u6', icon:'🎯', color:'var(--purple)', title:'Goal Factoring', sub:'Why do you even do that?',
+  source:[['CFAR Handbook: Goal Factoring & Units of Exchange','https://www.rationality.org/resources/handbook'],['Hammertime: Goal Factoring','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/Cu5C5KhkoXhrPMLFN']],
+  chapters:[
+
+{ id:'u6c1', icon:'🌳', title:'Actions are bundles', kind:'learn',
+teach:`<p>Almost nothing you do serves a single purpose. You attend the weekly meeting for: information (a little), being seen as reliable (a lot), coffee with Ana afterwards (honestly, mostly). <b>Goal Factoring</b> makes the bundle explicit:</p>
+<p>1. Pick a recurring action (or one you are avoiding).<br>2. List ALL the goals it serves — including the unflattering ones. (The list is not complete until something on it is slightly embarrassing.)<br>3. For each goal, ask: <b>is there a cheaper or better way to get this?</b><br>4. Recombine: keep, restructure, or replace the action.</p>
+<div class="ex"><b>Example:</b> Tomas "reads the news" 90 min/day. Factored goals: feel informed (10 min digest would do), conversation material (Slack thread does it better), and — the embarrassing one — a socially acceptable break from work. Replacing the third with actual walks cut news to 15 min and improved both rest and focus.</div>
+<div class="key">The classic finding: the action survives, but restructured — or one hidden goal turns out to be load-bearing and finally gets served properly instead of sideways.</div>`,
+quiz:[
+{q:'How do you know your goal list for an action is complete?',opts:[
+['When it contains at least 5 goals',0,'No magic number. The CFAR heuristic is different: completeness is signaled by honesty, not count.'],
+['When at least one listed goal is slightly embarrassing to admit',1,'Yes — the load-bearing goals are often the unflattering ones (status, avoidance, comfort). A list with only respectable goals is usually missing the engine.'],
+['When every goal is measurable',0,'Measurability is nice but unrelated to completeness. "Feeling needed" is unmeasurable and frequently the true engine.']]},
+{q:'Goal Factoring most often concludes with:',opts:[
+['Quitting the analyzed activity',0,'Quitting happens but is not the modal outcome. Usually some goals are real and worth serving.'],
+['Keeping the activity but restructuring it, or serving a hidden goal directly instead of sideways',1,'Right. The win is usually surgical: same goals, cheaper bundle — or a hidden goal finally served on purpose.'],
+['Feeling guilty about your true motives',0,'Anti-goal. The unflattering motives are treated as legitimate customer requirements, not sins.']]}],
+cards:[
+['Goal Factoring — 4 steps','1) Pick recurring/avoided action. 2) List ALL goals it serves (incl. embarrassing). 3) Per goal: cheaper/better way? 4) Recombine: keep, restructure, replace.'],
+['Completeness test for a goal list','At least one entry is slightly embarrassing. Respectable-only lists are missing the engine.'],
+['Modal outcome of goal factoring','Not quitting: restructuring the action, or serving a hidden goal directly instead of sideways.']],
+},
+
+{ id:'u6c2', icon:'⚖️', title:'Units of Exchange', kind:'learn',
+teach:`<p>Goal Factoring needs a currency. CFAR's <b>Units of Exchange</b>: train yourself to convert between time, money, energy, and attention — because you trade them constantly whether or not you look.</p>
+<p>Compute your rough <b>hourly value</b> (not salary — what an hour of discretionary time is worth to you). Then practice conversions:</p>
+<div class="ex">• 40 min/week commute fight over a cheaper parking spot, to save 6€ — is that a trade you would take if stated aloud?<br>• A 90€ robot vacuum vs. 26 hours/year of sweeping.<br>• "Free" social media: 70 min/day = 425 hours/year. At your hourly value, what did it cost?</div>
+<div class="key">The skill is not frugality in any single currency — it is <i>refusing trades you would never accept if stated explicitly</i>. Most people burn hours to save cents and burn attention to save minutes.</div>`,
+quiz:[
+{q:'The core skill of Units of Exchange is:',opts:[
+['Saving as much money as possible',0,'Money is one currency among four. Optimizing it alone produces classic errors like burning hours to save cents.'],
+['Making implicit trades explicit, and refusing the ones you would never accept aloud',1,'Exactly. The conversions (time↔money↔energy↔attention) exist to surface trades you are already making blindly.'],
+['Valuing your time at your salary rate',0,'Salary is a weak proxy — discretionary-hour value differs from billed value, and varies with energy and context.']]}],
+cards:[
+['The four currencies of Units of Exchange','Time, money, energy, attention — you trade between them constantly whether or not you look.'],
+['Units of Exchange — the core skill','Make implicit trades explicit; refuse any trade you would never accept if stated aloud (e.g. 40 min of fighting traffic to save 6€).']],
+},
+
+{ id:'u6c3', icon:'🧮', title:'Factor a real activity', kind:'drill',
+teach:`<p>Apply both tools to your real schedule. Choose a recurring activity that consumes ≥2 hours/week — or a commitment you keep but resent.</p>`,
+drill:{prompt:`Goal-factor a real recurring activity (≥2h/week). Report: (a) the activity + weekly cost in time/money/energy, (b) the FULL goal list — flag the embarrassing one, (c) for each goal a cheaper/better channel if one exists, (d) your recombination decision (keep / restructure how / replace with what).`,
+placeholder:'Activity: ... (~Xh/week)\nGoals: 1)... 2)... 3) [embarrassing] ...\nCheaper channels: ...\nDecision: ...',min:10},
+rubric:['Real activity with honest cost accounting across currencies','Goal list passes the embarrassment test','Each goal examined for a cheaper/better channel, not just the convenient ones','A concrete recombination decision with a first step, not "I should think about this"'],
+cards:[],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 7
+{ id:'u7', icon:'🌊', color:'var(--red)', title:'Aversions & Comfort', sub:'Emotions are data, avoidance is expensive',
+  source:[['CFAR Handbook: Aversion Factoring & CoZE','https://www.rationality.org/resources/handbook'],['Hammertime Day 5 & 7-8','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/c5wFM7KJLtuMnLFsH']],
+  chapters:[
+
+{ id:'u7c1', icon:'🧲', title:'Aversion Factoring', kind:'learn',
+teach:`<p>When you "just never get around to" something for months, the cause is usually an <b>aversion</b> — a quiet flinch with a reason inside it. Aversion Factoring treats the flinch as data:</p>
+<p>1. Name the avoided thing.<br>2. List every aversion: imagine starting it <i>right now</i> and write down each "ugh" as it arrives.<br>3. Sort each aversion: is it tracking something <b>real</b> (the task genuinely has this cost) or is it <b>miscalibrated</b> (inherited, outdated, exaggerated)?<br>4. <b>Real → redesign the task</b> to remove the cost. <b>Miscalibrated → test it gently</b> (that is CoZE, next chapter).</p>
+<div class="ex"><b>Example:</b> Avoided: calling the landlord. Aversions: (a) phone calls can start at bad moments — real → schedule it, send a text first; (b) "he will be angry" — testable: last 3 interactions were fine → miscalibrated, shrink it with one small test call.</div>
+<div class="key">Never bulldoze an aversion with willpower before sorting it. Some flinches are your best risk-detection firing correctly. The sin is not having aversions; it is never looking inside them.</div>`,
+quiz:[
+{q:'You feel a strong "ugh" about a task. The aversion-factoring move is:',opts:[
+['Push through — aversions are just weakness',0,'Bulldozing unsorted aversions discards real information and trains self-distrust. Some flinches are correct risk-detection.'],
+['List the component aversions, then sort each: tracking something real vs. miscalibrated',1,'Yes. Real costs get designed away; miscalibrated fears get gently tested. Different defects, different repairs.'],
+['Conclude the task is not for you',0,'That treats the bundled flinch as a verdict. Unbundled, half of it is usually fixable and half dissolvable.']]},
+{q:'An aversion turns out to be REAL (the task genuinely has that cost). What do you do?',opts:[
+['Redesign the task to remove or compensate the cost',1,'Right — e.g. hate the gym crowd? Go at 7am or train at home. Respect the data, change the design.'],
+['Use willpower, since now you understand it',0,'Understanding a real cost does not make paying it free. Redesign beats repeated payment.'],
+['Expose yourself to it repeatedly until it stops bothering you',0,'Exposure is for MIScalibrated aversions. Numbing yourself to real costs is self-harm with extra steps.']]}],
+cards:[
+['Aversion Factoring — 4 steps','1) Name avoided thing. 2) List each "ugh" (imagine starting now). 3) Sort: real vs miscalibrated. 4) Real → redesign task; miscalibrated → gentle test (CoZE).'],
+['Real vs miscalibrated aversion — different repairs','Real cost → change the task design. Miscalibrated fear → small safe experiment. Never bulldoze before sorting.']],
+},
+
+{ id:'u7c2', icon:'🚪', title:'CoZE: experiments, not exposure', kind:'field',
+teach:`<p><b>Comfort Zone Expansion</b> is the empiricist branch: for a <i>miscalibrated</i> aversion, design a small real-world experiment that tests the fear's prediction.</p>
+<p>The frame matters: CoZE is <b>not</b> "do scary things to toughen up." It is <i>"my fear predicts X will happen; let us check."</i> You are a scientist, the fear is a hypothesis, the world is the lab.</p>
+<div class="ex"><b>Examples:</b> Fear: "If I ask a basic question in the meeting, people will think less of me." Experiment: ask one basic question; observe actual reactions. Fear: "Negotiating the quote will offend the contractor." Experiment: ask politely for one discount this week; record response.</div>
+<div class="key">Rules: the experiment must be safe, reversible, real (not simulated), and small enough to actually run this week. Record the prediction BEFORE and the outcome AFTER — otherwise hindsight eats the update.</div>`,
+mission:{text:`<b>Field mission:</b> design and RUN one CoZE experiment this week on a miscalibrated aversion. Report: the fear's explicit prediction (written before), the experiment, what actually happened, and the size of your update.`,
+placeholder:'Fear predicted: ...\nExperiment: ...\nWhat happened: ...\nUpdate: ...'},
+rubric:['Targets a plausibly miscalibrated aversion (not a real cost)','Prediction recorded before the test, specific enough to be falsified','Experiment was real, safe, reversible, and actually executed','Honest comparison of prediction vs outcome, with an explicit update'],
+cards:[
+['CoZE — correct frame','Not "toughen up": treat the fear as a hypothesis making a prediction, design a small real experiment, compare prediction to outcome.'],
+['CoZE experiment rules','Safe, reversible, real (not simulated), small enough to run this week, prediction written down BEFORE.']],
+},
+
+{ id:'u7c3', icon:'🪙', title:'Sunk Cost Faith', kind:'learn',
+teach:`<p>Hammertime Day 8 offers a contrarian pairing. The <b>sunk cost fallacy</b> — continuing because of what you already spent — is a real bias. But beginners overcorrect into <b>quitting everything the moment it feels hard</b>, which has its own name: the sunk cost <i>temptation</i> is sometimes the only thing carrying you through the desert every long-term project crosses.</p>
+<p>The reconciliation: evaluate <b>at the right timescale</b>. Decide whether to continue a marathon project on scheduled review days (monthly, quarterly) using forward-looking math only. Between reviews, practice <b>Sunk Cost Faith</b>: the feeling of "but I have put so much in" is reframed as evidence that past-you, on a calm day, judged this worth doing.</p>
+<div class="key">Day-to-day mood is noise. Scheduled, calm, forward-looking review is signal. Quit on signal, never on noise.</div>`,
+quiz:[
+{q:'When should you re-evaluate whether to continue a long-term project?',opts:[
+['Whenever it feels pointless',0,'Feels-pointless days cluster exactly where the desert is driest. Quitting on mood noise kills most worthwhile projects at their hardest mile.'],
+['On scheduled review days, with forward-looking math; between reviews, keep faith',1,'Right. This gets you the anti-sunk-cost correction at the timescale where it is valid, without the overcorrection of mood-quitting.'],
+['Never — quitting is always the fallacy',0,'Refusing to ever quit is the original sunk cost fallacy. The fix is scheduled forward-looking review, not blind persistence.']]}],
+cards:[
+['Sunk Cost Faith — the rule','Evaluate long projects only on scheduled review days with forward-looking math. Between reviews, persist: mood is noise, review is signal.'],
+['The beginner overcorrection to sunk-cost awareness','Quitting anything the moment it feels hard. The desert in the middle of long projects then kills everything worthwhile.']],
+},
+]},
+];
+// ===================== PRAXIS CURRICULUM (Units 8-14) =====================
+CURRICULUM.push(
+
+// ---------------------------------------------------------------- UNIT 8
+{ id:'u8', icon:'🔮', color:'var(--blue)', title:'Inner Simulator', sub:'Your gut runs simulations — use them',
+  source:[['CFAR Handbook: Inner Simulator & Murphyjitsu','https://www.rationality.org/resources/handbook'],['Hammertime Day 10: Murphyjitsu','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/N47M3JiHveHfwdbFg'],['Book: Superforecasting (Tetlock)','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'u8c1', icon:'🎞️', title:'Asking your gut properly', kind:'learn',
+teach:`<p>Your System 1 contains a high-fidelity <b>simulator</b> trained on your entire life. It knows things your explicit reasoning does not — but it answers a different question than the one you usually ask.</p>
+<p>Ask "will my plan work?" and your verbal mind replies with hope. Ask the simulator instead — <b>concretely picture the outcome having happened</b> — and read off the involuntary reaction:</p>
+<div class="key">The <b>surprise-o-meter</b>: vividly imagine it is next Friday and the report is NOT finished. Are you surprised? If your gut says "obviously that is what happens," your plan was fiction and the simulator just told you so.</div>
+<p>The simulator speaks in surprise, relief, dread, and "of course" — not in words. The skill is posing questions in its native format: specific scenes, specific dates, outcomes stated as already-happened facts.</p>
+<div class="ex"><b>Example:</b> "Imagine you delegated the launch email to Sam and it went out on time. Surprised?" Gut: mild disbelief. That disbelief is data — something in you knows Sam is overloaded. Now you can ask what it knows.</div>`,
+quiz:[
+{q:'Why does "imagine it is Friday and the report is unfinished — are you surprised?" work better than "will I finish by Friday?"',opts:[
+['It is more pessimistic, and pessimism is more accurate',0,'Not pessimism — format. The simulator can run a concrete scene; it cannot parse an abstract probability question, which the verbal mind hijacks with hope.'],
+['It poses the question in the simulator’s native format — a concrete scene — and reads an involuntary signal',1,'Exactly. Surprise/no-surprise is involuntary and hard to fake, unlike verbal predictions which are social performances.'],
+['It commits you psychologically to finishing',0,'Commitment devices are a different tool. This one is purely diagnostic: extracting information System 1 already has.']]},
+{q:'Your gut feels NO surprise at imagining your plan failing. The right response is:',opts:[
+['Push the plan harder to prove your gut wrong',0,'The signal was information, not a challenge. Ignoring it repeats the exact mistake the technique exists to prevent.'],
+['Treat it as data: ask what failure mode the simulator foresees, then patch the plan',1,'Right — and that question-asking loop has a name: Murphyjitsu (next chapter).'],
+['Abandon the plan',0,'Too coarse. The simulator usually objects to a specific weak joint, not the whole plan. Find the joint.']]}],
+cards:[
+['What is the surprise-o-meter?','Vividly imagine the outcome as an already-happened fact and read the involuntary surprise/no-surprise. Unsurprised by failure = plan is fiction.'],
+['Why query System 1 with scenes instead of questions?','The simulator’s native format is concrete scenes with dates and sensory detail; abstract "will it work?" gets hijacked by verbal hope.']],
+},
+
+{ id:'u8c2', icon:'🥋', title:'Murphyjitsu', kind:'drill',
+teach:`<p><b>Murphyjitsu</b> = iterated pre-mortems powered by the surprise-o-meter:</p>
+<p>1. Write your plan.<br>2. Simulate: "It failed." Surprised?<br>3. If not surprised: ask the simulator <i>how</i> it failed (the first image that comes is the data). Patch the plan against that specific failure.<br>4. Re-simulate. Repeat until imagined failure genuinely surprises you.</p>
+<div class="key">Stop condition: <i>failure would surprise you</i>. Not "I added three safeguards" — surprise. That asymmetry is what makes it a feedback loop instead of a ritual.</div>
+<p>Use it on real plans only: tomorrow's deadline, the weekend trip, the difficult email. A plan you will actually run is the only test bench that pushes back.</p>`,
+drill:{prompt:`Run Murphyjitsu on a REAL plan from the next 7 days. Report: (a) the plan, (b) each simulated failure the simulator produced (at least 2 rounds), (c) the patch for each, (d) whether failure now genuinely surprises your gut — be honest if it does not.`,
+placeholder:'Plan: ...\nRound 1 — gut says it fails by: ... → patch: ...\nRound 2 — ... → patch: ...\nFailure now surprising? ...',min:8},
+rubric:['Plan is real and within ~7 days','At least 2 iterations of simulate→failure-mode→patch','Failure modes are specific scenes (who/what/when), not categories like "procrastination"','Honest final surprise reading; if still unsurprised, says so and names the residual hole'],
+cards:[
+['Murphyjitsu loop','Plan → imagine it failed → if unsurprised, ask HOW it failed → patch that specific mode → re-simulate. Stop when failure would genuinely surprise you.'],
+['Murphyjitsu stop condition','Not "added enough safeguards" — imagined failure produces genuine gut surprise. Surprise is the metric, patches are the means.']],
+},
+
+{ id:'u8c3', icon:'⏱️', title:'Time calibration', kind:'checkin',
+teach:`<p>The planning fallacy is the best-documented bias in the literature — and the most fixable, because feedback is cheap: <b>predict, then measure.</b></p>
+<p>Standing practice: each day, before starting some real task, predict how many minutes it will take. When it is done, record the actual. Praxis keeps score and shows your personal <b>fudge ratio</b> (actual ÷ predicted). Most people start near 1.5-2×.</p>
+<div class="key">After ~20 resolved predictions, you will know YOUR multiplier, per task type. From then on, "this will take an hour" comes with an automatic, evidence-based correction — calibration you can actually feel. (Hammertime Day 9.)</div>`,
+checkin:{key:'timecal',label:'Time Prediction',icon:'⏱️',every:24,
+ask:'Pick a real task you will do today. Predict its duration in minutes BEFORE starting. Resolve it (enter actual minutes) once done — open predictions wait in the Habits tab.',
+form:'predict-min'},
+cards:[
+['How do you actually fix the planning fallacy?','Predict durations before real tasks, record actuals, learn your personal fudge ratio (actual ÷ predicted), then apply it to future estimates.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 9
+{ id:'u9', icon:'🕯️', color:'var(--purple)', title:'Focusing', sub:'Listening to the wordless layer',
+  source:[['Hammertime: Focusing','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/noXTkjP45BAZqKJxM'],['Book: Focusing (Gendlin)','https://www.rationality.org/resources/reading-list'],['Hammertime Day 6: Mantras','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/uhqax7dL8edMpqJWp']],
+  chapters:[
+
+{ id:'u9c1', icon:'🫧', title:'The felt sense', kind:'learn',
+teach:`<p>Gendlin's <b>Focusing</b> begins from a research finding: therapy clients who improved were the ones who paused mid-sentence, attended to a vague bodily <i>something</i>, and let words come from it — rather than explaining themselves fluently.</p>
+<p>That vague something is the <b>felt sense</b>: a pre-verbal, bodily sense of a whole situation. "Something about this project feels... [pause] ...crowded?" The word "crowded" either clicks — a small bodily release, the <b>felt shift</b> — or it does not, and you try another word.</p>
+<h4>The loop</h4>
+<p>1. Pick a situation; ask "what does ALL of that feel like?" and wait.<br>2. Let a fuzzy bodily quality form (chest, throat, gut — pressure, fog, knot).<br>3. Offer it words or images, gently, like guesses.<br>4. Check each guess against the body: click or no click.<br>5. On a click, ask the sense itself: "what makes it so [word]?" and wait again.</p>
+<div class="key">Why this is in a rationality curriculum: enormous amounts of evidence about your real motivations and beliefs are stored sub-verbally. Focusing is the read-head for that data. Without it, Goal Factoring lists stay respectable and aversions stay unnamed.</div>`,
+quiz:[
+{q:'What distinguishes a felt sense from an emotion like "angry"?',opts:[
+['A felt sense is stronger',0,'Usually the opposite — it is subtle, vague, easy to miss. Its signature is wholeness and pre-verbality, not intensity.'],
+['A felt sense is a pre-verbal bodily sense of a WHOLE situation, initially without a name',1,'Yes. "Angry" is a labeled category; a felt sense is the unlabeled "something about all this" that words must be tested against.'],
+['Felt senses are only found in meditation',0,'They arise in ordinary moments — mid-sentence, mid-decision. Focusing is noticing them, not inducing special states.']]},
+{q:'How do you know a word you offered to the felt sense is RIGHT?',opts:[
+['It sounds accurate when you say it',0,'Verbal plausibility is exactly what Focusing distrusts. The check is bodily, not rhetorical.'],
+['A small bodily release or "click" — the felt shift',1,'Right. The body confirms or rejects the word. No click means keep guessing, even if the word is clever.'],
+['It matches what you already believed about the situation',0,'Matching prior beliefs is a bug, not a test — the point is to learn something the verbal layer did not already know.']]}],
+cards:[
+['Felt sense — definition','A pre-verbal, bodily sense of a whole situation (pressure/fog/knot in chest, throat, gut) that precedes any label.'],
+['Felt shift — what is it?','The small bodily release/"click" when an offered word or image fits the felt sense. It is the truth-test in Focusing.'],
+['Why does a rationality curriculum include Focusing?','Much evidence about your real motivations/beliefs is stored sub-verbally. Focusing is the read-head; without it goal lists stay respectable and aversions unnamed.']],
+},
+
+{ id:'u9c2', icon:'🪞', title:'A focusing session', kind:'drill',
+teach:`<p>Run one short session (10-15 min, somewhere quiet). Choose something mildly unresolved — a ledger bug with emotional residue works well. Not your heaviest material; pick a 4/10, not a 9/10.</p>
+<div class="key">You will report on the PROCESS, not the content. The content is yours; whether you followed the loop is what feedback can help with.</div>`,
+drill:{prompt:`Run a 10-15 min Focusing session on something mildly unresolved. Report the process: (a) what you picked and why it was mild enough, (b) where/how the felt sense showed up bodily, (c) 2-3 words/images you offered and how each checked out (click / no click), (d) any felt shift and what, if anything, surprised you. Content stays as private as you like — describe the mechanics.`,
+placeholder:'Picked: ... (about 4/10 heavy)\nFelt sense: ... in my ...\nGuesses: "X" — no click; "Y" — partial; "Z" — click\nShift/surprise: ...',min:12},
+rubric:['Chose appropriately mild material','Located a bodily felt sense and stayed with it (vs. analyzing verbally)','Tested multiple words/images against the body, reporting clicks honestly','Curious, non-coercive stance — no forcing meaning; surprise welcomed'],
+cards:[],
+},
+
+{ id:'u9c3', icon:'📿', title:'Mantras', kind:'drill',
+teach:`<p>Hammertime Day 6: a <b>mantra</b> is a short, self-authored sentence that re-aims your mind when a known failure mode fires. Not affirmations — <i>cached corrections</i>. Existing examples: "Is that your true rejection?", "What would I do if I were not afraid?", "The map is not the territory."</p>
+<p>A good mantra: (a) targets a failure mode you actually have, (b) is phrased in words that move YOU (borrowed words decay fast), (c) is short enough to fire mid-moment, (d) pairs naturally with a noticing trigger — a mantra is the action half of a mental TAP.</p>
+<div class="ex"><b>Example:</b> Failure mode: spiraling into thoroughness on low-stakes tasks. Mantra: "Done is a kind of perfect." Trigger: noticing the third revision pass.</div>`,
+drill:{prompt:`Craft ONE mantra for a failure mode you have verified in yourself (ledger evidence welcome). Report: (a) the failure mode + evidence it recurs, (b) the mantra in your own words, (c) the noticing trigger it pairs with, (d) why these specific words move you where generic advice does not.`,
+placeholder:'Failure mode: ... (seen on ... )\nMantra: "..."\nFires when I notice: ...\nWhy these words: ...',min:6},
+rubric:['Failure mode is real and evidenced, not aspirational','Mantra is short, self-authored, and emotionally live for the author','Paired with a concrete noticing trigger (mental TAP structure)','Mantra is a correction/re-aim, not a feel-good affirmation'],
+cards:[
+['Mantra (Hammertime) — definition','A short self-authored sentence that re-aims your mind when a known failure mode fires: a cached correction, paired with a noticing trigger. Not an affirmation.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 10
+{ id:'u10', icon:'🤝', color:'var(--teal)', title:'Internal Alignment', sub:'Stop fighting yourself',
+  source:[['CFAR Handbook: Understanding Shoulds & IDC','https://www.rationality.org/resources/handbook'],['Hammertime: Internal Double Crux & TDT for Humans','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/mQmx4kQQtHeBip9ZC']],
+  chapters:[
+
+{ id:'u10c1', icon:'⚖️', title:'Understanding shoulds', kind:'learn',
+teach:`<p>CFAR's most quietly radical idea: when you feel "I should want to work but I want to rest," <b>both signals are coming from you</b>, and both encode real information about what you value.</p>
+<p>The "should" usually carries social/long-term data (deadlines exist, people rely on you). The resistance usually carries local data (you are depleted, the task is misdesigned, the goal stopped being yours two years ago). Treating either side as the enemy throws away half your information.</p>
+<div class="key">Diagnostic: a healthy goal feels like <i>wanting</i>, even when hard. A goal that runs purely on "should"-pressure for months is either someone else’s goal, or yours but misdesigned. Both are bugs — file them.</div>
+<p>This reframe converts "I am lazy and broken" (unworkable) into "two subsystems disagree and each has evidence" (workable — by the next chapter).</p>`,
+quiz:[
+{q:'You have needed "discipline" to force a goal for six months straight. The CFAR-style diagnosis is:',opts:[
+['You lack willpower; train harder',0,'Months of pure should-pressure is data about the goal, not about your character. Forcing harder discards that data.'],
+['The resistance encodes information: the goal may be someone else’s, or yours but misdesigned — investigate, both options are bugs',1,'Right. Healthy goals mostly feel like wanting, even when hard. Chronic forcing means a subsystem is voting "no" for reasons worth hearing.'],
+['Goals are not supposed to feel good; ignore the feeling',0,'Hard ≠ joyless-for-months. Persistent resistance is signal, and "ignore signal" is not a rationality technique.']]}],
+cards:[
+['What information does a "should" carry vs. the resistance to it?','Should: social/long-term data (commitments, consequences). Resistance: local data (depletion, misdesigned task, dead goal). Both are yours; both are evidence.'],
+['Diagnostic for a goal running on pure should-pressure for months','Either someone else’s goal or yours-but-misdesigned. Both are bugs to file and factor — not character flaws to bulldoze.']],
+},
+
+{ id:'u10c2', icon:'🧬', title:'Internal Double Crux', kind:'drill',
+teach:`<p><b>Internal Double Crux</b> stages a real negotiation between the conflicting parts:</p>
+<p>1. Name the conflict ("ship it now" vs "it is not ready").<br>2. Let each side speak <b>in first person, fully, without interruption</b> — write both monologues. The side you like less goes second and gets MORE space.<br>3. Find each side's <b>crux</b>: what would change its mind? ("If I knew a delay would not slip forever, I would relax about shipping.")<br>4. Look for the experiment or reframe that satisfies both cruxes.<br>5. Close with a deal both sides actually accept — check for the felt shift from Unit 9; a deal without the click is a coup, and coups get reversed at 2am.</p>
+<div class="key">The Focusing skill is load-bearing here: each "side" is often a felt sense first and an argument second. Let it speak from the body.</div>`,
+drill:{prompt:`Run IDC on a real current internal conflict (a ledger bug with "I want X but also Y" structure). Report: (a) the two sides, (b) a few first-person lines from EACH (less-liked side gets more space), (c) each side’s crux, (d) the deal — and whether it produced a genuine click or just a verbal compromise.`,
+placeholder:'Conflict: ...\nSide A says: "..."\nSide B says: "..."\nCrux A: ... / Crux B: ...\nDeal: ... Click? ...',min:12},
+rubric:['Real, current conflict — not hypothetical','Both sides speak in first person; the disliked side gets genuine charity and space','Cruxes are actual mind-changers, specific and testable','Deal addresses both cruxes; honest report of click vs mere verbal truce'],
+cards:[
+['IDC — the five moves','Name conflict → each side speaks first-person (disliked side gets more space) → find each side’s crux → find experiment/reframe satisfying both → deal verified by felt shift.'],
+['Why must an IDC deal produce a felt "click"?','A deal one side never accepted is a coup; the losing subsystem reverses it later (2am, week 3). The click is ratification.']],
+},
+
+{ id:'u10c3', icon:'🤞', title:'TDT for humans', kind:'learn',
+teach:`<p>Hammertime's "TDT for Humans," humanized: you are not deciding <i>this case</i>; you are deciding <b>what kind of agent you are in all structurally similar cases</b>. Skipping today's run is not one skipped run — it is ratifying the policy "skip when tired," which future-you will execute hundreds of times.</p>
+<p>Practical consequences:</p>
+<p>• <b>Self-promises become precious.</b> Every kept promise to yourself raises the credibility of all future internal deals (including your IDC deals). Every broken one taxes them. So: promise rarely, keep ruthlessly.<br>• <b>Decide policies, not cases.</b> "Do I answer email at 22:30?" is exhausting nightly; "I do not answer email after 21:00" is decided once.<br>• <b>Design escape hatches in advance.</b> A policy with a principled exception ("unless someone is blocked on me") survives; a policy that meets reality unprepared dies, and its death taxes the next policy.</p>
+<div class="key">Your relationship with future-you is iterated, not one-shot. Defect today, and tomorrow-you stops believing your commitments — at which point no technique in this app can be installed.</div>`,
+quiz:[
+{q:'Why does "promise rarely, keep ruthlessly" matter for everything else in this app?',opts:[
+['Because broken self-promises feel bad',0,'The cost is structural, not just emotional: it is about the credibility of future internal contracts.'],
+['Because TAPs, IDC deals, and policies are all promises to future-you — their installation depends on your internal credit rating',1,'Exactly. Each broken self-promise taxes every future internal deal. Self-trust is the currency the whole toolbox runs on.'],
+['Because others are watching',0,'This is about the internal game; it binds even in perfect privacy.']]}],
+cards:[
+['"Deciding the policy, not the case" — what does it mean?','Each choice ratifies a rule for all structurally similar situations. Skipping a run when tired = installing "skip when tired" as policy.'],
+['Why promise rarely and keep ruthlessly?','Every kept self-promise raises the credibility of future internal deals (TAPs, IDC, policies); every broken one taxes them. Self-trust is the installation medium.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 11
+{ id:'u11', icon:'🎲', color:'var(--gold)', title:'Epistemics', sub:'Calibration, Fermi, and the scout',
+  source:[['Book: The Scout Mindset (Galef)','https://www.rationality.org/resources/reading-list'],['Book: Superforecasting (Tetlock)','https://www.rationality.org/resources/reading-list'],['Book: How to Measure Anything ideas via Fermi practice','https://www.rationality.org/resources/reading-list']],
+  chapters:[
+
+{ id:'u11c1', icon:'🔭', title:'Scout mindset', kind:'learn',
+teach:`<p>Julia Galef's frame: reasoning runs in one of two modes. The <b>soldier</b> asks "can I believe this?" of friendly evidence and "must I believe this?" of hostile evidence. The <b>scout</b> asks one question of everything: <i>"is it true?"</i> — because the scout's job is an accurate map, and inaccurate maps get scouts killed.</p>
+<h4>Field tests for catching your inner soldier</h4>
+<p>• <b>Selective rigor:</b> you demand citations only from conclusions you dislike.<br>• <b>The relief tell:</b> finding a flaw in opposing evidence feels like <i>relief</i> — that is defense, not inquiry.<br>• <b>The status quo swap:</b> would you choose your current job/city/stack if you did not already have it?<br>• <b>The true rejection:</b> is the objection you are voicing the thing that would actually change your mind?</p>
+<div class="key">Scout mindset is not niceness or fence-sitting. Scouts can hold strong positions — they just bought them with evidence and keep the receipt.</div>`,
+quiz:[
+{q:'You notice you feel RELIEF on finding a methodological flaw in a study that contradicts you. What is that feeling?',opts:[
+['Good epistemic instincts rewarding rigor',0,'If rigor were the motive, the same flaw-hunting energy would aim at studies you agree with. Does it?'],
+['A soldier-mindset tell: you were defending, not inquiring',1,'Yes — relief means the conclusion was the goal. A scout finding a flaw feels something closer to "hm, okay, updating less then."'],
+['Proof the study was wrong',0,'A flaw weakens evidence; your relief is information about YOU, not about the study’s truth value.']]},
+{q:'"Would you choose your current situation if you did not already have it?" — what bias does this swap test detect?',opts:[
+['Sunk cost / status quo rationalization',1,'Right — the soldier defends the existing position because it is yours. The swap removes the ownership and asks the scout question directly.'],
+['The planning fallacy',0,'That is about time estimation — Unit 8’s territory.'],
+['Anchoring on numbers',0,'Different bias; the swap targets attachment to incumbent choices.']]}],
+cards:[
+['Soldier vs scout — the two questions','Soldier: "CAN I believe this?" (friendly evidence) / "MUST I believe this?" (hostile). Scout: "Is it true?" — of everything, symmetrically.'],
+['The relief tell','Feeling relief when finding a flaw in opposing evidence = you were defending a conclusion, not inquiring. Scouts update; soldiers celebrate.'],
+['What is your "true rejection"?','The consideration that would ACTUALLY change your mind — often not the objection you say out loud. Arguing past it wastes everyone’s time, including yours.']],
+},
+
+{ id:'u11c2', icon:'🎯', title:'Calibration training', kind:'calib',
+teach:`<p>A calibrated mind, when it says "70% sure," is right about 70% of the time. Calibration is the rare epistemic skill with a <b>tight feedback loop</b> — which makes it trainable in-app, the Basics-attitude way.</p>
+<p>Below: trivia statements. Answer true/false AND give your confidence. The score that matters is not accuracy — it is whether your 90%s behave like 90%s. Overconfidence shows up within twenty questions, in numbers you cannot argue with.</p>
+<div class="key">Transfer rule: the point is not trivia — it is learning what 70% <i>feels like from the inside</i>, so you can attach honest numbers to "the client will sign" and "I will finish by Friday."</div>`,
+calib:10,
+cards:[
+['What does it mean to be calibrated?','When you say "70% confident," you are right ~70% of the time. Tested by tracking confidence vs outcomes over many predictions.'],
+['Why train calibration on trivia?','Tight, fast feedback loop. The transferable skill is knowing what 70% vs 95% FEELS like from inside, for use on real predictions.']],
+},
+
+{ id:'u11c3', icon:'✉️', title:'Fermi estimates', kind:'drill',
+teach:`<p>A <b>Fermi estimate</b> decomposes an unknowable-sounding number into multipliable known-ish parts. Piano tuners in Chicago, sure — but the life-relevant versions are better: <i>What does this meeting cost in salary? How many deep-work hours do I actually have left this year? What is my commute worth over a decade?</i></p>
+<h4>Method</h4>
+<p>1. Decompose into factors you can bound.<br>2. Estimate each within a factor of ~3 (use ranges).<br>3. Multiply; keep units honest (the #1 Fermi bug is unit drift).<br>4. Sanity-check against a known anchor.<br>5. Note which factor dominates the uncertainty — that is the one worth refining.</p>
+<div class="ex"><b>Example:</b> "Is it worth automating this weekly report?" 45 min/week × 48 weeks ≈ 36 h/year. Automation: ~8 h to build + 30 min/quarter upkeep ≈ 10 h/year-one. Pays back in under 4 months; dominant uncertainty: the build estimate (apply your Unit 8 fudge ratio).</div>`,
+drill:{prompt:`Run a Fermi estimate on a real decision-relevant quantity in YOUR life (cost of a habit, value of an automation, hours of X remaining this year...). Show: decomposition, per-factor estimates with rough ranges, the multiplication, a sanity-check anchor, and the dominant uncertainty.`,
+placeholder:'Question: ...\nDecomposition: ...\nFactors: A ≈ ... (range ...), B ≈ ...\nResult: ... Sanity check: ...\nDominant uncertainty: ...',min:8},
+rubric:['Quantity is real and decision-relevant to the author','Decomposition into boundable factors; units tracked correctly throughout','Ranges acknowledged, not false precision','Sanity-check anchor used; dominant uncertainty identified correctly'],
+cards:[
+['Fermi method — 5 steps','Decompose → estimate factors within ~3× (ranges) → multiply with honest units → sanity-check vs known anchor → name the dominant uncertainty.'],
+['#1 Fermi bug','Unit drift — minutes silently becoming hours, per-week becoming per-year. Keep units attached to every number.']],
+},
+
+{ id:'u11c4', icon:'🌦️', title:'Daily forecasts', kind:'checkin',
+teach:`<p>Superforecasters are made by volume: many small predictions, scored honestly, updated incrementally. Your standing practice: <b>one real prediction per day with a probability</b>, about your own life or world events. "Package arrives before Saturday: 80%." "I leave the office by 18:30: 60%."</p>
+<p>Resolve them when reality answers. Praxis tracks your Brier score and calibration curve over time.</p>
+<div class="key">Bayes for humans, minimal version: your probability should move when evidence arrives, by an amount that would not embarrass you in either direction. Writing the number down BEFORE is what makes the embarrassment detectable — and therefore the learning possible. (Maths-attitude readers: each resolved forecast is one update step; the Brier score is your loss function.)</div>`,
+checkin:{key:'forecast',label:'Daily Forecast',icon:'🎲',every:24,
+ask:'Make one falsifiable prediction with a probability (about your day, week, or the world). Resolve pending ones in the Habits tab when reality answers.',
+form:'predict-prob'},
+cards:[
+['Why write the probability BEFORE the outcome?','Pre-registration makes miscalibration detectable (and feelable). Post-hoc "I knew it" destroys the training signal.'],
+['Brier score — what is it?','Mean of (probability − outcome)² over your forecasts. Lower is better; 0.25 = coin-flip guessing on binary events at 50%.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 12
+{ id:'u12', icon:'🌉', color:'var(--orange)', title:'Double Crux', sub:'Disagreement as a search problem',
+  source:[['CFAR Handbook: Double Crux','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'u12c1', icon:'🪜', title:'Cruxes', kind:'learn',
+teach:`<p>A <b>crux</b> for your belief B is a claim C such that if you changed your mind about C, you would change your mind about B. Most stated arguments are not cruxes — they are decoration on a conclusion reached elsewhere.</p>
+<p><b>Double Crux</b>, between two people who disagree: instead of exchanging volleys, both search for a <i>shared</i> crux — a sub-claim where (a) they disagree and (b) each would update on B if they updated on it. Then they investigate THAT, often with actual evidence, because it is concrete and smaller.</p>
+<div class="ex"><b>Example:</b> "We should/should not rewrite the backend." Search finds the double crux: "the current system can(not) handle next year’s load with patches." That is researchable — benchmark it — where the original disagreement was just two aesthetics colliding.</div>
+<div class="key">The honest entry fee: asking yourself "what would actually change MY mind?" — and noticing when the answer is "nothing," which means you were not having a disagreement, you were having a war. (Unit 11’s true-rejection test, now with witnesses.)</div>`,
+quiz:[
+{q:'What makes a claim C a crux for your belief B?',opts:[
+['C is your strongest argument for B',0,'Arguments are often post-hoc decoration. The test is counterfactual: would flipping C flip B? Many "strong arguments" fail it.'],
+['If you changed your mind about C, you would change your mind about B',1,'Exactly — cruxes are defined by counterfactual impact on your belief, not by rhetorical strength.'],
+['C is something your opponent already accepts',0,'That is a premise for persuasion, a different game. Cruxes are about where YOUR belief actually rests.']]},
+{q:'Why is finding a DOUBLE crux so productive?',opts:[
+['It proves one side right immediately',0,'It does not settle anything by itself — it relocates the disagreement to ground where settling is possible.'],
+['It reduces a large vague disagreement to a smaller concrete claim both sides have agreed to update on — often one you can just test',1,'Right. The fight becomes a research question with pre-committed stakes, which is the entire trick.'],
+['It avoids conflict',0,'Double crux often sharpens conflict initially — it just makes the conflict tractable.']]}],
+cards:[
+['Crux — definition','A claim C such that changing your mind about C would change your mind about belief B. Test is counterfactual, not rhetorical strength.'],
+['Double crux — what are you searching for?','A sub-claim where both parties disagree AND both would update their top-level belief if they updated on it. Then investigate that, with evidence if possible.']],
+},
+
+{ id:'u12c2', icon:'🧭', title:'Crux a live disagreement', kind:'drill',
+teach:`<p>Pick a real disagreement you currently have — with a colleague, a friend, an author you read this week, or a past version of yourself. The other person does not need to participate (though it is better if they do); the discipline of finding YOUR cruxes is most of the value.</p>`,
+drill:{prompt:`Take a live disagreement. Report: (a) your position B, stated fairly, (b) the other side’s position as THEY would state it (pass their ideological Turing test), (c) 2-3 candidate cruxes of yours — with the counterfactual check ("if I learned ___, I would change my mind"), (d) your guess at THEIR crux, (e) if a shared crux exists: what evidence would move it?`,
+placeholder:'B (mine): ...\nTheir position, fairly: ...\nMy cruxes: 1) if I learned... 2) ...\nTheir likely crux: ...\nTestable how: ...',min:10},
+rubric:['Disagreement is real and current','Opposing position passes a fair ideological Turing test (no strawman)','Cruxes pass the counterfactual test — flipping them would genuinely flip B','Identifies evidence that could move the shared crux, or honestly reports finding no crux ("nothing would change my mind" flagged as the finding it is)'],
+cards:[
+['Ideological Turing test','Stating the opposing position so its holders would accept it as their own. Entry fee for any honest disagreement work.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 13
+{ id:'u13', icon:'🕳️', color:'var(--purple)', title:'The Abyss', sub:'The questions that actually matter',
+  source:[['Hammertime: The Strategic Level','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/SYT8E7YThLHWr6JEm'],['CFAR Handbook: Hamming Questions','https://www.rationality.org/resources/handbook']],
+  chapters:[
+
+{ id:'u13c1', icon:'❓', title:'Hamming questions', kind:'drill',
+teach:`<p>Richard Hamming ate lunch with Bell Labs scientists and asked: <i>"What are the most important problems in your field? And why are you not working on them?"</i> Careers changed; some colleagues stopped sitting with him.</p>
+<p>Pointed at a life, the <b>Hamming questions</b> become: <i>What is the most important problem in your life right now — and why are you not working on it?</i></p>
+<div class="key">Notice the question’s structure: it assumes a gap, and it is usually right, because important problems are precisely the ones that accumulate flinches (Unit 1), grow ugh-fields, and get crowded out by legible, easy, fake-urgent work. Your biggest bug is rarely ON your bug list. This chapter is where it gets filed.</div>
+<p>Treat the next 15 minutes as protected. Use the timer. Focusing skills (Unit 9) help when the answer arrives as a body-knot rather than a sentence.</p>`,
+drill:{prompt:`Sit with the Hamming pair for 15 timed minutes: "What is the most important problem in my life right now?" and "Why am I not working on it?" Report: (a) the problem (at whatever level of detail you choose), (b) the honest reasons for the gap — flinches, fears, structures, (c) the SMALLEST real next action, (d) file the problem as a ledger bug if it is not there already.`,
+placeholder:'Most important problem: ...\nWhy not working on it: ...\nSmallest next action: ...\nFiled to ledger: yes',min:15,timer:15},
+rubric:['Evidence of real sitting-with, not a cached answer (cached answers arrive in 30 seconds and sound rehearsed)','Gap reasons are honest and specific (names the flinch/fear/structure, not "no time")','Next action is genuinely small and concrete (doable within 48h)','Problem filed to the ledger'],
+cards:[
+['The Hamming questions (life version)','"What is the most important problem in your life right now?" + "Why are you not working on it?" — the gap the second question exposes is the finding.'],
+['Why is your biggest bug rarely on your bug list?','Important problems accumulate flinches and ugh-fields, so they get systematically not-looked-at while legible fake-urgent work fills the list.']],
+},
+
+{ id:'u13c2', icon:'🌑', title:'Staring into the abyss', kind:'field',
+teach:`<p>Ben Kuhn's term for deliberately considering the questions you flinch hardest from — the ones where a "yes" would demand large change: <i>Is this relationship right? Is this career mine or my parents’? Is this city, this cofounder, this faith still true for me?</i></p>
+<p>People who excel at this schedule it ON PURPOSE, because no day ever volunteers for it. The format that works: a long walk, a notebook, one abyss question, no devices, a hard time-box (30-60 min), and a rule that <b>considering ≠ deciding</b> — you are allowed to look precisely because looking does not commit you.</p>
+<div class="key">Time-boxing is load-bearing in both directions: it forces the look to happen, and it licenses you to stop. Abyss-staring without a box becomes either avoidance or rumination — the two failure modes this practice exists to replace.</div>`,
+mission:{text:`<b>Field mission (schedule it this week):</b> one 30-60 min time-boxed abyss session — walk or notebook, no devices, ONE question you flinch from. Report: the question, 3-5 honest observations from the session (detail level is yours), and what — if anything — goes on the ledger or calendar as a result. "I looked and the answer is genuinely fine" is a valid, reportable outcome.`,
+placeholder:'Question: ...\nObservations: ...\nResulting bug/action (or: looked, genuinely fine because ...): ...'},
+rubric:['A real abyss-grade question (a "yes" would demand significant change)','Session actually happened: time-boxed, device-free, scheduled deliberately','Observations show contact with the question, not deflection into logistics','Outcome handled honestly: filed bug, scheduled action, or a justified "all-clear" — rumination not extended past the box'],
+cards:[
+['Staring into the abyss — definition & format','Deliberately, on a schedule, time-boxed (30-60 min, no devices): consider one question you flinch from, where "yes" demands big change. Considering ≠ deciding.'],
+['The two failure modes the time-box prevents','Avoidance (the look never happens without scheduling) and rumination (the look never ends without a box).']],
+},
+
+{ id:'u13c3', icon:'♟️', title:'The strategic level', kind:'learn',
+teach:`<p>Hammertime’s closing concept. Three levels of response to any mistake:</p>
+<p>• <b>Object level:</b> fix the mistake (resend the email).<br>• <b>Tactical level:</b> install a guard against that mistake (checklist before sending — a TAP).<br>• <b>Strategic level:</b> ask what property of your <i>decision-making process</i> produced it, and what ELSE that property is currently producing. ("I committed in person to a deadline I had never simulated. Where else do I commit pre-simulation?")</p>
+<div class="key">One strategic insight typically dissolves a whole FAMILY of bugs that object-level fixes would have whack-a-moled forever. This is also the right lens on your last 12 units: the techniques are tactics; noticing which tactic fires when, and what your characteristic failure-shape is — that is strategy. Your Final Exam unit is next.</div>`,
+quiz:[
+{q:'You sent the wrong attachment. Object, tactical, and strategic responses respectively are:',opts:[
+['Apologize / triple-check everything always / be more careful',0,'"Triple-check everything" is unscalable and "be more careful" is not a process change — that is a wish wearing a strategy costume.'],
+['Resend it / a TAP: attach-then-verify before send / ask "where else do I finalize-then-verify in the wrong order?"',1,'Right — and the strategic question is the only one of the three that pays compound interest across domains.'],
+['Resend it / apologize twice / switch email clients',0,'Two object-level moves and a tool change. The strategic level interrogates the decision process, not the equipment.']]}],
+cards:[
+['Object / tactical / strategic responses to a mistake','Object: fix this instance. Tactical: install a guard (TAP/checklist) against this mistake. Strategic: identify the decision-process property that produced it — and what else it is producing.'],
+['Why does the strategic level pay compound interest?','One process-level insight dissolves a whole family of bugs across domains; object fixes whack one mole each.']],
+},
+]},
+
+// ---------------------------------------------------------------- UNIT 14
+{ id:'u14', icon:'🏔️', color:'var(--gold)', title:'Your Own Art', sub:'Graduation: become your own curriculum',
+  source:[['Attitudes about Applied Rationality (Camille B.)','https://www.lesswrong.com/posts/5jdqtpT6StjKDKacw/attitudes-about-applied-rationality'],['Hammertime Final Exam','https://www.lesswrong.com/s/qRxTKm7DAftSuTGvj/p/Q7MsMshzbzhEs729s']],
+  chapters:[
+
+{ id:'u14c1', icon:'🗺️', title:'Attitudes about applied rationality', kind:'learn',
+teach:`<p>Zoom out. Within the rationalist community there are distinct <b>attitudes</b> — clusters of opinion about what practicing rationality should even mean (taxonomy: Camille B., LessWrong 2024). Knowing them helps you understand practitioners who baffle you, and diagnose your own blind spots:</p>
+<p>• <b>Basics:</b> calibration, forecasting, lifehacks — real, simple, measurable practice over community immersion. (Your Unit 11.)<br>
+• <b>Reading:</b> master the corpus — the Sequences, the CFAR reading list — before improvising. (The source links under every unit.)<br>
+&nbsp;&nbsp;◦ <i>Maths sub-attitude:</i> the real foundations are Bayesian probability and decision theory; layman paraphrases lose the substance.<br>
+• <b>Speaking:</b> use the concepts in daily language — "that’s a sunk cost", "what’s your crux?" — so they shape thought. Naturalized jargon as installed software.<br>
+• <b>Workshop:</b> rationality is a performance skill; it must be deliberately practiced, drilled, coached — reading about deadlifts builds no muscle. (This app’s spine.)<br>
+• <b>Object-Level:</b> microdose the meta; spend the hours on real work and real productivity. The failure mode to avoid is thinking about rationality too much. (The 5-minute day, the workday-sized drills.)<br>
+• <b>Feedback-loop:</b> whatever you practice, instrument it — no measurement, no learning. (Your TAP audits, Brier scores, fudge ratios.)<br>
+• <b>Idiosyncratic:</b> eventually, ditch everyone’s curriculum — including this one — and build YOUR art. Following role models forever is its own irrationality.</p>
+<div class="key">Each attitude names a failure mode of the others, and each is somewhere right. A practice using only one goes stale; a practice ignoring one usually has a hole shaped exactly like it.</div>`,
+quiz:[
+{q:'Your practice consists entirely of reading LessWrong deeply and discussing it in precise jargon. Per the attitudes map, which critiques apply most directly?',opts:[
+['The Workshop and Object-Level critiques: concepts without drills build no skill, and meta without object-level work changes no outcomes',1,'Yes — Reading+Speaking without practice is the classic hole. (The reverse hole exists too: drilling without theory re-invents wheels badly.)'],
+['The Reading critique: you have not read enough',0,'Reading more deepens the same groove. The missing dimensions are practice and real-world contact, not corpus volume.'],
+['No critique applies; that is complete practice',0,'Every single-attitude practice has a hole shaped like the missing attitudes — that is the central claim of the taxonomy.']]},
+{q:'What does the Feedback-loop attitude add that pure Workshop-attitude drilling lacks?',opts:[
+['More repetitions',0,'Volume is the Workshop attitude’s own currency. The addition is orthogonal to volume.'],
+['Measurement: without tracked outcomes you cannot tell practice from ritual',1,'Right — drills can feel productive while teaching nothing. Brier scores, TAP audits, and fudge ratios are what make the difference detectable.'],
+['Better teachers',0,'Coaching quality matters but is still Workshop-internal. The distinctive addition is instrumentation.']]}],
+cards:[
+['Name 6+ attitudes about applied rationality','Basics, Reading (+ Maths), Speaking, Workshop, Object-Level, Idiosyncratic, Feedback-loop. Each names a failure mode of the others.'],
+['Workshop attitude — central claim','Rationality is a performance skill: it must be deliberately practiced and drilled, not just read about. Reading about deadlifts builds no muscle.'],
+['Object-Level attitude — central claim','Spend your hours on real work; microdose the meta. Failure mode to avoid: thinking about rationality instead of living effectively.']],
+},
+
+{ id:'u14c2', icon:'🗣️', title:'Naturalize, then teach', kind:'field',
+teach:`<p>The Speaking attitude’s test, inverted: you have not internalized a concept until you can deploy it <b>without its jargon</b>. "Crux" and "felt shift" are handles for you — but the skill is the thing, not the word.</p>
+<p>Also Feynman’s test: teaching a thing to someone outside the culture is the fastest way to discover which parts you actually understand.</p>`,
+mission:{text:`<b>Field mission:</b> this week, in a real conversation, help someone think through a real problem of theirs using ONE technique from this app — WITHOUT using any rationalist jargon and without lecturing. (E.g., walk them into goal-factoring by asking "what does the meeting actually get you?") Report: the technique, how you translated it, what they said, and what the translation taught you about your own understanding.`,
+placeholder:'Technique: ...\nHow I phrased it jargon-free: ...\nWhat happened: ...\nWhat I learned about my own grasp: ...'},
+rubric:['Real conversation, real problem belonging to the other person','Zero jargon; technique fully translated into plain questions/moves','Helped them think rather than performing knowledge at them','Honest reflection on which parts of the technique the author discovered they only half-knew'],
+cards:[
+['Naturalization test for a concept','You can deploy it in plain language on a live problem, without its jargon. The word is a handle; the skill is the thing.']],
+},
+
+{ id:'u14c3', icon:'⚒️', title:'Forge your own hammer', kind:'drill',
+teach:`<p>Hammertime’s Final Exam, faithfully: the course ends by making you the toolsmith. Design <b>one original rationality technique</b> — yours, fitted to YOUR characteristic failure-shape (you identified it at the strategic level, Unit 13).</p>
+<p>A real technique has: a trigger condition (when to run), a procedure (steps a tired person can follow), a mechanism story (why it should work, in terms of the machinery from these 14 units), and a test (how you will know within two weeks whether it works — Feedback-loop attitude, always).</p>
+<div class="key">It does not need to be novel to humanity. It needs to be true to your bugs and actually run. Most published techniques started as someone’s personal patch.</div>`,
+drill:{prompt:`Design one original technique for your characteristic failure-shape. Report: (a) the failure-shape with ledger evidence, (b) name + trigger + procedure (numbered steps), (c) mechanism — why this should work given what you know from this curriculum, (d) the 2-week test you will run, with a measurable signal.`,
+placeholder:'Failure-shape: ... (evidence: bugs #...)\nTechnique "...": when [trigger], do 1)... 2)... 3)...\nMechanism: ...\nTest: for 2 weeks, measure ...',min:15},
+rubric:['Failure-shape is evidenced from the author’s own ledger/audits, not generic','Procedure is executable by a tired person (concrete trigger, short numbered steps)','Mechanism story uses real machinery (noticing, TAP wiring, simulator queries, friction, felt senses...) coherently','Two-week test has a genuine measurable signal and a date'],
+cards:[],
+},
+
+{ id:'u14c4', icon:'🎓', title:'Design your ongoing practice', kind:'checkin',
+teach:`<p>Graduation = the app stops being your curriculum and becomes your gym equipment. Final standing practice, replacing nothing and reviewing everything: a <b>weekly practice review</b>.</p>
+<p>Each week, 10 minutes: Which habits (Bug Hunt, Resolve, TAP audit, Design, forecasts, time predictions) are alive? Which became ritual without signal — and should be paused honestly rather than zombie-maintained? What does your ledger say your life needs MORE of next week — and what is the Idiosyncratic move: the thing no curriculum assigned you that you know you should practice?</p>
+<div class="key">A practice you chose, sized to your real weeks, instrumented, and revised on schedule — that is the end state every attitude agrees on. The streak was scaffolding. The looking is the building.</div>`,
+checkin:{key:'practice',label:'Practice Review',icon:'🎓',every:168,
+ask:'Weekly: which standing practices are alive vs ritual? Pause zombies honestly. What does your ledger say next week needs more of? Name one self-assigned (Idiosyncratic) practice element.',
+form:'report'},
+cards:[
+['What is the graduation end-state of this curriculum?','A self-chosen, instrumented, weekly-revised practice sized to your real life — with you as the toolsmith. The app becomes equipment, not curriculum.']],
+},
+]},
+);
+
+// ===================== CALIBRATION BANK =====================
+const CALIB_BANK=[
+['The Great Wall of China is easily visible to the naked eye from low Earth orbit.',false],
+['A goldfish’s memory lasts only about three seconds.',false],
+['Measured from base to summit, Mount Everest is the tallest mountain on Earth.',false],
+['Lightning never strikes the same place twice.',false],
+['The Eiffel Tower is measurably taller in summer than in winter.',true],
+['Antibiotics are effective against viral infections.',false],
+['Venus has a higher average surface temperature than Mercury.',true],
+['The Sahara is the largest desert on Earth.',false],
+['Bats are blind.',false],
+['Napoleon was notably shorter than the average French man of his era.',false],
+['Perfectly pure water is a good conductor of electricity.',false],
+['The Pacific Ocean is larger than all of Earth’s land area combined.',true],
+['Sealed honey can remain edible for thousands of years.',true],
+['Humans typically use only about 10% of their brains.',false],
+['Oxford University is older than the Aztec Empire.',true],
+['Cleopatra lived closer in time to the Moon landing than to the construction of the Great Pyramid.',true],
+['There are more possible chess games than atoms in the observable universe.',true],
+['Sharks are mammals.',false],
+['Adult humans have more bones than newborn babies.',false],
+['Sound travels faster in water than in air.',true],
+['A day on Venus (one rotation) is longer than its year (one orbit).',true],
+['Sydney is the capital of Australia.',false],
+['Botanically, bananas are berries but strawberries are not.',true],
+['The Mongol Empire was the largest contiguous land empire in history.',true],
+['Mount Kilimanjaro is in Kenya.',false],
+['The human stomach gets an entirely new lining every few days.',true],
+['Albert Einstein failed mathematics at school.',false],
+['More than half of the world’s population lives in Asia.',true],
+['The Amazon River is generally considered to discharge more water than the next several largest rivers combined.',true],
+['Peanuts are botanically nuts.',false],
+];
+// ===================== PRAXIS ENGINE =====================
+'use strict';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DAY=864e5, HOUR=36e5;
+const todayStr=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Math.random().toString(36).slice(2,10);
+
+// ---------- state ----------
+let S=null;
+const DEFAULT={v:1,xp:0,xpToday:0,today:todayStr(),streak:0,bestStreak:0,lastGoalDay:null,freezes:1,
+goal:30,done:{},cards:{},bugs:[],taps:[],habits:{},preds:[],calib:[],calibSeen:[],
+reports:[],apiKey:'',model:'claude-sonnet-4-6',notif:false,notified:{},welcomed:false,
+ghToken:'',gistId:'',gistOwner:'',lastSync:0,updated:0,reps:{}};
+function load(){try{S=Object.assign({},DEFAULT,JSON.parse(localStorage.getItem('praxis')||'{}'));}catch(e){S=Object.assign({},DEFAULT);}}
+function save(){S.updated=Date.now();localStorage.setItem('praxis',JSON.stringify(S));scheduleSync();}
+
+// ---------- gist sync ----------
+const SYNC_PRIVATE=['apiKey','ghToken','gistId','gistOwner','notif','notified','lastSync'];
+const GIST_FILE='praxis-sync.json';
+let syncT=null, syncBusy=false;
+function ghH(){return {'authorization':'Bearer '+S.ghToken,'accept':'application/vnd.github+json','content-type':'application/json'};}
+function setSyncStatus(msg){const el=$('#syncstatus');if(el)el.innerHTML='<div class="small" style="margin-top:8px">'+msg+'</div>';}
+function syncPayload(){const o={};for(const k in S){if(!SYNC_PRIVATE.includes(k))o[k]=S[k];}return JSON.stringify(o);}
+function statusPayload(){ // non-sensitive numbers only: read by the notifier task & widget
+  return JSON.stringify({day:S.today,xpToday:S.xpToday,goal:S.goal,goalMet:S.xpToday>=S.goal,
+    streak:S.streak,freezes:S.freezes,dueHabits:dueHabits().length,dueReps:dueReps().length,
+    dueCards:dueCards().length,openPreds:openPreds().length,updated:Date.now()});
+}
+function statusURL(){return (S.gistOwner&&S.gistId)?'https://gist.githubusercontent.com/'+S.gistOwner+'/'+S.gistId+'/raw/praxis-status.json':'';}
+function scheduleSync(){if(!S.ghToken||!S.gistId)return;clearTimeout(syncT);syncT=setTimeout(syncPush,8000);}
+async function syncPush(){
+  if(!S.ghToken||!S.gistId||syncBusy)return; syncBusy=true;
+  try{
+    const r=await fetch('https://api.github.com/gists/'+S.gistId,{method:'PATCH',headers:ghH(),
+      body:JSON.stringify({files:{[GIST_FILE]:{content:syncPayload()},'praxis-status.json':{content:statusPayload()}}})});
+    if(r.ok){S.lastSync=Date.now();localStorage.setItem('praxis',JSON.stringify(S));setSyncStatus('☁️ ✓ pushed '+new Date().toLocaleTimeString());}
+    else if(r.status===401||r.status===403)setSyncStatus('☁️ ✗ push failed: token invalid/expired (re-enable sync)');
+    else if(r.status===404)setSyncStatus('☁️ ✗ gist not found — tap “Enable / repair sync”');
+    else setSyncStatus('☁️ ✗ push failed: HTTP '+r.status);
+  }catch(e){setSyncStatus('☁️ push skipped (offline) — will retry on next activity');}
+  finally{syncBusy=false;}
+}
+async function syncPull(manual){
+  if(!S.ghToken||!S.gistId)return;
+  try{
+    const r=await fetch('https://api.github.com/gists/'+S.gistId,{headers:ghH()});
+    if(!r.ok){if(manual)setSyncStatus('☁️ ✗ pull failed: HTTP '+r.status);return;}
+    const j=await r.json(); if(!S.gistOwner&&j.owner&&j.owner.login){S.gistOwner=j.owner.login;localStorage.setItem('praxis',JSON.stringify(S));}
+    const f=j.files&&j.files[GIST_FILE]; if(!f)return;
+    let txt=f.content;
+    if(f.truncated){txt=await(await fetch(f.raw_url)).text();}
+    const rem=JSON.parse(txt);
+    if((rem.updated||0)>(S.updated||0)){
+      SYNC_PRIVATE.forEach(k=>{rem[k]=S[k];});
+      S=Object.assign({},DEFAULT,rem);
+      S.lastSync=Date.now();
+      localStorage.setItem('praxis',JSON.stringify(S));
+      toast('☁️ Newer progress pulled from sync');
+      render();
+    }else if(manual)setSyncStatus('☁️ ✓ this device is already up to date');
+  }catch(e){if(manual)setSyncStatus('☁️ ✗ pull failed: '+esc(e.message));}
+}
+async function syncNow(){setSyncStatus('<span class="spin"></span> syncing…');await syncPull(true);await syncPush();}
+async function syncEnable(){
+  const t=$('#ghtok').value.replace(/[\s​-‍⁠﻿]/g,'');
+  if(!t){setSyncStatus('☁️ ✗ paste a GitHub token first');return;}
+  S.ghToken=t; localStorage.setItem('praxis',JSON.stringify(S));
+  setSyncStatus('<span class="spin"></span> looking for your sync gist…');
+  try{
+    let id=null;
+    const r=await fetch('https://api.github.com/gists?per_page=100',{headers:ghH()});
+    if(r.status===401){setSyncStatus('☁️ ✗ token rejected (401). Use a classic token with the “gist” scope, or a fine-grained token with Gists read/write.');return;}
+    let owner='';
+    if(r.ok){const list=await r.json();const hit=list.find(g=>g.files&&g.files[GIST_FILE]);if(hit){id=hit.id;owner=(hit.owner&&hit.owner.login)||'';}}
+    if(id){
+      S.gistId=id; S.gistOwner=owner; localStorage.setItem('praxis',JSON.stringify(S));
+      setSyncStatus('☁️ found existing sync gist — pulling…');
+      await syncPull(true); await syncPush();
+      setSyncStatus('☁️ ✓ sync enabled (existing gist '+id.slice(0,8)+'…). Pull happens on open, push after activity.');
+    }else{
+      const c=await fetch('https://api.github.com/gists',{method:'POST',headers:ghH(),
+        body:JSON.stringify({description:'Praxis (applied rationality app) progress sync',public:false,
+          files:{[GIST_FILE]:{content:syncPayload()},'praxis-status.json':{content:statusPayload()}}})});
+      if(!c.ok){setSyncStatus('☁️ ✗ could not create gist: HTTP '+c.status+'. Check the token has gist write access.');return;}
+      const j=await c.json(); S.gistId=j.id; S.gistOwner=(j.owner&&j.owner.login)||''; S.lastSync=Date.now();
+      localStorage.setItem('praxis',JSON.stringify(S));
+      setSyncStatus('☁️ ✓ sync enabled — new private gist created ('+j.id.slice(0,8)+'…). Paste the SAME token on your other device and tap Enable there; it will find this gist automatically.');
+    }
+    render();
+  }catch(e){setSyncStatus('☁️ ✗ network error: '+esc(e.message));}
+}
+function syncDisable(){S.ghToken='';S.gistId='';localStorage.setItem('praxis',JSON.stringify(S));toast('Sync disabled on this device');render();}
+
+// ---------- day rollover & streak ----------
+function rollover(){
+  const t=todayStr();
+  if(S.today===t) return;
+  // count days fully missed between lastGoalDay and yesterday
+  const yesterday=new Date(Date.now()-DAY).toISOString().slice(0,10);
+  if(S.streak>0 && S.lastGoalDay && S.lastGoalDay<yesterday){
+    // days missed = gap between lastGoalDay and today, minus 1 grace for "today not over"
+    let d=new Date(S.lastGoalDay+'T12:00:00');
+    let missed=0;
+    while(true){d=new Date(d.getTime()+DAY); const ds=d.toISOString().slice(0,10); if(ds>=t)break; missed++;}
+    while(missed>0&&S.freezes>0){S.freezes--;missed--;toast('🧊 Streak freeze used');}
+    if(missed>0){S.streak=0;}
+  }
+  S.today=t; S.xpToday=0; save();
+}
+function addXP(n){
+  S.xp+=n; const before=S.xpToday; S.xpToday+=n;
+  if(before<S.goal&&S.xpToday>=S.goal){ // daily goal hit -> streak
+    if(S.lastGoalDay!==S.today){
+      S.streak++; S.lastGoalDay=S.today;
+      if(S.streak>S.bestStreak)S.bestStreak=S.streak;
+      if(S.streak>0&&S.streak%7===0&&S.freezes<3){S.freezes++;toast('🧊 +1 streak freeze (7-day streak)');}
+      setTimeout(()=>toast('🔥 Daily goal reached — streak '+S.streak),700);
+    }
+  }
+  save(); renderTop();
+  toast('+'+n+' XP');
+}
+
+// ---------- curriculum helpers ----------
+const ALLCH=[]; CURRICULUM.forEach(u=>u.chapters.forEach(c=>{c._unit=u;ALLCH.push(c);}));
+const chById=id=>ALLCH.find(c=>c.id===id);
+function chState(c){
+  if(S.done[c.id])return 'done';
+  const i=ALLCH.indexOf(c);
+  if(i===0)return 'next';
+  return S.done[ALLCH[i-1].id]?'next':'locked';
+}
+
+// ---------- SR (SM-2-ish) ----------
+function cardId(chap,i){return chap+'#'+i;}
+function ensureCards(c){
+  (c.cards||[]).forEach((cd,i)=>{const id=cardId(c.id,i);
+    if(!S.cards[id])S.cards[id]={ease:2.5,ivl:0,due:Date.now(),f:cd[0],b:cd[1],reps:0};});
+}
+function dueCards(){return Object.entries(S.cards).filter(([,c])=>c.due<=Date.now());}
+function gradeCard(id,g){ // g: 0 again,1 hard,2 good,3 easy
+  const c=S.cards[id]; c.reps++;
+  if(g===0){c.ivl=0;c.ease=Math.max(1.3,c.ease-0.2);c.due=Date.now()+10*60e3;}
+  else{
+    c.ease=Math.max(1.3,c.ease+(g===1?-0.15:g===3?0.15:0));
+    c.ivl=c.ivl===0?1:(c.ivl===1?3:Math.round(c.ivl*c.ease*(g===1?0.8:g===3?1.3:1)));
+    c.due=Date.now()+c.ivl*DAY;
+  }
+  save();
+}
+
+// ---------- habits / check-ins ----------
+function habitDue(h){if(h.paused)return false; return Date.now()-(h.last||h.since) > h.every*HOUR;}
+function dueHabits(){return Object.entries(S.habits).filter(([,h])=>habitDue(h));}
+function habitMeta(key){for(const u of CURRICULUM)for(const c of u.chapters)if(c.checkin&&c.checkin.key===key)return c.checkin;return null;}
+function openPreds(){return S.preds.filter(p=>!p.resolved);}
+
+// ---------- practice reps (spaced repetition of EXERCISES) ----------
+const REP_IVLS=[3,7,21,42];
+const REP_EXCLUDE=['u2c2','u3c2','u5c2']; // skills already covered by a standing check-in
+const REPHINTS={
+u1c2:'Catch 3 NEW mental flinches today. This rep, aim earlier: try to catch the precursor body sensation before attention has fully bounced.',
+u1c3:'Pick 2 FRESH noticing targets you have not trained yet, with their personal signatures and a likely situation tomorrow.',
+u4c2:'Install ONE new TAP for a different recurring bug — or take your weakest existing TAP and redesign its trigger to be more sensory. 10 rehearsals either way.',
+u6c3:'Goal-factor a DIFFERENT recurring activity — ideally one you have never thought to question. Embarrassment test still applies.',
+u7c2:'Design and run a new CoZE experiment on a different miscalibrated aversion. Write the prediction BEFORE, as always.',
+u8c2:'Murphyjitsu a NEW real plan from the coming week. Iterate until failure genuinely surprises your gut.',
+u9c2:'Run a fresh Focusing session on something else mildly unresolved (~4/10 heavy). Report process, not content.',
+u9c3:'Audit your mantra: has it actually fired since last time? Refine its wording or trigger — or craft a mantra for a second failure mode.',
+u10c2:'Run IDC on a different live internal conflict. Less-liked side still gets more space.',
+u11c3:'Fermi a new decision-relevant quantity in your life — and this time apply your personal fudge ratio to any duration estimates.',
+u12c2:'Crux a fresh disagreement — if possible, do it WITH the other person this time and compare cruxes.',
+u13c1:'Re-ask the Hamming pair. Has the most important problem changed? Is the gap between knowing and working on it shrinking?',
+u13c2:'Schedule another abyss session with a DIFFERENT question you flinch from. Time-boxed, device-free, considering is not deciding.',
+u14c2:'Translate a different technique, jargon-free, in a real conversation about a real problem of theirs.',
+u14c3:'Review your invented technique against its 2-week test results: keep, revise, or retire it and forge a new one for your next failure-shape.'
+};
+function repEligible(c){return !!(c.drill||c.mission)&&c.kind!=='checkin'&&!REP_EXCLUDE.includes(c.id);}
+function repInterval(i){return i<REP_IVLS.length?REP_IVLS[i]:Math.round(42*Math.pow(1.5,i-REP_IVLS.length+1));}
+function migrateReps(){ // idempotent: schedules reps for already-completed drill/field chapters
+  let ch=false;
+  ALLCH.forEach(c=>{if(repEligible(c)&&S.done[c.id]&&!S.reps[c.id]){
+    const base=(typeof S.done[c.id]==='number'&&S.done[c.id]>1e12)?S.done[c.id]:Date.now();
+    S.reps[c.id]={i:0,due:base+REP_IVLS[0]*DAY,count:0};ch=true;}});
+  if(ch)localStorage.setItem('praxis',JSON.stringify(S));
+}
+function dueReps(){return Object.entries(S.reps).filter(([id,r])=>r.due<=Date.now());}
+
+
+// ---------- notifications ----------
+function notifCheck(){
+  if(!S.notif||typeof Notification==='undefined'||Notification.permission!=='granted')return;
+  dueHabits().forEach(([k,h])=>{
+    const m=habitMeta(k); if(!m)return;
+    const last=S.notified[k]||0;
+    if(Date.now()-last>6*HOUR){ // don't spam
+      try{new Notification('Praxis — '+m.label,{body:m.ask,tag:'praxis-'+k});}catch(e){}
+      S.notified[k]=Date.now(); save();
+    }
+  });
+  const dr=dueReps();
+  if(dr.length&&Date.now()-(S.notified._reps||0)>6*HOUR){
+    try{new Notification('Praxis — practice reps',{body:dr.length+' technique rep'+(dr.length>1?'s':'')+' due — run them on fresh real targets.',tag:'praxis-reps'});}catch(e){}
+    S.notified._reps=Date.now(); save();
+  }
+}
+setInterval(notifCheck,60e3);
+
+// ---------- toast ----------
+let toastT=null;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.style.display='block';
+  clearTimeout(toastT);toastT=setTimeout(()=>t.style.display='none',2200);}
+
+// ---------- Claude feedback ----------
+async function claudeFeedback(chap,exercise,rubric,answer,extra){
+  const sys='You are the precise, warm practice coach inside Praxis, a deliberate-practice app for applied rationality (CFAR Handbook / Hammertime curriculum). Your feedback style: specific, concrete, kind, zero fluff. The user practices on REAL life material; if the response looks hypothetical, generic, or fabricated where real material was required, say so plainly and ask for a real attempt. Never invent facts about the user.';
+  const usr='CHAPTER: '+chap.title+' (unit: '+chap._unit.title+')\n\nEXERCISE:\n'+exercise.replace(/<[^>]+>/g,'')+
+    '\n\nRUBRIC:\n'+(rubric||[]).map((r,i)=>(i+1)+'. '+r).join('\n')+
+    (extra?'\n\nCONTEXT:\n'+extra:'')+
+    '\n\nUSER RESPONSE:\n'+answer+
+    '\n\nGive feedback in under 220 words:\n1) Rubric verdicts: for each item, ✓ / ✗ / ~ with a 1-line reason.\n2) GOOD: the strongest specific thing they did.\n3) SHARPEN: the single most important improvement.\n4) NEXT: one concrete follow-up action or probing question.';
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+    headers:{'content-type':'application/json','x-api-key':S.apiKey,
+      'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:S.model||'claude-sonnet-4-6',max_tokens:800,system:sys,
+      messages:[{role:'user',content:usr}]})});
+  if(!r.ok){const e=await r.text();throw new Error('API '+r.status+': '+e.slice(0,200));}
+  const j=await r.json();
+  return j.content.map(b=>b.text||'').join('');
+}
+
+// ---------- top bar & nav ----------
+function renderTop(){
+  $('#topbar').innerHTML=
+    '<div class="stat"><span class="ic">🔥</span>'+S.streak+'</div>'+
+    '<div class="stat"><span class="ic">🧊</span>'+S.freezes+'</div>'+
+    '<div class="stat" title="XP today / goal"><span class="ic">⚡</span>'+S.xpToday+'/'+S.goal+'</div>'+
+    '<div class="stat"><span class="ic">💎</span>'+S.xp+'</div>';
+}
+let TAB='path';
+function renderNav(){
+  const due=dueHabits().length, rev=dueCards().length, pr=openPreds().length, rp=dueReps().length;
+  const items=[['path','🛤️'],['habits','⏰'],['review','🧠'],['ledger','🐛'],['you','⚙️']];
+  $('#nav').innerHTML=items.map(([k,ic])=>{
+    let b=''; if(k==='habits'&&(due+pr+rp)>0)b='<span class="badge">'+(due+pr+rp)+'</span>';
+    if(k==='review'&&rev>0)b='<span class="badge">'+rev+'</span>';
+    return '<button class="'+(TAB===k?'on':'')+'" onclick="setTab(\''+k+'\')">'+ic+b+'</button>';
+  }).join('');
+}
+function setTab(t){TAB=t;render();}
+
+// ---------- views ----------
+function render(){migrateReps();renderTop();renderNav();
+  const v={path:vPath,habits:vHabits,review:vReview,ledger:vLedger,you:vYou}[TAB];
+  $('#app').innerHTML=v();
+}
+
+function vPath(){
+  let h='';
+  if(!S.welcomed){
+    h+='<div class="card"><h3>🔨 Welcome to Praxis</h3><p class="small">Deliberate practice for applied rationality. Short lessons teach a technique; <b>drills make you run it on your real life</b>; spaced repetition keeps it loaded; recurring check-ins (Bug Hunt &amp; co.) keep you honest. Daily goal is adjustable down to ~5 minutes, and streak freezes exist — flexibility is a feature.</p><p class="small">For graded feedback on written drills, add a Claude API key in ⚙️. Without it, you self-grade against expert rubrics.</p><button class="btn" onclick="S.welcomed=true;save();render()">Let’s go</button></div>';
+  }
+  const due=dueHabits().length;
+  if(due>0)h+='<div class="banner alert" onclick="setTab(\'habits\')" style="cursor:pointer">⏰ <b>'+due+' check-in'+(due>1?'s':'')+' due</b> — your standing practices need you. Tap to open.</div>';
+  const rp=dueReps().length;
+  if(rp>0)h+='<div class="banner alert" onclick="setTab(\'habits\')" style="cursor:pointer">🔁 <b>'+rp+' practice rep'+(rp>1?'s':'')+' due</b> — earlier techniques, fresh targets. Tap to open.</div>';
+  const rev=dueCards().length;
+  if(rev>0)h+='<div class="banner info" onclick="setTab(\'review\')" style="cursor:pointer">🧠 '+rev+' cards ready for review.</div>';
+  CURRICULUM.forEach(u=>{
+    const done=u.chapters.filter(c=>S.done[c.id]).length;
+    h+='<div class="unit-head" style="border-left:5px solid '+u.color+'"><div class="uic">'+u.icon+'</div><div><h2>'+esc(u.title)+'</h2><div class="small">'+esc(u.sub)+' · '+done+'/'+u.chapters.length+'</div></div></div>';
+    h+='<div class="small" style="margin:2px 4px 8px">'+u.source.map(s=>'<a href="'+s[1]+'" target="_blank" rel="noopener">📖 '+esc(s[0])+'</a>').join(' · ')+'</div>';
+    h+='<div class="path">';
+    u.chapters.forEach((c,i)=>{
+      const st=chState(c);
+      const cls='node '+(st==='done'?'done':st==='next'?'next':'locked')+(c.kind==='checkin'?' checkin':'')+(i%2?' off-r':i%3===0?' off-l':'');
+      const click=st==='locked'?'':' onclick="openLesson(\''+c.id+'\')"';
+      h+='<button class="'+cls+'"'+click+'>'+(st==='done'?'✅':c.icon)+'<span class="lbl">'+esc(c.title)+(c.kind==='checkin'?' ⏰':'')+'</span></button><div class="gap-lbl"></div>';
+    });
+    h+='</div>';
+  });
+  const total=ALLCH.length, fin=Object.keys(S.done).length;
+  if(fin>=total)h+='<div class="banner win">🏔️ Curriculum complete. The app is now equipment; you are the curriculum. Keep the weekly Practice Review alive.</div>';
+  return h;
+}
+
+function vHabits(){
+  let h='<h2 style="margin:8px 0">⏰ Standing practices</h2><p class="small">The harder chapters live here: real-life check-ins on YOUR schedule. Adjust intervals or pause honestly — never zombie-maintain.</p>';
+  const keys=Object.keys(S.habits);
+  if(!keys.length)h+='<div class="card small">No check-ins unlocked yet. They unlock as you reach the ⏰ chapters on the path (first one: Bug Hunt, Unit 2).</div>';
+  keys.forEach(k=>{
+    const hb=S.habits[k], m=habitMeta(k); if(!m)return;
+    const since=Date.now()-(hb.last||hb.since);
+    const dueIn=hb.every*HOUR-since;
+    const status=hb.paused?'<span class="pill">paused</span>':(dueIn<=0?'<span class="pill due">DUE</span>':'<span class="pill ok">next in '+fmtDur(dueIn)+'</span>');
+    h+='<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">'+m.icon+' '+esc(m.label)+'</h3>'+status+'</div>'+
+      '<p class="small">'+esc(m.ask)+'</p>'+
+      '<div class="row"><button class="btn sm" onclick="doHabit(\''+k+'\')">Do it now</button>'+
+      '<button class="btn sm sec" onclick="habitInterval(\''+k+'\')">every '+hb.every+'h ✎</button>'+
+      '<button class="btn sm ghost" onclick="S.habits[\''+k+'\'].paused=!S.habits[\''+k+'\'].paused;save();render()">'+(hb.paused?'resume':'pause')+'</button></div></div>';
+  });
+  const repIds=Object.keys(S.reps);
+  if(repIds.length){
+    h+='<h3 style="margin:18px 0 4px">🔁 Practice reps</h3><p class="small">Completed exercises return on expanding intervals (3d → 1w → 3w → 6w…) — same technique, fresh real target. Grade honestly: Hard brings it back sooner.</p>';
+    repIds.map(id=>[id,S.reps[id]]).sort((a,b)=>a[1].due-b[1].due).forEach(([id,r])=>{
+      const c=chById(id); if(!c)return;
+      const due=r.due-Date.now();
+      h+='<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">'+c.icon+' '+esc(c.title)+'</h3>'+(due<=0?'<span class="pill due">DUE</span>':'<span class="pill ok">in '+fmtDur(due)+'</span>')+'</div>'+
+        '<div class="small">'+esc(c._unit.title)+' · rep #'+(r.count+1)+' · interval '+repInterval(r.i)+'d</div>'+
+        (due<=0?'<button class="btn sm" style="margin-top:8px" onclick="doRep(\''+id+'\')">Do the rep</button>':'')+'</div>';
+    });
+  }
+  const op=openPreds();
+  if(op.length){
+    h+='<h3 style="margin:18px 0 4px">🔮 Open predictions</h3>';
+    op.forEach(p=>{
+      h+='<div class="card"><div class="small">'+(p.type==='min'?'⏱️ predicted <b>'+p.val+' min</b>':'🎲 <b>'+p.val+'%</b>')+' · '+new Date(p.made).toLocaleDateString()+'</div><div>'+esc(p.text)+'</div>';
+      if(p.type==='min')h+='<div class="row" style="margin-top:8px"><input type="number" id="act_'+p.id+'" placeholder="actual minutes" style="flex:1"><button class="btn sm" onclick="resolveMin(\''+p.id+'\')">Resolve</button></div>';
+      else h+='<div class="row" style="margin-top:8px"><button class="btn sm" onclick="resolveProb(\''+p.id+'\',1)">Happened ✓</button><button class="btn sm sec" onclick="resolveProb(\''+p.id+'\',0)">Did not ✗</button></div>';
+      h+='</div>';
+    });
+  }
+  // stats
+  const mins=S.preds.filter(p=>p.type==='min'&&p.resolved);
+  const probs=S.preds.filter(p=>p.type==='prob'&&p.resolved);
+  if(mins.length||probs.length||S.calib.length){
+    h+='<h3 style="margin:18px 0 4px">📊 Your feedback loops</h3><div class="statgrid">';
+    if(mins.length){const r=mins.reduce((a,p)=>a+p.outcome/p.val,0)/mins.length;
+      h+='<div class="card"><div class="big">×'+r.toFixed(2)+'</div><div class="small">fudge ratio (actual ÷ predicted, n='+mins.length+')</div></div>';}
+    if(probs.length){const br=probs.reduce((a,p)=>a+Math.pow(p.val/100-p.outcome,2),0)/probs.length;
+      h+='<div class="card"><div class="big">'+br.toFixed(3)+'</div><div class="small">Brier score, forecasts (n='+probs.length+', lower=better)</div></div>';}
+    if(S.calib.length){const acc=S.calib.filter(c=>c.correct).length/S.calib.length;
+      const avgc=S.calib.reduce((a,c)=>a+c.conf,0)/S.calib.length;
+      h+='<div class="card"><div class="big">'+Math.round(acc*100)+'%</div><div class="small">calibration accuracy vs '+Math.round(avgc)+'% avg confidence (n='+S.calib.length+')</div></div>';}
+    h+='</div>';
+  }
+  return h;
+}
+function fmtDur(ms){const h=Math.floor(ms/HOUR);if(h>=48)return Math.floor(h/24)+'d';if(h>=1)return h+'h';return Math.max(1,Math.floor(ms/60e3))+'min';}
+function habitInterval(k){const v=prompt('Check-in interval in hours for this practice:',S.habits[k].every);
+  const n=parseInt(v);if(n>0){S.habits[k].every=n;save();render();}}
+function resolveMin(id){const v=parseFloat($('#act_'+id).value);if(!(v>0))return toast('Enter actual minutes');
+  const p=S.preds.find(p=>p.id===id);p.resolved=Date.now();p.outcome=v;addXP(10);render();}
+function resolveProb(id,o){const p=S.preds.find(p=>p.id===id);p.resolved=Date.now();p.outcome=o;addXP(10);render();}
+
+function vReview(){
+  const due=dueCards();
+  let h='<h2 style="margin:8px 0">🧠 Review</h2><p class="small">Spaced repetition keeps techniques loaded so noticing can fire. '+Object.keys(S.cards).length+' cards total · <b>'+due.length+' due</b>.</p>';
+  h+=due.length?'<button class="btn" onclick="startSR()">Review '+due.length+' card'+(due.length>1?'s':'')+'</button>':'<div class="card small">Nothing due. Cards return on their schedule — that’s the point.</div>';
+  return h;
+}
+
+function vLedger(){
+  const open=S.bugs.filter(b=>b.st==='open'), sq=S.bugs.filter(b=>b.st!=='open');
+  let h='<h2 style="margin:8px 0">🐛 Bug Ledger</h2><p class="small">The fuel tank. '+open.length+' open · '+sq.length+' squashed.</p>';
+  h+='<div class="row" style="margin-bottom:8px"><input type="text" id="newbug" placeholder="If it bugs you, it’s a bug…"><button class="btn sm" onclick="addBugUI()">File</button></div>';
+  h+='<div class="card">'+(open.length?open.map(b=>
+    '<div class="bug"><button class="chk" onclick="squash(\''+b.id+'\')" title="squash">⬜</button><div class="txt">'+esc(b.t)+'<div class="small">'+new Date(b.ts).toLocaleDateString()+'</div></div></div>').join('')
+    :'<div class="small">Empty tank. Run a generator (Unit 2) — room sweep, day replay, areas-of-life…</div>')+'</div>';
+  if(sq.length)h+='<details><summary>Squashed ('+sq.length+')</summary><div class="card">'+sq.map(b=>'<div class="bug sq"><span>✅</span><div class="txt">'+esc(b.t)+'</div></div>').join('')+'</div></details>';
+  return h;
+}
+function addBug(t){if(!t||!t.trim())return;S.bugs.unshift({id:uid(),t:t.trim(),ts:Date.now(),st:'open'});save();}
+function addBugUI(){const v=$('#newbug').value;if(!v.trim())return;addBug(v);addXP(5);render();}
+function squash(id){const b=S.bugs.find(b=>b.id===id);b.st='sq';b.sqts=Date.now();addXP(15);toast('🔨 Bug squashed');render();}
+
+function vYou(){
+  const fin=Object.keys(S.done).length;
+  let h='<h2 style="margin:8px 0">⚙️ You</h2>';
+  h+='<div class="statgrid"><div class="card"><div class="big">🔥 '+S.streak+'</div><div class="small">streak (best '+S.bestStreak+')</div></div>'+
+     '<div class="card"><div class="big">'+fin+'/'+ALLCH.length+'</div><div class="small">chapters</div></div>'+
+     '<div class="card"><div class="big">'+S.bugs.filter(b=>b.st!=='open').length+'</div><div class="small">bugs squashed</div></div>'+
+     '<div class="card"><div class="big">'+S.taps.length+'</div><div class="small">TAPs installed</div></div></div>';
+  h+='<div class="card"><h3>Daily goal</h3><div class="row">'+
+    [10,30,50].map(g=>'<button class="btn sm '+(S.goal===g?'':'sec')+'" onclick="S.goal='+g+';save();render()">'+g+' XP'+(g===10?' (~5 min)':'')+'</button>').join('')+'</div>'+
+    '<p class="small">Downscale honestly on heavy weeks instead of breaking the chain. You have '+S.freezes+' 🧊 streak freezes (earn 1 per 7-day streak, max 3); they auto-spend on missed days.</p></div>';
+  h+='<div class="card"><h3>Claude feedback</h3><label class="fld">Anthropic API key (stored only on this device)</label><input type="password" id="apikey" value="'+esc(S.apiKey)+'" placeholder="sk-ant-..." autocomplete="off">'+
+    '<button class="btn sm ghost" style="margin-top:4px" onclick="const k=$(\'#apikey\');k.type=k.type===\'password\'?\'text\':\'password\'">👁 show/hide key</button>'+
+    (S.apiKey?'<p class="small">Currently saved: '+esc(S.apiKey.slice(0,12))+'…'+esc(S.apiKey.slice(-4))+' ('+S.apiKey.length+' chars)</p>':'<p class="small">No key saved yet.</p>')+
+    '<label class="fld">Model</label><input type="text" id="model" value="'+esc(S.model)+'">'+
+    '<div class="row" style="margin-top:10px"><button class="btn sm sec" onclick="saveKey()">Save</button><button class="btn sm" onclick="testKey()">Test key</button></div>'+
+    '<div id="keystatus"></div>'+
+    '<p class="small">⚠️ A real key is ~100+ characters and starts with sk-ant-. The Console shows the FULL key only once, at creation — the keys list afterwards shows a shortened sk-ant-…xxxx that will NOT work. If your saved key is under ~50 chars, create a new key and copy it from the creation dialog.</p>'+
+    '<p class="small">Without a key, drills fall back to self-grading against the expert rubric — which is also real practice (Feedback-loop attitude). Get a key at console.anthropic.com.</p></div>';
+  h+='<div class="card"><h3>☁️ Sync across devices</h3>'+
+    (S.gistId?'<p class="small">Status: <b style="color:var(--green)">enabled</b> · gist '+esc(S.gistId.slice(0,8))+'… · last sync '+(S.lastSync?new Date(S.lastSync).toLocaleString():'never')+'</p>':'<p class="small">Status: off. Progress syncs through a <b>private GitHub gist</b> you own — pulled when the app opens, pushed ~8s after activity. Newest device wins, so finish on one device before switching.</p>')+
+    '<label class="fld">GitHub token (stored only on this device)</label><input type="password" id="ghtok" value="'+esc(S.ghToken)+'" placeholder="ghp_… or github_pat_…" autocomplete="off">'+
+    '<div class="row" style="margin-top:10px"><button class="btn sm sec" onclick="syncEnable()">'+(S.gistId?'Re-enable / repair':'Enable sync')+'</button>'+
+    (S.gistId?'<button class="btn sm" onclick="syncNow()">Sync now</button><button class="btn sm ghost" onclick="syncDisable()">Disable</button>':'')+'</div>'+
+    '<div id="syncstatus"></div>'+
+    (statusURL()?'<label class="fld">Status feed (for the notifier & widget — safe numbers only)</label><div class="row"><input type="text" readonly value="'+esc(statusURL())+'" id="sturl"><button class="btn sm sec" onclick="navigator.clipboard&&navigator.clipboard.writeText(statusURL()).then(()=>toast(\'Copied\'))">Copy</button></div>':'')+
+    '<p class="small">Get a token at github.com → Settings → Developer settings → Personal access tokens → <b>Tokens (classic)</b> → Generate new token, tick ONLY the <b>gist</b> scope (set a long expiration). Paste the <b>same token</b> on your other device and tap Enable — it finds the same gist automatically. Your Anthropic API key and this token are never synced; set those per device.</p></div>';
+  h+='<div class="card"><h3>Notifications</h3><button class="btn sm '+(S.notif?'':'sec')+'" onclick="toggleNotif()">'+(S.notif?'Enabled ✓':'Enable check-in notifications')+'</button>'+
+    '<p class="small">Nags you when a standing practice (Bug Hunt, Resolve Cycle…) passes its window — while the app is open or installed. On iPhone: Share → Add to Home Screen, then enable here. For nudges even when the app is closed, also set a recurring phone alarm or calendar reminder matched to your intervals.</p></div>';
+  h+='<div class="card"><h3>Data</h3><div class="row"><button class="btn sm sec" onclick="expData()">Export</button><button class="btn sm sec" onclick="impData()">Import</button><button class="btn sm ghost" onclick="if(confirm(\'Erase ALL progress?\')){localStorage.removeItem(\'praxis\');location.reload();}">Reset</button></div></div>';
+  h+='<p class="small center" style="margin-top:18px">Praxis · built on the CFAR Handbook, Hammertime (alkjash), the CFAR reading list, and “Attitudes about Applied Rationality”. Practice on real life only.</p>';
+  return h;
+}
+function saveKey(){
+  // strip whitespace, newlines, zero-width & other invisible characters that sneak in via copy-paste
+  const k=$('#apikey').value.replace(/[\s\u200B-\u200D\u2060\uFEFF]/g,'');
+  $('#apikey').value=k;
+  S.apiKey=k; S.model=$('#model').value.trim()||'claude-sonnet-4-6'; save();
+  if(!k){$('#keystatus').innerHTML='<div class="fb bad">Field is empty — nothing saved.</div>';return;}
+  let warn='';
+  if(!k.startsWith('sk-ant-'))warn=' ⚠️ It does not start with sk-ant- — is it an Anthropic API key?';
+  else if(k.length<50)warn=' ⚠️ Only '+k.length+' chars — this looks like the REDACTED key from the Console list (sk-ant-…xxxx). Create a new key and copy it from the creation dialog.';
+  $('#keystatus').innerHTML='<div class="fb '+(warn?'bad':'good')+'">Saved: '+esc(k.slice(0,12))+'…'+esc(k.slice(-4))+' ('+k.length+' chars).'+warn+' Now tap “Test key”.</div>';
+}
+async function testKey(){
+  if(!S.apiKey){$('#keystatus').innerHTML='<div class="fb bad">Save a key first.</div>';return;}
+  $('#keystatus').innerHTML='<div class="fb"><span class="spin"></span> Testing against the API…</div>';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+      headers:{'content-type':'application/json','x-api-key':S.apiKey,
+        'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:S.model||'claude-sonnet-4-6',max_tokens:8,
+        messages:[{role:'user',content:'Reply with the single word: ok'}]})});
+    if(r.ok){$('#keystatus').innerHTML='<div class="fb good">✓ Key works. Feedback is live.</div>';return;}
+    const t=await r.text(); let hint='';
+    if(r.status===401)hint=' → The key itself is wrong/incomplete. Most common cause: copying the shortened sk-ant-…xxxx from the Console keys list instead of the full key shown once at creation. Create a fresh key.';
+    else if(r.status===400&&/credit|billing/i.test(t))hint=' → Key is valid but the account has no credits. Add billing in the Console.';
+    else if(r.status===404)hint=' → Model name not recognized — check the Model field (default: claude-sonnet-4-6).';
+    else if(r.status===429)hint=' → Rate limited; key is valid. Try again in a minute.';
+    $('#keystatus').innerHTML='<div class="fb bad">✗ API '+r.status+': '+esc(t.slice(0,160))+hint+'</div>';
+  }catch(e){$('#keystatus').innerHTML='<div class="fb bad">✗ Network error: '+esc(e.message)+'. Check your connection.</div>';}
+}
+function toggleNotif(){
+  if(S.notif){S.notif=false;save();render();return;}
+  if(typeof Notification==='undefined'){toast('Notifications unsupported in this browser');return;}
+  Notification.requestPermission().then(p=>{if(p==='granted'){S.notif=true;save();notifCheck();}else toast('Permission denied');render();});
+}
+function expData(){
+  const blob=new Blob([JSON.stringify(S)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='praxis-backup-'+todayStr()+'.json';a.click();
+}
+function impData(){
+  const i=document.createElement('input');i.type='file';i.accept='.json';
+  i.onchange=()=>{const f=i.files[0];const r=new FileReader();
+    r.onload=()=>{try{S=Object.assign({},DEFAULT,JSON.parse(r.result));save();render();toast('Imported');}catch(e){toast('Invalid file');}};
+    r.readAsText(f);};
+  i.click();
+}
+
+// ---------- sheet (lesson player) ----------
+let L=null; // {chap, steps, i, answers}
+function sheetHTML(h){$('#sheetInner').innerHTML=h;$('#sheet').classList.add('open');$('#sheet').scrollTop=0;}
+function closeSheet(){$('#sheet').classList.remove('open');stopTimer();render();}
+
+function openLesson(id){
+  const c=chById(id); if(!c||chState(c)==='locked')return;
+  const steps=[];
+  if(c.teach)steps.push({t:'teach'});
+  (c.quiz||[]).forEach((q,i)=>steps.push({t:'quiz',q,i}));
+  if(c.kind==='calib')steps.push({t:'calib'});
+  if(c.drill)steps.push({t:'drill'});
+  if(c.mission)steps.push({t:'mission'});
+  if(c.checkin)steps.push({t:'checkinIntro'});
+  steps.push({t:'done'});
+  L={chap:c,steps,i:0,correct:0,redo:S.done[c.id]};
+  renderStep();
+}
+function stepNext(){L.i++;renderStep();}
+function renderStep(){
+  const c=L.chap, st=L.steps[L.i];
+  const pct=Math.round(L.i/L.steps.length*100);
+  let h='<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:'+pct+'%"></div></div></div>';
+  h+='<div class="small" style="margin-bottom:6px">'+c._unit.icon+' '+esc(c._unit.title)+' · '+esc(c.title)+'</div>';
+  if(!st){closeSheet();return;}
+  if(st.t==='teach'){
+    h+='<div class="teach">'+c.teach+'</div><button class="btn" style="margin-top:14px" onclick="stepNext()">Continue</button>';
+  }
+  else if(st.t==='quiz'){
+    h+='<h3>'+esc(st.q.q)+'</h3>'+st.q.opts.map((o,j)=>'<button class="opt" id="opt'+j+'" onclick="answerQuiz('+j+')">'+esc(o[0])+'</button>').join('')+'<div id="qfb"></div>';
+  }
+  else if(st.t==='calib'){
+    h+=renderCalib();
+  }
+  else if(st.t==='drill'||st.t==='mission'){
+    const d=st.t==='drill'?c.drill:c.mission;
+    h+='<div class="teach"><div class="key">'+(d.prompt||d.text)+'</div></div>';
+    if(c.drill&&c.drill.pickbug){
+      const open=S.bugs.filter(b=>b.st==='open');
+      if(open.length)h+='<label class="fld">Pick a bug (optional)</label><select id="bugsel"><option value="">—</option>'+open.map(b=>'<option>'+esc(b.t.slice(0,80))+'</option>').join('')+'</select>';
+    }
+    const tm=(st.t==='drill'&&c.drill.timer)?c.drill.timer:null;
+    if(tm)h+='<div class="timerbox card"><div class="t" id="tdisp">'+tm+':00</div><button class="btn sm warn" id="tbtn" onclick="startTimer('+tm+')">▶ Start '+tm+'-min timer</button></div>';
+    h+='<textarea id="ans" placeholder="'+esc(d.placeholder||'Your report…')+'"></textarea>';
+    h+='<div id="fbzone"></div>';
+    h+='<div class="row" style="margin-top:10px">';
+    if(S.apiKey)h+='<button class="btn" id="fbbtn" onclick="getFeedback()">Get Claude feedback</button>';
+    h+='<button class="btn '+(S.apiKey?'sec':'')+'" onclick="selfGrade()">'+(S.apiKey?'Self-grade':'Submit & self-grade')+'</button></div>';
+    h+='<button class="btn ghost" style="margin-top:6px" onclick="if(confirm(\'Skip without practicing? The technique stays uninstalled.\'))stepNext()">Skip for now</button>';
+  }
+  else if(st.t==='checkinIntro'){
+    const k=c.checkin;
+    h+='<div class="teach"><div class="key">⏰ <b>Standing practice unlocked: '+esc(k.label)+'</b><br>'+esc(k.ask)+'<br><br>Praxis will expect this every <b>'+k.every+'h</b> and nag you when overdue. You can change the interval or pause it in the Habits tab.</div></div>';
+    h+='<label class="fld">Check-in window (hours)</label><input type="number" id="ckint" value="'+k.every+'">';
+    h+='<button class="btn" style="margin-top:12px" onclick="acceptCheckin()">Accept this practice</button>';
+  }
+  else if(st.t==='done'){
+    const xp=L.redo?5:({learn:20,drill:30,field:40,checkin:20,calib:25}[c.kind]||20);
+    h+='<div class="center" style="padding:40px 0"><div style="font-size:4rem">'+(L.redo?'🔁':'🎉')+'</div><h2>'+(L.redo?'Reviewed':'Chapter complete')+'</h2>'+
+      '<p class="small">'+(c.cards&&c.cards.length?c.cards.length+' card'+(c.cards.length>1?'s':'')+' added to spaced repetition.':'')+'</p>'+
+      '<button class="btn" onclick="finishLesson('+xp+')">Claim +'+xp+' XP</button></div>';
+  }
+  sheetHTML(h);
+}
+function answerQuiz(j){
+  const st=L.steps[L.i], o=st.q.opts[j];
+  st.q.opts.forEach((oo,k)=>{const el=$('#opt'+k);el.disabled=true;
+    if(oo[1])el.classList.add('right');else if(k===j)el.classList.add('wrong');});
+  $('#qfb').innerHTML='<div class="fb '+(o[1]?'good':'bad')+'"><b>'+(o[1]?'✓ Correct.':'✗ Not quite.')+'</b> '+esc(o[2])+'</div>'+
+    '<button class="btn" onclick="stepNext()">Continue</button>';
+  if(o[1]){L.correct++;if(!L.redo)addXP(5);}
+}
+// ---- calibration step ----
+let CAL=null;
+function renderCalib(){
+  const c=L.chap, n=c.calib||10;
+  if(!CAL){
+    const unseen=CALIB_BANK.map((_,i)=>i).filter(i=>!S.calibSeen.includes(i));
+    let pool=unseen.length>=n?unseen:CALIB_BANK.map((_,i)=>i);
+    pool=pool.sort(()=>Math.random()-0.5).slice(0,n);
+    CAL={qs:pool,i:0,conf:null,score:0};
+  }
+  if(CAL.i>=CAL.qs.length){
+    const recent=S.calib.slice(-CAL.qs.length);
+    const acc=Math.round(recent.filter(x=>x.correct).length/recent.length*100);
+    const avg=Math.round(recent.reduce((a,x)=>a+x.conf,0)/recent.length);
+    const verdict=avg>acc+7?'Overconfident: your numbers ran ahead of your accuracy. Shrink the big numbers.':(acc>avg+7?'Underconfident: you know more than you claim. Trust the 80s.':'Nicely calibrated on this batch.');
+    setTimeout(()=>{ // replace step content
+      sheetHTML('<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:90%"></div></div></div>'+
+      '<div class="center" style="padding:20px 0"><h2>📊 Batch result</h2><div class="statgrid" style="text-align:left"><div class="card"><div class="big">'+acc+'%</div><div class="small">accuracy</div></div><div class="card"><div class="big">'+avg+'%</div><div class="small">avg confidence</div></div></div>'+
+      '<div class="fb '+(Math.abs(avg-acc)<=7?'good':'bad')+'" style="text-align:left">'+verdict+' Lifetime: '+S.calib.length+' answers. Re-run this chapter anytime — calibration is a workout, not a fact.</div>'+
+      '<button class="btn" onclick="CAL=null;stepNext()">Continue</button></div>');},0);
+    return '<div></div>';
+  }
+  const q=CALIB_BANK[CAL.qs[CAL.i]];
+  let h='<h3>Statement '+(CAL.i+1)+'/'+CAL.qs.length+'</h3><div class="srcard">'+esc(q[0])+'</div>';
+  h+='<p class="small" style="margin-top:10px">True or false — and how confident?</p>';
+  h+='<div class="row"><button class="btn sm" onclick="CAL.ansTF=true;calHi(this)">TRUE</button><button class="btn sm sec" onclick="CAL.ansTF=false;calHi(this)">FALSE</button></div>';
+  h+='<div class="conf">'+[50,60,70,80,90,99].map(p=>'<button onclick="calConf('+p+',this)">'+p+'%</button>').join('')+'</div>';
+  h+='<div id="calfb"></div>';
+  return h;
+}
+function calHi(btn){document.querySelectorAll('.row .btn').forEach(b=>b.classList.add('sec'));btn.classList.remove('sec');}
+function calConf(p,btn){
+  if(CAL.ansTF===undefined)return toast('Pick true/false first');
+  document.querySelectorAll('.conf button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');
+  const q=CALIB_BANK[CAL.qs[CAL.i]];
+  const correct=CAL.ansTF===q[1];
+  S.calib.push({conf:p,correct,ts:Date.now()});
+  if(!S.calibSeen.includes(CAL.qs[CAL.i]))S.calibSeen.push(CAL.qs[CAL.i]);
+  save();
+  $('#calfb').innerHTML='<div class="fb '+(correct?'good':'bad')+'"><b>'+(correct?'✓ Correct':'✗ Wrong')+'</b> — it is '+(q[1]?'TRUE':'FALSE')+'. You said '+p+'%. '+(correct?(p<70?'If you keep being right at low confidence, trust yourself more.':''):(p>=90?'A '+p+'% miss should sting — let it recalibrate you.':''))+'</div>'+
+    '<button class="btn" onclick="CAL.i++;CAL.ansTF=undefined;if(!L.redo)addXP(2);sheetHTML(rebuildCalib())">Next</button>';
+}
+function rebuildCalib(){
+  const pct=Math.round(L.i/L.steps.length*100);
+  return '<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:'+pct+'%"></div></div></div>'+
+  '<div class="small" style="margin-bottom:6px">'+L.chap._unit.icon+' '+esc(L.chap._unit.title)+' · '+esc(L.chap.title)+'</div>'+renderCalib();
+}
+
+// ---- drill feedback ----
+function gatherAnswer(){
+  let a=$('#ans').value.trim();
+  const sel=$('#bugsel'); if(sel&&sel.value)a='Chosen bug: '+sel.value+'\n'+a;
+  return a;
+}
+function rubricFor(){const c=L.chap;return c.rubric||(c.drill&&c.drill.rubric)||[];}
+async function getFeedback(){
+  const a=gatherAnswer(); if(a.length<30)return toast('Write your real attempt first');
+  const c=L.chap, st=L.steps[L.i];
+  const ex=st.t==='drill'?c.drill.prompt:c.mission.text;
+  $('#fbbtn').innerHTML='<span class="spin"></span> Coach is reading…';$('#fbbtn').disabled=true;
+  try{
+    const fb=await claudeFeedback(c,ex,rubricFor(),a,'Open bugs in user ledger: '+S.bugs.filter(b=>b.st==='open').length);
+    $('#fbzone').innerHTML='<div class="feedback-md">🧑‍🏫 '+esc(fb)+'</div><button class="btn" onclick="acceptDrill()">Accept & continue</button>';
+  }catch(e){
+    $('#fbzone').innerHTML='<div class="fb bad">Feedback failed ('+esc(e.message)+'). Check key/connection in ⚙️, or self-grade below.</div>';
+  }
+  $('#fbbtn').innerHTML='Get Claude feedback';$('#fbbtn').disabled=false;
+}
+function selfGrade(){
+  const a=gatherAnswer(); if(a.length<30)return toast('Write your real attempt first');
+  const r=rubricFor();
+  $('#fbzone').innerHTML='<div class="card"><h3>Self-grade against the rubric</h3>'+r.map((x,i)=>'<label style="display:flex;gap:8px;margin:8px 0;font-size:.92rem"><input type="checkbox" id="rb'+i+'" style="width:auto"> <span>'+esc(x)+'</span></label>').join('')+
+  '<p class="small">Check only what your response HONESTLY satisfies. Unchecked items = your next attempt’s targets.</p><button class="btn" onclick="acceptDrill()">Done — continue</button></div>';
+  if($('#fbzone').scrollIntoView)$('#fbzone').scrollIntoView({behavior:'smooth'});
+}
+function acceptDrill(){
+  const c=L.chap, a=gatherAnswer();
+  S.reports.push({ts:Date.now(),chap:c.id,text:a.slice(0,4000)});
+  // captures
+  if(c.drill&&c.drill.bugcapture){
+    const lines=a.split('\n').map(l=>l.replace(/^[-*•]\s*/,'').trim()).filter(l=>l&&!/^(generator|bug)s?\s*:/i.test(l)&&l.length>3);
+    lines.slice(0,12).forEach(l=>addBug(l));
+    toast(lines.length+' bugs filed to ledger');
+  }
+  if(c.drill&&c.drill.tapcapture){
+    const m=a.match(/TAP\s*:\s*(.+)/i);
+    if(m){S.taps.push({t:m[1].trim(),ts:Date.now()});
+      const id='tap#'+uid();
+      S.cards[id]={ease:2.5,ivl:0,due:Date.now(),f:'Recite your installed TAP (verbatim):',b:m[1].trim(),reps:0};
+      toast('TAP installed + added to review');}
+  }
+  save(); stopTimer(); stepNext();
+}
+function acceptCheckin(){
+  const c=L.chap, k=c.checkin;
+  const n=parseInt($('#ckint').value)||k.every;
+  if(!S.habits[k.key])S.habits[k.key]={since:Date.now(),last:Date.now(),every:n,paused:false};
+  else S.habits[k.key].every=n;
+  save(); stepNext();
+}
+function finishLesson(xp){
+  const c=L.chap;
+  if(!S.done[c.id]){S.done[c.id]=Date.now();if(repEligible(c))S.reps[c.id]={i:0,due:Date.now()+REP_IVLS[0]*DAY,count:0};}
+  ensureCards(c); addXP(xp); save(); closeSheet();
+}
+
+// ---- habit execution ----
+function doHabit(k){
+  const m=habitMeta(k); if(!m)return;
+  let h='<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:50%"></div></div></div>'+
+    '<h2>'+m.icon+' '+esc(m.label)+'</h2><div class="teach"><div class="key">'+esc(m.ask)+'</div></div>';
+  if(m.timer)h+='<div class="timerbox card"><div class="t" id="tdisp">'+m.timer+':00</div><button class="btn sm warn" onclick="startTimer('+m.timer+')">▶ Start '+m.timer+'-min timer</button></div>';
+  if(m.form==='bugs'){
+    h+='<textarea id="ans" placeholder="One bug per line…"></textarea><button class="btn" style="margin-top:10px" onclick="habitBugs(\''+k+'\')">File & complete</button>';
+  }else if(m.form==='predict-min'){
+    h+='<label class="fld">Task</label><input type="text" id="ptask" placeholder="Write the monthly report">'+
+       '<label class="fld">Predicted minutes</label><input type="number" id="pmin" placeholder="45">'+
+       '<button class="btn" style="margin-top:12px" onclick="habitPredMin(\''+k+'\')">Lock prediction</button>';
+  }else if(m.form==='predict-prob'){
+    h+='<label class="fld">Falsifiable prediction</label><input type="text" id="ptask" placeholder="I leave the office by 18:30 today">'+
+       '<label class="fld">Probability</label><div class="conf">'+[50,60,70,80,90,95,99].map(p=>'<button onclick="window._pp='+p+';document.querySelectorAll(\'.conf button\').forEach(b=>b.classList.remove(\'sel\'));this.classList.add(\'sel\')">'+p+'%</button>').join('')+'</div>'+
+       '<button class="btn" style="margin-top:12px" onclick="habitPredProb(\''+k+'\')">Lock prediction</button>';
+  }else{
+    h+='<textarea id="ans" placeholder="Your report…"></textarea><div id="fbzone"></div><div class="row" style="margin-top:10px">'+
+      (S.apiKey?'<button class="btn" id="fbbtn" onclick="habitFeedback(\''+k+'\')">Get Claude feedback</button>':'')+
+      '<button class="btn '+(S.apiKey?'sec':'')+'" onclick="habitDone(\''+k+'\')">Complete</button></div>';
+  }
+  sheetHTML(h);
+}
+function habitBugs(k){
+  const a=$('#ans').value; const lines=a.split('\n').map(l=>l.replace(/^[-*•]\s*/,'').trim()).filter(l=>l.length>3);
+  if(!lines.length)return toast('File at least one bug');
+  lines.slice(0,12).forEach(addBug);
+  completeHabit(k,lines.length+' bug(s) filed');
+}
+function habitPredMin(k){
+  const t=$('#ptask').value.trim(), v=parseFloat($('#pmin').value);
+  if(!t||!(v>0))return toast('Task + minutes needed');
+  S.preds.push({id:uid(),text:t,type:'min',val:v,made:Date.now(),resolved:0,outcome:null});
+  completeHabit(k,'Prediction locked — resolve it in Habits when done');
+}
+function habitPredProb(k){
+  const t=$('#ptask').value.trim(), p=window._pp;
+  if(!t||!p)return toast('Prediction + probability needed');
+  S.preds.push({id:uid(),text:t,type:'prob',val:p,made:Date.now(),resolved:0,outcome:null});
+  window._pp=null;
+  completeHabit(k,'Forecast locked — resolve it when reality answers');
+}
+async function habitFeedback(k){
+  const a=$('#ans').value.trim(); if(a.length<30)return toast('Write your real report first');
+  const m=habitMeta(k);
+  const fake={title:m.label,_unit:{title:'Standing practice'}};
+  $('#fbbtn').innerHTML='<span class="spin"></span> Coach is reading…';$('#fbbtn').disabled=true;
+  try{
+    const fb=await claudeFeedback(fake,m.ask,['Practice actually performed on real life, not narrated hypothetically','Specific and concrete (names, actions, observations)','Honest about failures/skips','Contains the practice’s key artifact (bug/TAP verdicts/fix/etc.)'],a,'');
+    $('#fbzone').innerHTML='<div class="feedback-md">🧑‍🏫 '+esc(fb)+'</div>';
+  }catch(e){$('#fbzone').innerHTML='<div class="fb bad">Feedback failed: '+esc(e.message)+'</div>';}
+  $('#fbbtn').innerHTML='Get Claude feedback';$('#fbbtn').disabled=false;
+}
+function habitDone(k){
+  const a=$('#ans')?$('#ans').value.trim():'';
+  if(a.length<10)return toast('A few honest lines, minimum');
+  S.reports.push({ts:Date.now(),chap:'habit:'+k,text:a.slice(0,4000)});
+  completeHabit(k,'Practice logged');
+}
+function completeHabit(k,msg){
+  S.habits[k].last=Date.now(); delete S.notified[k]; save();
+  addXP(20); toast('✓ '+msg); closeSheet();
+}
+
+// ---- practice rep execution ----
+function doRep(id){
+  const c=chById(id), r=S.reps[id]; if(!c||!r)return;
+  const d=c.drill||c.mission;
+  let h='<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:50%"></div></div></div>';
+  h+='<div class="small" style="margin-bottom:6px">'+c._unit.icon+' '+esc(c._unit.title)+' · '+esc(c.title)+' · rep #'+(r.count+1)+'</div>';
+  h+='<div class="teach"><div class="key">🔁 '+esc(REPHINTS[id]||'Run this technique again on a NEW real target — different from last time.')+'</div></div>';
+  h+='<details><summary>Original exercise & rubric</summary><div class="teach"><div class="ex">'+(d.prompt||d.text)+'</div><div class="small">'+(c.rubric||(c.drill&&c.drill.rubric)||[]).map(x=>'• '+esc(x)).join('<br>')+'</div></div></details>';
+  if(c.drill&&c.drill.timer)h+='<div class="timerbox card"><div class="t" id="tdisp">'+c.drill.timer+':00</div><button class="btn sm warn" onclick="startTimer('+c.drill.timer+')">▶ Start '+c.drill.timer+'-min timer</button></div>';
+  h+='<textarea id="ans" placeholder="'+esc((d.placeholder||'Your report…'))+'"></textarea><div id="fbzone"></div>';
+  if(S.apiKey)h+='<button class="btn" id="fbbtn" style="margin-top:10px" onclick="repFeedback(\''+id+'\')">Get Claude feedback</button>';
+  h+='<p class="small" style="margin-top:12px">How did the rep go? (sets the next interval)</p>'+
+    '<div class="row"><button class="btn sm warn" onclick="repGrade(\''+id+'\',0)">Hard — again in '+repInterval(r.i)+'d</button>'+
+    '<button class="btn sm" onclick="repGrade(\''+id+'\',1)">Good — '+repInterval(r.i+1)+'d</button>'+
+    '<button class="btn sm sec" onclick="repGrade(\''+id+'\',2)">Easy — '+repInterval(r.i+2)+'d</button></div>';
+  sheetHTML(h);
+}
+async function repFeedback(id){
+  const a=$('#ans').value.trim(); if(a.length<30)return toast('Write your real attempt first');
+  const c=chById(id), d=c.drill||c.mission;
+  $('#fbbtn').innerHTML='<span class="spin"></span> Coach is reading…';$('#fbbtn').disabled=true;
+  try{
+    const fb=await claudeFeedback(c,'PRACTICE REP (repeat of an earlier exercise on a fresh target): '+(REPHINTS[id]||'')+'\n\nOriginal exercise: '+(d.prompt||d.text),(c.rubric||(c.drill&&c.drill.rubric)||[]).concat(['Target is genuinely NEW, not a rehash of a previous attempt']),a,'This is rep #'+(S.reps[id].count+1)+' of this technique for this user.');
+    $('#fbzone').innerHTML='<div class="feedback-md">🧑‍🏫 '+esc(fb)+'</div>';
+  }catch(e){$('#fbzone').innerHTML='<div class="fb bad">Feedback failed: '+esc(e.message)+'</div>';}
+  $('#fbbtn').innerHTML='Get Claude feedback';$('#fbbtn').disabled=false;
+}
+function repGrade(id,g){
+  const a=$('#ans').value.trim(); if(a.length<30)return toast('Write your real attempt first — the rep is the doing, not the tap');
+  const r=S.reps[id]; r.count++;
+  if(g===1)r.i++; else if(g===2)r.i+=2;
+  r.due=Date.now()+repInterval(r.i)*DAY;
+  S.reports.push({ts:Date.now(),chap:'rep:'+id,text:a.slice(0,4000)});
+  save(); stopTimer(); addXP(25);
+  toast('🔁 Next rep in '+repInterval(r.i)+'d'); closeSheet();
+}
+
+// ---- SR session ----
+let SR=null;
+function startSR(){SR={q:dueCards().map(([id])=>id),i:0,flip:false};renderSR();}
+function renderSR(){
+  if(SR.i>=SR.q.length){sheetHTML('<div class="top"><button class="x" onclick="closeSheet()">✕</button></div><div class="center" style="padding:40px 0"><div style="font-size:3.5rem">🧠</div><h2>Review done</h2><button class="btn" onclick="addXP(Math.min(20,'+SR.q.length+'*2));closeSheet()">Claim XP</button></div>');return;}
+  const id=SR.q[SR.i], c=S.cards[id];
+  let h='<div class="top"><button class="x" onclick="closeSheet()">✕</button><div class="prog"><div style="width:'+Math.round(SR.i/SR.q.length*100)+'%"></div></div></div>';
+  h+='<div class="srcard">'+esc(c.f)+(SR.flip?'<hr><div style="color:var(--gold)">'+esc(c.b)+'</div>':'')+'</div>';
+  if(!SR.flip)h+='<button class="btn" style="margin-top:14px" onclick="SR.flip=true;renderSR()">Show answer</button>';
+  else h+='<div class="srgrid">'+
+    '<button style="background:var(--red)" onclick="srG(\''+id+'\',0)">Again</button>'+
+    '<button style="background:var(--orange)" onclick="srG(\''+id+'\',1)">Hard</button>'+
+    '<button style="background:var(--green)" onclick="srG(\''+id+'\',2)">Good</button>'+
+    '<button style="background:var(--blue)" onclick="srG(\''+id+'\',3)">Easy</button></div>';
+  sheetHTML(h);
+}
+function srG(id,g){gradeCard(id,g);SR.i++;SR.flip=false;renderSR();}
+
+// ---- timer ----
+let TMR=null;
+function startTimer(min){
+  stopTimer(); let left=min*60;
+  const d=$('#tdisp'); if(!d)return;
+  TMR=setInterval(()=>{
+    left--; if(!$('#tdisp')){stopTimer();return;}
+    $('#tdisp').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
+    if(left<=0){stopTimer();$('#tdisp').textContent='⏰ TIME';
+      try{navigator.vibrate&&navigator.vibrate([300,150,300]);}catch(e){}
+      if(S.notif&&Notification.permission==='granted')try{new Notification('Praxis',{body:'Timer done — write your report.'});}catch(e){}
+      toast('⏰ Timer done — report what you DID');}
+  },1000);
+}
+function stopTimer(){if(TMR){clearInterval(TMR);TMR=null;}}
+
+// ---------- boot ----------
+load(); rollover(); render(); notifCheck();
+if(S.ghToken&&S.gistId)syncPull();
+window.addEventListener('visibilitychange',()=>{if(!document.hidden){rollover();render();notifCheck();if(S.ghToken&&S.gistId)syncPull();}});
+
+// PWA installability: inject manifest
+(function(){
+  const man={name:'Praxis — Applied Rationality Dojo',short_name:'Praxis',display:'standalone',
+    background_color:'#10131c',theme_color:'#10131c',start_url:location.href,
+    icons:[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2310131c'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle'%3E%F0%9F%94%A8%3C/text%3E%3C/svg%3E",sizes:'any',type:'image/svg+xml'}]};
+  const l=document.createElement('link');l.rel='manifest';
+  l.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify(man));
+  document.head.appendChild(l);
+})();
+</script>
+</body>
+</html>
